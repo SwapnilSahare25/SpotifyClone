@@ -1,6 +1,0 @@
-framework module RCPageControl {
-  umbrella header "RCPageControl-umbrella.h"
-
-  export *
-  module * { export * }
-}
