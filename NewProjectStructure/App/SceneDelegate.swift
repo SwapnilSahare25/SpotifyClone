@@ -61,27 +61,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
       print("Spotify code received in SceneDelegate: \(code)")
 
-      // 2. Call the token exchange
       UserAuthenticationService.shared.exchangeCodeForToken(code: code) { result in
 
-          // 3. All UI updates MUST be on the main thread
           DispatchQueue.main.async {
-
-              // 4. Handle result and NAVIGATION FIRST
               switch result {
               case .success(let token):
                   print("Access Token received via SceneDelegate: \(token.access_token.prefix(15))...")
                   isUserLoggedIn = true
-
-                  // Perform NAVIGATION LOGIC before dismissing the SFSafariViewController
                   let homeVc = HomeViewController()
                   let searchVc = SearchViewController()
                   let libraryVc = LibraryViewController()
                   sceneDelegate.goToMainApp(vcs: [homeVc, searchVc, libraryVc], titles: ["Home","Search","Library"], images: ["house", "magnifyingglass", "music.note.list"])
-
-                  //NOW DISMISS the login screen after the navigation is initiated
-                  // Since goToMainApp likely changes the rootViewController, the dismissal
-                  // might be instantaneous or part of the root VC transition.
                   UIApplication.shared.topMostViewController()?.dismiss(animated: true, completion: nil)
 
 

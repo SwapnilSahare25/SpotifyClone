@@ -23,6 +23,7 @@
 		551F72FE2ED8864C00B44A14 /* Inter_18pt-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 551F72F52ED8864C00B44A14 /* Inter_18pt-Bold.ttf */; };
 		559019652ED9C42E005F9E5E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559019642ED9C42E005F9E5E /* LoginViewController.swift */; };
 		559019672ED9CFD6005F9E5E /* SpotifyTokenObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559019662ED9CFD6005F9E5E /* SpotifyTokenObject.swift */; };
+		55907B322EE89E180064C0DA /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55907B312EE89E180064C0DA /* KeychainService.swift */; };
 		55CF4CA32ED6F5F300A77E05 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CF4CA22ED6F5F300A77E05 /* Constant.swift */; };
 		55CF4CA82ED6F65400A77E05 /* UIKit+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CF4CA72ED6F65400A77E05 /* UIKit+Extension.swift */; };
 		55CF4CAC2ED6F68200A77E05 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CF4CAB2ED6F68200A77E05 /* String+Extension.swift */; };
@@ -72,6 +73,7 @@
 		551F72F52ED8864C00B44A14 /* Inter_18pt-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter_18pt-Bold.ttf"; sourceTree = "<group>"; };
 		559019642ED9C42E005F9E5E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		559019662ED9CFD6005F9E5E /* SpotifyTokenObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyTokenObject.swift; sourceTree = "<group>"; };
+		55907B312EE89E180064C0DA /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		55CF4CA22ED6F5F300A77E05 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		55CF4CA72ED6F65400A77E05 /* UIKit+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIKit+Extension.swift"; sourceTree = "<group>"; };
 		55CF4CAB2ED6F68200A77E05 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
@@ -239,6 +241,7 @@
 			children = (
 				55CF4CD92ED7733F00A77E05 /* ApiManager+EndPoints */,
 				55CF4CBF2ED6F79F00A77E05 /* UserAuthenticationService.swift */,
+				55907B312EE89E180064C0DA /* KeychainService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -555,6 +558,7 @@
 				55CF4CA82ED6F65400A77E05 /* UIKit+Extension.swift in Sources */,
 				551F72D82ED8811D00B44A14 /* IntroViewController.swift in Sources */,
 				55CF4CA32ED6F5F300A77E05 /* Constant.swift in Sources */,
+				55907B322EE89E180064C0DA /* KeychainService.swift in Sources */,
 				55CF4CBC2ED6F77500A77E05 /* ApiManager.swift in Sources */,
 				55CF4CB22ED6F6D500A77E05 /* Utility.swift in Sources */,
 				55CF4CB42ED6F6EF00A77E05 /* ThirdPartyManager.swift in Sources */,

@@ -34,6 +34,7 @@ class TabBarManager: UITabBarController, UITabBarControllerDelegate {
         }
         
         self.viewControllers = controllers
+      self.selectedIndex = 0
     }
     
     required init?(coder: NSCoder) {
@@ -45,6 +46,8 @@ class TabBarManager: UITabBarController, UITabBarControllerDelegate {
         tabBar.unselectedItemTintColor = .gray
         tabBar.backgroundColor = .white
         tabBar.isTranslucent = false
+
+
     }
     
     

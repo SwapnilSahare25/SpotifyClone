@@ -58,7 +58,7 @@ class UserAuthenticationService {
     let scopeEncoded = scopes.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
 
     // Append code_challenge and code_challenge_method=S256
-    let urlString = Host+"?response_type=code&client_id=\(spotifyClientID)&scope=\(scopeEncoded)&redirect_uri=\(redirect)&code_challenge=\(challenge)&code_challenge_method=S256"
+    let urlString = AuthorizeUrl+"?response_type=code&client_id=\(spotifyClientID)&scope=\(scopeEncoded)&redirect_uri=\(redirect)&code_challenge=\(challenge)&code_challenge_method=S256"
 
     return URL(string: urlString)
   }
@@ -71,6 +71,8 @@ class UserAuthenticationService {
 
   func logout() {
     isUserLoggedIn = false
+    KeychainService.shared.delete(key: "spotify_access_token")
+           KeychainService.shared.delete(key: "spotify_refresh_token")
     let loginVc = LoginViewController()
     WindowManager.shared.setRootController(loginVc, animated: true)
   }
@@ -104,7 +106,14 @@ class UserAuthenticationService {
 
         switch response.result {
         case .success(let token):
+          // Save access token
           print("Token Exchange SUCCESS! Access Token:", token.access_token)
+          KeychainService.shared.save(key: "spotify_access_token", value: token.access_token)
+          // Save refresh token
+          if let refresh = token.refresh_token {
+            KeychainService.shared.save(key: "spotify_refresh_token", value: refresh)
+          }
+
         case .failure(let error):
           print("Token Exchange FAILURE! Error: \(error.localizedDescription)")
         }
@@ -113,6 +122,66 @@ class UserAuthenticationService {
       }
   }
 
+  func refreshAccessToken(completion: @escaping (Bool) -> Void) {
+
+         guard let refreshToken = KeychainService.shared.load(key: "spotify_refresh_token") else {
+             print("Refresh token not found.")
+             completion(false)
+             return
+         }
+
+         let url = "https://accounts.spotify.com/api/token"
+
+         let params: [String: String] = [
+             "grant_type": "refresh_token",
+             "refresh_token": refreshToken,
+             "client_id": spotifyClientID
+         ]
+
+         let headers: HTTPHeaders = ["Content-Type": "application/x-www-form-urlencoded"]
+
+         AF.request(url, method: .post, parameters: params, encoder: URLEncodedFormParameterEncoder.default, headers: headers)
+             .validate()
+             .responseDecodable(of: SpotifyTokenObject.self) { response in
+
+                 switch response.result {
+                 case .success(let token):
+                     print("Refresh SUCCESS → New Access Token:", token.access_token)
+
+                     // Save updated access token
+                     KeychainService.shared.save(key: "spotify_access_token", value: token.access_token)
+
+                     if let newRefresh = token.refresh_token {
+                         KeychainService.shared.save(key: "spotify_refresh_token", value: newRefresh)
+                     }
+
+                     completion(true)
+
+                 case .failure(let error):
+                     print("Refresh FAILED:", error.localizedDescription)
+                     completion(false)
+                 }
+             }
+     }
+
+  // Automatically return valid access token
+   func getValidAccessToken(completion: @escaping (String?) -> Void) {
+
+       if let token = KeychainService.shared.load(key: "spotify_access_token") {
+           completion(token)
+           return
+       }
+
+       // If expired or missing → refresh it
+       refreshAccessToken { success in
+           if success {
+               let newToken = KeychainService.shared.load(key: "spotify_access_token")
+               completion(newToken)
+           } else {
+               completion(nil)
+           }
+       }
+   }
 
   // Reusable Auth API call
   // - Parameters:

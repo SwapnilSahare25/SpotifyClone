@@ -55,7 +55,8 @@ let topBarHeight = statusBarFrame.size.height + (UINavigationController().naviga
 
 let PerPageItem: Int  = 20
 
-var Host = "https://accounts.spotify.com/authorize"
+var AuthorizeUrl = "https://accounts.spotify.com/authorize"
+var Host = "https://api.spotify.com/v1"
 var scopes = "user-read-private user-read-email playlist-read-private"
 
 var spotifyClientID: String = "262b23b768d84dafb4129b71109f66e4"

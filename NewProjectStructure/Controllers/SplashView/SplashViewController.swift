@@ -20,23 +20,58 @@ class SplashViewController: UIViewController {
     }
     
     private func goToMainAfterDelay() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-            if IsIntroHasSeen {
-              if isUserLoggedIn{
-                let homeVc = HomeViewController()
-                let searchVc = SearchViewController()
-                let libraryVc = LibraryViewController()
 
-                sceneDelegate.goToMainApp(vcs: [homeVc,searchVc,libraryVc], titles: ["Home","Search","Library"], images: ["house", "magnifyingglass", "music.note.list"])
-              }else{
-                let loginVc = LoginViewController()
-                WindowManager.shared.setRootController(loginVc, animated: true)
-              }
-            }else{
-                let introVc = UINavigationController(rootViewController: IntroViewController())
-                WindowManager.shared.setRootController(introVc)
-            }
+      if !IsIntroHasSeen {
+        let introVc = UINavigationController(rootViewController: IntroViewController())
+        WindowManager.shared.setRootController(introVc)
+        return
+      }
+
+      if !isUserLoggedIn {
+        let loginVc = LoginViewController()
+        WindowManager.shared.setRootController(loginVc, animated: true)
+        return
+      }
+      UserAuthenticationService.shared.getValidAccessToken { token in
+
+        DispatchQueue.main.async {
+          if let token = token {
+
+            let homeVc = HomeViewController()
+            let searchVc = SearchViewController()
+            let libraryVc = LibraryViewController()
+
+            sceneDelegate.goToMainApp(
+              vcs: [homeVc, searchVc, libraryVc],
+              titles: ["Home", "Search", "Library"],
+              images: ["house", "magnifyingglass", "music.note.list"]
+            )
+          } else {
+
+            isUserLoggedIn = false
+            let loginVc = LoginViewController()
+            WindowManager.shared.setRootController(loginVc, animated: true)
+          }
         }
+      }
+
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+//            if IsIntroHasSeen {
+//              if isUserLoggedIn{
+//                let homeVc = HomeViewController()
+//                let searchVc = SearchViewController()
+//                let libraryVc = LibraryViewController()
+//
+//                sceneDelegate.goToMainApp(vcs: [homeVc,searchVc,libraryVc], titles: ["Home","Search","Library"], images: ["house", "magnifyingglass", "music.note.list"])
+//              }else{
+//                let loginVc = LoginViewController()
+//                WindowManager.shared.setRootController(loginVc, animated: true)
+//              }
+//            }else{
+//                let introVc = UINavigationController(rootViewController: IntroViewController())
+//                WindowManager.shared.setRootController(introVc)
+//            }
+//        }
         
     }
     
