@@ -27,26 +27,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
   func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-    guard let code = url.queryValue(for: "code") else { return false }
-          print("Spotify code received: \(code)")
-    UIApplication.shared.topMostViewController()?.dismiss(animated: true, completion: {
-      UserAuthenticationService.shared.exchangeCodeForToken(code: code) { result in
-        switch result {
-        case .success(let token):
-          print("Access Token:", token.access_token)
-          isUserLoggedIn = true
-          DispatchQueue.main.async {
-            let homeVc = HomeViewController()
-            let searchVc = SearchViewController()
-            let libraryVc = LibraryViewController()
-            sceneDelegate.goToMainApp(vcs: [homeVc,searchVc,libraryVc], titles: ["Home","Search","Library"], images: ["house", "magnifyingglass", "music.note.list"])
-          }
-        case .failure(let error):
-          print("Token Error:", error.localizedDescription)
-
-        }
-      }
-    })
+//    guard let code = url.queryValue(for: "code") else { return false }
+//          print("Spotify code received: \(code)")
+//    UIApplication.shared.topMostViewController()?.dismiss(animated: true, completion: {
+//      UserAuthenticationService.shared.exchangeCodeForToken(code: code) { result in
+//        switch result {
+//        case .success(let token):
+//          print("Access Token:", token.access_token)
+//          isUserLoggedIn = true
+//          DispatchQueue.main.async {
+//            let homeVc = HomeViewController()
+//            let searchVc = SearchViewController()
+//            let libraryVc = LibraryViewController()
+//            sceneDelegate.goToMainApp(vcs: [homeVc,searchVc,libraryVc], titles: ["Home","Search","Library"], images: ["house", "magnifyingglass", "music.note.list"])
+//          }
+//        case .failure(let error):
+//          print("Token Error:", error.localizedDescription)
+//
+//        }
+//      }
+//    })
 
     return true
   }

@@ -9,64 +9,121 @@ import Foundation
 import Alamofire
 import SafariServices
 import UIKit
+import CommonCrypto
+
 
 class UserAuthenticationService {
-    static let shared = UserAuthenticationService()
-    private init() {}
+  static let shared = UserAuthenticationService()
+  private init() {}
 
   private var safariVC: SFSafariViewController?
+  //NEW: Storage for the verifier
+  private var codeVerifier: String?
 
+  //NEW: Generates a random string for the verifier
+  private func generateRandomString(length: Int) -> String {
+    let charset: String = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~"
+    return String((0..<length).map{ _ in charset.randomElement()! })
+  }
+  //NEW: Generates the SHA256 hashed, Base64URL-encoded challenge
+  private func generateCodeChallenge(from verifier: String) -> String? {
+    guard let data = verifier.data(using: .utf8) else { return nil }
+
+    // 1. Hash the verifier using SHA256
+    var hash = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
+    data.withUnsafeBytes {
+      _ = CC_SHA256($0.baseAddress, CC_LONG(data.count), &hash)
+    }
+
+    // 2. Base64URL-encode the hash
+    let challenge = Data(hash).base64EncodedString()
+      .replacingOccurrences(of: "+", with: "-")
+      .replacingOccurrences(of: "/", with: "_")
+      .replacingOccurrences(of: "=", with: "")
+
+    return challenge
+  }
 
 
   // Step 1: Get Authorization URL
-      private func getAuthURL() -> URL? {
-          let redirect = redirectUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-          let scopeEncoded = scopes.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+  private func getAuthURL() -> URL? {
+    // Generate and store the verifier, then generate the challenge
+    let verifier = generateRandomString(length: 128)
+    codeVerifier = verifier
+    guard let challenge = generateCodeChallenge(from: verifier) else { return nil }
 
-          let urlString = Host+"?response_type=code&client_id=\(spotifyClientID)&scope=\(scopeEncoded)&redirect_uri=\(redirect)"
-          return URL(string: urlString)
-      }
+    // Correct the Host URL constant (Assuming 'Host' is a global constant)
+    // NOTE: Ensure your Host constant is set to "https://accounts.spotify.com/authorize"
+    let redirect = redirectUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+    let scopeEncoded = scopes.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
 
+    // Append code_challenge and code_challenge_method=S256
+    let urlString = Host+"?response_type=code&client_id=\(spotifyClientID)&scope=\(scopeEncoded)&redirect_uri=\(redirect)&code_challenge=\(challenge)&code_challenge_method=S256"
+
+    return URL(string: urlString)
+  }
   // Step 2: Open Spotify login page in SFSafariViewController
-     func login(from viewController: UIViewController) {
-         guard let url = getAuthURL() else { return }
-         safariVC = SFSafariViewController(url: url)
-         viewController.present(safariVC!, animated: true)
-     }
+  func login(from viewController: UIViewController) {
+    guard let url = getAuthURL() else { return }
+    safariVC = SFSafariViewController(url: url)
+    viewController.present(safariVC!, animated: true)
+  }
+
+  func logout() {
+    isUserLoggedIn = false
+    let loginVc = LoginViewController()
+    WindowManager.shared.setRootController(loginVc, animated: true)
+  }
+
 
   func exchangeCodeForToken(code: String, completion: @escaping (Result<SpotifyTokenObject, AFError>) -> Void) {
-      let url = "https://accounts.spotify.com/api/token"
+    let url = "https://accounts.spotify.com/api/token"
 
-      let params: [String: String] = [
-          "grant_type": "authorization_code",
-          "code": code,
-          "redirect_uri": redirectUrl,
-          "client_id": spotifyClientID,
-          "client_secret": spotifyClientSecret
-      ]
+    // Safely unwrap and clear the verifier
+    guard let verifier = codeVerifier else {
+      print("Error: Code verifier not available.")
+      completion(.failure(AFError.responseValidationFailed(reason: .customValidationFailed(error: NSError()))))
+      return
+    }
+    codeVerifier = nil
 
-      let headers: HTTPHeaders = ["Content-Type": "application/x-www-form-urlencoded"]
+    let params: [String: String] = [
+      "grant_type": "authorization_code",
+      "code": code,
+      "redirect_uri": redirectUrl,
+      "client_id": spotifyClientID,
+      //"client_secret": spotifyClientSecret
+      "code_verifier": verifier
+    ]
+
+    let headers: HTTPHeaders = ["Content-Type": "application/x-www-form-urlencoded"]
 
 
     AF.request(url,method: .post,parameters: params,encoder: URLEncodedFormParameterEncoder.default,headers: headers).validate()
       .responseDecodable(of: SpotifyTokenObject.self) { response in
 
-          completion(response.result)
+        switch response.result {
+        case .success(let token):
+          print("Token Exchange SUCCESS! Access Token:", token.access_token)
+        case .failure(let error):
+          print("Token Exchange FAILURE! Error: \(error.localizedDescription)")
+        }
+        completion(response.result)
 
       }
   }
 
 
-    // Reusable Auth API call
-    // - Parameters:
-    //   - endpoint: API endpoint
-    //   - parameters: key-value parameters from VC
-    //   - method: GET / POST / PUT / DELETE
-    //   - completion: returns User object or error
-//    func callAuthAPI(endpoint: String,parameters: [String: Any]? = nil,method: HTTPMethod = .post,completion: @escaping (Result<UserObject, AFError>) -> Void) {
-//        
-//        APIManager.shared.request(endpoint: endpoint,method: method, parameters: parameters,completion: completion)
-//    }
+  // Reusable Auth API call
+  // - Parameters:
+  //   - endpoint: API endpoint
+  //   - parameters: key-value parameters from VC
+  //   - method: GET / POST / PUT / DELETE
+  //   - completion: returns User object or error
+  //    func callAuthAPI(endpoint: String,parameters: [String: Any]? = nil,method: HTTPMethod = .post,completion: @escaping (Result<UserObject, AFError>) -> Void) {
+  //
+  //        APIManager.shared.request(endpoint: endpoint,method: method, parameters: parameters,completion: completion)
+  //    }
 }
 
 
