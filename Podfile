@@ -10,8 +10,8 @@ target 'NewProjectStructure' do
 	pod 'PopupKit'
 	pod 'Alamofire'
 	pod 'IQKeyboardManagerSwift'
-  pod 'RCPageControl'
   pod 'CHIPageControl'
+  pod 'SOTabBar'
 
   # Pods for NewProjectStructure
 

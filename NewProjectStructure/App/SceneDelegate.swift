@@ -66,7 +66,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
           DispatchQueue.main.async {
               switch result {
               case .success(let token):
-                  print("Access Token received via SceneDelegate: \(token.access_token.prefix(15))...")
+                  print("Access Token received via SceneDelegate: \(token.access_token)")
                   isUserLoggedIn = true
                   let homeVc = HomeViewController()
                   let searchVc = SearchViewController()

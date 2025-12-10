@@ -34,7 +34,7 @@ class TabBarManager: UITabBarController, UITabBarControllerDelegate {
         }
         
         self.viewControllers = controllers
-      self.selectedIndex = 0
+        self.selectedIndex = 0
     }
     
     required init?(coder: NSCoder) {
@@ -44,7 +44,7 @@ class TabBarManager: UITabBarController, UITabBarControllerDelegate {
     private func configureTabBarAppearance() {
         tabBar.tintColor = .systemBlue
         tabBar.unselectedItemTintColor = .gray
-        tabBar.backgroundColor = .white
+        tabBar.backgroundColor = Appcolor
         tabBar.isTranslucent = false
 
 
