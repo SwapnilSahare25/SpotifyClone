@@ -44,7 +44,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
            guard let window = self.window else { return }
 
-           UIView.transition(with: window,duration: 0.3,options: .transitionCrossDissolve,animations: {
+           UIView.transition(with: window,duration: 0.1,options: .transitionCrossDissolve,animations: {
                window.rootViewController = TabBarManager.shared}, completion: nil)
         
        }
@@ -71,7 +71,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                   let homeVc = HomeViewController()
                   let searchVc = SearchViewController()
                   let libraryVc = LibraryViewController()
-                  sceneDelegate.goToMainApp(vcs: [homeVc, searchVc, libraryVc], titles: ["Home","Search","Library"], images: ["house", "magnifyingglass", "music.note.list"])
+                  sceneDelegate.goToMainApp(vcs: [homeVc, searchVc, libraryVc], titles: ["Home","Search","Library"], images: ["Home", "Search", "Library"])
                   UIApplication.shared.topMostViewController()?.dismiss(animated: true, completion: nil)
 
 

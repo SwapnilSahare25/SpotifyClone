@@ -58,7 +58,6 @@ let PerPageItem: Int  = 20
 var AuthorizeUrl = "https://accounts.spotify.com/authorize"
 var Host = "https://api.spotify.com/v1"
 var scopes = "user-read-private user-read-email playlist-read-private"
-
 var spotifyClientID: String = "262b23b768d84dafb4129b71109f66e4"
 var spotifyClientSecret: String = "8b08ca74b389477cb40b8470b314234d"
 var redirectUrl: String = "myspotifyclone://callback"
@@ -93,3 +92,12 @@ var isUserLoggedIn:Bool{
         UserDefaults.standard.set(newValue, forKey: "isUserLoggedIn")
     }
 }
+
+var spotifyTokenExpiry: Date? {
+     get {
+         return UserDefaults.standard.object(forKey: "spotify_token_expiry") as? Date
+     }
+     set {
+         UserDefaults.standard.set(newValue, forKey: "spotify_token_expiry")
+     }
+ }

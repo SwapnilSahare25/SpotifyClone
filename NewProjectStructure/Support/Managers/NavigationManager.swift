@@ -57,7 +57,7 @@ class NavigationManager {
           viewController.dismiss(animated: animated, completion: completion)
       }
     
-    func createNavigationController(rootViewController: UIViewController,prefersLargeTitles: Bool = false,backgroundColor: UIColor = .white,tintColor: UIColor = .systemBlue,
+    func createNavigationController(rootViewController: UIViewController,prefersLargeTitles: Bool = false,backgroundColor: UIColor = .white,tintColor: UIColor = .white,
                                        titleColor: UIColor = .label,titleFont: UIFont = .boldSystemFont(ofSize: 18)) -> AHKNavigationController {
 
            let nav = AHKNavigationController(rootViewController: rootViewController)

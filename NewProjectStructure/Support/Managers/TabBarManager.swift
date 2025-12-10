@@ -26,10 +26,10 @@ class TabBarManager: UITabBarController, UITabBarControllerDelegate {
         
         for (index, vc) in vcs.enumerated() {
             let imageName = imageNames[index]
-            //let image = UIImage(named: imageName) ?? UIImage(systemName: "square")
+            let image = UIImage(named: imageName) ?? UIImage(systemName: "square")
             
             let nav = UINavigationController(rootViewController: vc)
-            nav.tabBarItem = UITabBarItem(title: titles[index], image: UIImage(systemName: imageName), tag: index)
+            nav.tabBarItem = UITabBarItem(title: titles[index], image: image, tag: index)
             controllers.append(nav)
         }
         
@@ -42,10 +42,33 @@ class TabBarManager: UITabBarController, UITabBarControllerDelegate {
     }
     
     private func configureTabBarAppearance() {
-        tabBar.tintColor = .systemBlue
+
+      let appearance = UITabBarAppearance()
+         appearance.configureWithOpaqueBackground()
+
+         // Unselected (Regular)
+         let normalAttributes: [NSAttributedString.Key: Any] = [
+             .foregroundColor: UIColor.gray,
+             .font: UIFont.systemFont(ofSize: 12, weight: .regular)
+         ]
+         appearance.stackedLayoutAppearance.normal.titleTextAttributes = normalAttributes
+
+         // Selected (Bold)
+         let selectedAttributes: [NSAttributedString.Key: Any] = [
+             .foregroundColor: WhiteBgColor,
+             .font: UIFont.systemFont(ofSize: 12, weight: .bold)
+         ]
+         appearance.stackedLayoutAppearance.selected.titleTextAttributes = selectedAttributes
+
+        tabBar.tintColor = WhiteBgColor
         tabBar.unselectedItemTintColor = .gray
         tabBar.backgroundColor = Appcolor
         tabBar.isTranslucent = false
+
+      tabBar.standardAppearance = appearance
+//      if #available(iOS 15.0, *) {
+//          tabBar.scrollEdgeAppearance = appearance
+//      }
 
 
     }

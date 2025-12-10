@@ -72,7 +72,8 @@ class UserAuthenticationService {
   func logout() {
     isUserLoggedIn = false
     KeychainService.shared.delete(key: "spotify_access_token")
-           KeychainService.shared.delete(key: "spotify_refresh_token")
+    KeychainService.shared.delete(key: "spotify_refresh_token")
+    spotifyTokenExpiry = nil
     let loginVc = LoginViewController()
     WindowManager.shared.setRootController(loginVc, animated: true)
   }
@@ -113,7 +114,7 @@ class UserAuthenticationService {
           if let refresh = token.refresh_token {
             KeychainService.shared.save(key: "spotify_refresh_token", value: refresh)
           }
-
+          spotifyTokenExpiry = Date().addingTimeInterval(TimeInterval(token.expires_in))
         case .failure(let error):
           print("Token Exchange FAILURE! Error: \(error.localizedDescription)")
         }
@@ -154,7 +155,7 @@ class UserAuthenticationService {
                      if let newRefresh = token.refresh_token {
                          KeychainService.shared.save(key: "spotify_refresh_token", value: newRefresh)
                      }
-
+                   spotifyTokenExpiry = Date().addingTimeInterval(TimeInterval(token.expires_in))
                      completion(true)
 
                  case .failure(let error):
@@ -164,24 +165,27 @@ class UserAuthenticationService {
              }
      }
 
-  // Automatically return valid access token
-   func getValidAccessToken(completion: @escaping (String?) -> Void) {
+  // MARK: - Auto Get Valid Token
+      func getValidAccessToken(completion: @escaping (String?) -> Void) {
 
-       if let token = KeychainService.shared.load(key: "spotify_access_token") {
-           completion(token)
-           return
-       }
+          // If token expired → refresh
+          if let expiry = spotifyTokenExpiry, expiry < Date() {
+              print("Access Token Expired → Refreshing…")
+              return refreshAccessToken { success in
+                  completion(success ? KeychainService.shared.load(key: "spotify_access_token") : nil)
+              }
+          }
 
-       // If expired or missing → refresh it
-       refreshAccessToken { success in
-           if success {
-               let newToken = KeychainService.shared.load(key: "spotify_access_token")
-               completion(newToken)
-           } else {
-               completion(nil)
-           }
-       }
-   }
+          // If access token exists and valid
+          if let token = KeychainService.shared.load(key: "spotify_access_token") {
+              return completion(token)
+          }
+
+          // If missing → try refresh
+          refreshAccessToken { success in
+              completion(success ? KeychainService.shared.load(key: "spotify_access_token") : nil)
+          }
+      }
 
   // Reusable Auth API call
   // - Parameters:

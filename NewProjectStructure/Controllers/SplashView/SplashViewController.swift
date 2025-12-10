@@ -44,7 +44,7 @@ class SplashViewController: UIViewController {
             sceneDelegate.goToMainApp(
               vcs: [homeVc, searchVc, libraryVc],
               titles: ["Home", "Search", "Library"],
-              images: ["house", "magnifyingglass", "music.note.list"]
+              images: ["Home", "Search", "Library"]
             )
           } else {
 

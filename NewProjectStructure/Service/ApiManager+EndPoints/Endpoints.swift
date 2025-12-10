@@ -8,16 +8,18 @@
 import Foundation
 
 struct Endpoints {
-    
-    static let login = "auth/login"
-    static let signUp = "auth/signup"
-    static let forgotPassword = "auth/forgot-password"
+
 
     static func deleteUser(id: String) -> String {
-        return "auth/delete/\(id)"
+        return "/auth/delete/\(id)"
     }
 
+  static func getCurrentUser() -> String {
+    return "/me"
+  }
+
+
     static func productOptions(lang: String, currency: String) -> String {
-        return "product/configurable-options?lang=\(lang)&currencyCode=\(currency)"
+        return "/product/configurable-options?lang=\(lang)&currencyCode=\(currency)"
     }
 }
