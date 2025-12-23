@@ -12,7 +12,7 @@ class APIManager {
     
     static let shared = APIManager()
     private init() {}
-    private let baseURL = "https://api.spotify.com/v1"
+    private let baseURL = "http://127.0.0.1:5001/"
     var currentToken: String?
 
   private func createAuthenticatedHeaders(with token: String? = nil) -> HTTPHeaders {
@@ -32,7 +32,8 @@ class APIManager {
 //    
     
     //Alamofire
-  func request<T: Codable>(endpoint: String,method: HTTPMethod = .get,parameters: Parameters? = nil,encoding: ParameterEncoding = JSONEncoding.default,completion: @escaping (Result<T, AFError>) -> Void) {
+  func request<T: Decodable>(endpoint: String,method: HTTPMethod = .get,parameters: Parameters? = nil,encoding: ParameterEncoding = JSONEncoding.default,onSuccess: @escaping (T) -> Void,
+                             onFailure: @escaping (String) -> Void) {
 
     let url = baseURL + endpoint
     UserAuthenticationService.shared.getValidAccessToken { accessToken in
@@ -57,10 +58,10 @@ class APIManager {
             switch response.result {
             case .success(let data):
               print(" Response: \(data)")
-              completion(.success(data))
+              onSuccess(data)
             case .failure(let error):
               print(" Error: \(error)")
-              completion(.failure(error))
+              onFailure(error.localizedDescription)
             }
           }
 

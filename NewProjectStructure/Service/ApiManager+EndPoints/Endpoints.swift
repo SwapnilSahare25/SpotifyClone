@@ -18,6 +18,18 @@ struct Endpoints {
     return "/me"
   }
 
+  static func home() -> String {
+    return "home"
+  }
+  static func getNewReleaseSongs(limit: Int = 10, offset: Int = 0) -> String {
+    return "/browse/new-releases?limit=\(limit)&offset=\(offset)"
+  }
+
+  static func getAllFeaturedPlayList(limit: Int = 10, offset: Int = 0) -> String {
+    return "/browse/featured-playlists?limit=\(limit)&offset=\(offset)"
+  }
+
+
 
     static func productOptions(lang: String, currency: String) -> String {
         return "/product/configurable-options?lang=\(lang)&currencyCode=\(currency)"

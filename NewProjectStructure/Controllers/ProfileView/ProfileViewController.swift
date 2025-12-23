@@ -17,16 +17,16 @@ class ProfileViewController: UIViewController {
     
 
   func callgetCurrentUserApi(){
-    let endPoint = Endpoints.getCurrentUser()
-
-    GetCurrentProfileService.shared.callGetCurrentUSerApi(endpoints: endPoint) { result in
-      switch result {
-      case .success( let user):
-        print(user.displayName ?? "","NAme")
-      case .failure(let error):
-        print("Failed to load profile:", error)
-      }
-    }
+//    let endPoint = Endpoints.getCurrentUser()
+//
+//    GetCurrentProfileService.shared.callGetCurrentUSerApi(endpoints: endPoint) { result in
+//      switch result {
+//      case .success( let user):
+//        print(user.displayName ?? "","NAme")
+//      case .failure(let error):
+//        print("Failed to load profile:", error)
+//      }
+//    }
   }
 
 }

@@ -8,20 +8,20 @@
 import Foundation
 import Alamofire
 
-
-class GetCurrentProfileService {
-  
-  static let shared = GetCurrentProfileService()
-  private init() {}
-
-
-  func callGetCurrentUSerApi(endpoints:String, completion: @escaping (Result<UserObject, AFError>) -> Void){
-
-    APIManager.shared.request(endpoint: endpoints) { (result: Result<UserObject, AFError>) in
-      completion(result)
-
-    }
-  }
-
-
-}
+//
+//class GetCurrentProfileService {
+//  
+//  static let shared = GetCurrentProfileService()
+//  private init() {}
+//
+//
+//  func callGetCurrentUSerApi(endpoints:String, completion: @escaping (Result<UserObject, AFError>) -> Void){
+//
+//    APIManager.shared.request(endpoint: endpoints) { (result: Result<UserObject, AFError>) in
+//      completion(result)
+//
+//    }
+//  }
+//
+//
+//}

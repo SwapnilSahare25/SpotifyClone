@@ -36,16 +36,8 @@ class SplashViewController: UIViewController {
 
         DispatchQueue.main.async {
           if let token = token {
+            sceneDelegate.goToMainApp()
 
-            let homeVc = HomeViewController()
-            let searchVc = SearchViewController()
-            let libraryVc = LibraryViewController()
-
-            sceneDelegate.goToMainApp(
-              vcs: [homeVc, searchVc, libraryVc],
-              titles: ["Home", "Search", "Library"],
-              images: ["Home", "Search", "Library"]
-            )
           } else {
 
             isUserLoggedIn = false
