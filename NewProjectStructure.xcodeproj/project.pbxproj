@@ -33,6 +33,7 @@
 		559613182EFBE7C9004ED2D4 /* NewReleaseCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559613172EFBE7C9004ED2D4 /* NewReleaseCollectionReusableView.swift */; };
 		5596131A2EFBE7F0004ED2D4 /* ShelfCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559613192EFBE7F0004ED2D4 /* ShelfCollectionReusableView.swift */; };
 		5596131C2EFC1CA1004ED2D4 /* EmptyHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5596131B2EFC1CA1004ED2D4 /* EmptyHeaderCollectionReusableView.swift */; };
+		5596131E2EFC356E004ED2D4 /* CustomGradientDecorationCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5596131D2EFC356E004ED2D4 /* CustomGradientDecorationCollectionReusableView.swift */; };
 		55B4E0112EFAA71500A5CC7A /* HomeObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B4E0102EFAA71500A5CC7A /* HomeObject.swift */; };
 		55CF4CA32ED6F5F300A77E05 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CF4CA22ED6F5F300A77E05 /* Constant.swift */; };
 		55CF4CA82ED6F65400A77E05 /* UIKit+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CF4CA72ED6F65400A77E05 /* UIKit+Extension.swift */; };
@@ -93,6 +94,7 @@
 		559613172EFBE7C9004ED2D4 /* NewReleaseCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReleaseCollectionReusableView.swift; sourceTree = "<group>"; };
 		559613192EFBE7F0004ED2D4 /* ShelfCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShelfCollectionReusableView.swift; sourceTree = "<group>"; };
 		5596131B2EFC1CA1004ED2D4 /* EmptyHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
+		5596131D2EFC356E004ED2D4 /* CustomGradientDecorationCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomGradientDecorationCollectionReusableView.swift; sourceTree = "<group>"; };
 		55B4E0102EFAA71500A5CC7A /* HomeObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeObject.swift; sourceTree = "<group>"; };
 		55CF4CA22ED6F5F300A77E05 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		55CF4CA72ED6F65400A77E05 /* UIKit+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIKit+Extension.swift"; sourceTree = "<group>"; };
@@ -222,6 +224,7 @@
 				559613172EFBE7C9004ED2D4 /* NewReleaseCollectionReusableView.swift */,
 				559613192EFBE7F0004ED2D4 /* ShelfCollectionReusableView.swift */,
 				5596131B2EFC1CA1004ED2D4 /* EmptyHeaderCollectionReusableView.swift */,
+				5596131D2EFC356E004ED2D4 /* CustomGradientDecorationCollectionReusableView.swift */,
 			);
 			path = Header;
 			sourceTree = "<group>";
@@ -585,6 +588,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5596131E2EFC356E004ED2D4 /* CustomGradientDecorationCollectionReusableView.swift in Sources */,
 				5596131A2EFBE7F0004ED2D4 /* ShelfCollectionReusableView.swift in Sources */,
 				55D70D982ED622F400780590 /* HomeViewController.swift in Sources */,
 				559019672ED9CFD6005F9E5E /* SpotifyTokenObject.swift in Sources */,

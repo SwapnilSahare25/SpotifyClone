@@ -18,15 +18,31 @@ class HomeGreetingCollectionViewCell: UICollectionViewCell,ReusableCell {
 
   override init(frame: CGRect) {
     super.init(frame: frame)
+    contentView.backgroundColor = .white.withAlphaComponent(0.1)
+    self.backgroundColor = .clear
+
     self.setUpUi()
 
   }
+  override func layoutSubviews() {
+          super.layoutSubviews()
+          // Crucial: Update the gradient frame to the box size
+          if let gradient = self.layer.sublayers?.first(where: { $0 is CAGradientLayer }) as? CAGradientLayer {
+              gradient.frame = self.bounds
+          }
+      }
 
   private func setUpUi(){
     self.containerView = UIFactory.makeContinerView(backgroundColor: ViewBGColor,cornerRadius: 5*DeviceMultiplier)
     self.contentView.addSubview(self.containerView)
     self.containerView.addConstraints(constraintsDict: [.Leading:0,.Trailing:0,.Top:0,.Bottom:0])
+    let boxColor = UIColor(red: 45/255, green: 45/255, blue: 45/255, alpha: 0.6)
+            let bottomColor = UIColor(red: 18/255, green: 18/255, blue: 18/255, alpha: 0.8)
 
+            self.setGradientBackground(
+                colors: [boxColor, bottomColor],
+                locations: [0.0, 1.0]
+            )
 
     self.imgView = UIFactory.makeImageView()
     self.containerView.addSubview(self.imgView)

@@ -77,16 +77,22 @@ extension UIView {
     }
     
     // MARK: - Gradient Background
-    func setGradientBackground(colors: [UIColor], startPoint: CGPoint = CGPoint(x: 0, y: 0),endPoint: CGPoint = CGPoint(x: 1, y: 1)) {
-        
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = colors.map { $0.cgColor }
-        gradientLayer.startPoint = startPoint
-        gradientLayer.endPoint = endPoint
-        gradientLayer.frame = self.bounds
-        self.layer.insertSublayer(gradientLayer, at: 0)
-    }
-    
+  func setGradientBackground(colors: [UIColor], locations: [NSNumber]) {
+          // Remove old gradients to prevent stacking/color muddiness
+    self.layer.sublayers?.filter({ $0 is CAGradientLayer }).forEach({ $0.removeFromSuperlayer() })
+
+            let gradientLayer = CAGradientLayer()
+            gradientLayer.colors = colors.map { $0.cgColor }
+            gradientLayer.locations = locations
+
+            // --- THIS IS THE KEY CHANGE ---
+            // Top-left to bottom-right diagonal creates that "glow" look
+            gradientLayer.startPoint = CGPoint(x: 0, y: 0)
+            gradientLayer.endPoint = CGPoint(x: 1, y: 1)
+
+            gradientLayer.frame = self.bounds
+            self.layer.insertSublayer(gradientLayer, at: 0)
+      }
     func fadeIn(duration: TimeInterval = 0.3) {
         self.alpha = 0
         self.isHidden = false
