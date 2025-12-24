@@ -56,11 +56,32 @@ let topBarHeight = statusBarFrame.size.height + (UINavigationController().naviga
 let PerPageItem: Int  = 20
 
 var AuthorizeUrl = "https://accounts.spotify.com/authorize"
-var Host = "https://api.spotify.com/v1"
+//var Host = "https://api.spotify.com/v1"
+var Host = "http://127.0.0.1:5001/"
 var scopes = "user-read-private user-read-email playlist-read-private"
 var spotifyClientID: String = "262b23b768d84dafb4129b71109f66e4"
 var spotifyClientSecret: String = "8b08ca74b389477cb40b8470b314234d"
 var redirectUrl: String = "myspotifyclone://callback"
+
+let deviceMargin = CGFloat.DeviceMargin
+extension CGFloat {
+    static var DeviceMargin: CGFloat {
+        let width = UIScreen.main.bounds.width
+        switch width {
+        case 0...375:
+            return 16 // iPhone SE, 8, Mini
+        case 376...450:
+            return 20 // All modern iPhones including Pro Max (430/440pt)
+        default:
+            return 24 // iPads or very large devices
+        }
+    }
+}
+extension CGFloat {
+    var scaled: CGFloat {
+        return self*DeviceMultiplier
+    }
+}
 
 
 var isAppLoad:Bool{
@@ -71,13 +92,6 @@ var isAppLoad:Bool{
     }
 }
 
-//var isEnglishLang:Bool{
-//    get{
-//        return UserDefaults.standard.bool(forKey: "isEnglishLang")
-//    }set{
-//        UserDefaults.standard.set(newValue, forKey: "isEnglishLang")
-//    }
-//}
 var IsIntroHasSeen:Bool{
     get{
         return UserDefaults.standard.bool(forKey: "IsIntroHasSeen")

@@ -85,3 +85,21 @@ struct Item: Codable {
     case subtitle, title, type, artist, name
   }
 }
+enum HomeSectionType {
+  case quickAccess([GridItem])
+  case newRelease(NewRelease)
+  case horizontalShelf(Section)
+  case circularArtistShelf(Section)
+  case none
+}
+
+
+struct HomeSectionsArray {
+  var sectionHeaderTitleStr: String = ""
+  var sectionHeaderIcon: String = ""
+  var sectionHeaderSubtitle:String = ""
+  var isRequiredIconAndSubtitle: Bool = false
+  var isRequiredHeader: Bool = true
+  var homeSectionType: HomeSectionType = .none
+  var headerHeight: CGFloat = 0
+}

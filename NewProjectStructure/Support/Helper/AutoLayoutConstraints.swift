@@ -24,63 +24,63 @@ extension UIView {
     
     // MARK: - Multi Constraint Helper
     func addConstraints(constraintsDict: [ConstraintType: CGFloat],to view: UIView? = nil,
-                        relativeTo relativeView: UIView? = nil,multiplyWithDevice: Bool = false) {
-        
+                        relativeTo relativeView: UIView? = nil) {
+
         guard let superview = self.superview ?? view else {
             print("ERROR: You must add \(self) to a superview before applying constraints.")
             return
         }
         
         for (type, value) in constraintsDict {
-            let constant = multiplyWithDevice ? value * DeviceMultiplier : value
-            
+            //let constant = multiplyWithDevice ? value * DeviceMultiplier : value
+
             switch type {
                 
                 // Standard anchors to superview
             case .Leading:
-                self.leading(constant: constant)
+                self.leading(constant: value)
             case .Trailing:
-                self.trailing(constant: constant)
+                self.trailing(constant: value)
             case .Top:
-                self.top(constant: constant)
+                self.top(constant: value)
             case .Bottom:
-                self.bottom(constant: constant)
+                self.bottom(constant: value)
             case .FixHeight:
-                self.setHeight(constant)
+                self.setHeight(value.scaled)
             case .FixWidth:
-                self.setWidth(constant)
+                self.setWidth(value.scaled)
             case .CenterX:
-                self.centerX(constant: constant)
+                self.centerX(constant: value)
             case .CenterY:
-                self.centerY(constant: constant)
-                
+                self.centerY(constant: value)
+
                 // Relative to another view
             case .BelowTo:
                 if let rel = relativeView {
-                    self.belowTo(view: rel, constant: constant)
+                    self.belowTo(view: rel, constant: value)
                 }
             case .AboveTo:
                 if let rel = relativeView {
-                    self.aboveTo(view: rel, constant: constant)
+                    self.aboveTo(view: rel, constant: value)
                 }
             case .LeftTo:
                 if let rel = relativeView {
-                    self.leftTo(view: rel, constant: constant)
+                    self.leftTo(view: rel, constant: value)
                 }
             case .RightTo:
                 if let rel = relativeView {
-                    self.rightTo(view: rel, constant: constant)
+                    self.rightTo(view: rel, constant: value)
                 }
                 
                 // Min/Max Height / Width
             case .HeightLessThanOrEqual:
-                heightLessThanEqual(constant)
+                heightLessThanEqual(value.scaled)
             case .WidthLessThanOrEqual:
-                widthLessThanEqual(constant)
+                widthLessThanEqual(value.scaled)
             case .HeightGreaterThanOrEqual:
-                heightGreaterThanEqual(constant)
+                heightGreaterThanEqual(value.scaled)
             case .WidthGreaterThanOrEqual:
-                widthGreaterThanEqual(constant)
+                widthGreaterThanEqual(value.scaled)
             }
         }
     }
@@ -204,46 +204,48 @@ extension UIView {
     }
     
     // MARK: - Size
-    func setWidth(_ width: CGFloat) {
-        let widthConstraint = NSLayoutConstraint(item: self, attribute: NSLayoutConstraint.Attribute.width, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: width)
-        self.superview!.addConstraint(widthConstraint)
-    }
-    
-    func setHeight(_ height: CGFloat) {
-        let heightConstraint = NSLayoutConstraint(item: self, attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: height)
-        self.superview!.addConstraint(heightConstraint)
-    }
-    
-    func heightLessThanEqual(_ height: CGFloat) {
-        translatesAutoresizingMaskIntoConstraints = false
-        heightAnchor.constraint(lessThanOrEqualToConstant: height).isActive = true
-    }
-    
-    func widthLessThanEqual(_ width: CGFloat) {
-        translatesAutoresizingMaskIntoConstraints = false
-        widthAnchor.constraint(lessThanOrEqualToConstant: width).isActive = true
-    }
-    
-    func heightGreaterThanEqual(_ height: CGFloat) {
-        translatesAutoresizingMaskIntoConstraints = false
-        heightAnchor.constraint(greaterThanOrEqualToConstant: height).isActive = true
-    }
-    
-    func widthGreaterThanEqual(_ width: CGFloat) {
-        translatesAutoresizingMaskIntoConstraints = false
-        widthAnchor.constraint(greaterThanOrEqualToConstant: width).isActive = true
-    }
-    
-    // MARK: - Equal To Another View
-    func equalHeight(to view: UIView) {
-        translatesAutoresizingMaskIntoConstraints = false
-        heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
-    }
-    
-    func equalWidth(to view: UIView) {
-        translatesAutoresizingMaskIntoConstraints = false
-        widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-    }
+  // MARK: - Size
+  func setWidth(_ width: CGFloat) {
+      translatesAutoresizingMaskIntoConstraints = false
+      widthAnchor.constraint(equalToConstant: width).isActive = true
+  }
+
+  func setHeight(_ height: CGFloat) {
+      translatesAutoresizingMaskIntoConstraints = false
+      heightAnchor.constraint(equalToConstant: height).isActive = true
+  }
+
+  func heightLessThanEqual(_ height: CGFloat) {
+      translatesAutoresizingMaskIntoConstraints = false
+      heightAnchor.constraint(lessThanOrEqualToConstant: height).isActive = true
+  }
+
+  func widthLessThanEqual(_ width: CGFloat) {
+      translatesAutoresizingMaskIntoConstraints = false
+      widthAnchor.constraint(lessThanOrEqualToConstant: width).isActive = true
+  }
+
+  func heightGreaterThanEqual(_ height: CGFloat) {
+      translatesAutoresizingMaskIntoConstraints = false
+      heightAnchor.constraint(greaterThanOrEqualToConstant: height).isActive = true
+  }
+
+  func widthGreaterThanEqual(_ width: CGFloat) {
+      translatesAutoresizingMaskIntoConstraints = false
+      widthAnchor.constraint(greaterThanOrEqualToConstant: width).isActive = true
+  }
+
+  // MARK: - Equal To Another View (NO SCALING)
+  func equalHeight(to view: UIView) {
+      translatesAutoresizingMaskIntoConstraints = false
+      heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+  }
+
+  func equalWidth(to view: UIView) {
+      translatesAutoresizingMaskIntoConstraints = false
+      widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+  }
+
     
     // MARK: - Fill Superview
     //    func fillSuperview(padding: CGFloat = 0, multiplyWithDevice: Bool = false) {

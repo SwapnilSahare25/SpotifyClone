@@ -8,16 +8,22 @@
 import UIKit
 
 class SplashViewController: UIViewController {
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.view.backgroundColor = Appcolor
-        let imgView = UIFactory.makeImageView(imageName: "splashIcon")
-        self.view.addSubview(imgView)
-        imgView.addConstraints(constraintsDict: [.FixHeight:200,.FixWidth:200,.CenterX:0,.CenterY:0],multiplyWithDevice: true)
-        self.goToMainAfterDelay()
-        
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    self.view.backgroundColor = Appcolor
+    let imgView = UIFactory.makeImageView(imageName: "splashIcon")
+    self.view.addSubview(imgView)
+    imgView.alpha = 0
+    imgView.addConstraints(constraintsDict: [.FixHeight:250,.FixWidth:250,.CenterX:0,.CenterY:0])
+    //self.goToMainAfterDelay()
+    UIView.animate(withDuration: 0.5) {
+      imgView.alpha = 1
     }
+    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+      self.goToMainAfterDelay()
+    }
+  }
     
     private func goToMainAfterDelay() {
 

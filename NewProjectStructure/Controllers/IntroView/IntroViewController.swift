@@ -31,7 +31,7 @@ class IntroViewController: UIViewController, UIScrollViewDelegate {
     func setUpMainView(){
       self.scrollView = UIFactory.makeScrollView(isPagingEnabled: true,showsHorizontalScrollIndicator: false)
       self.view.addSubview(self.scrollView)
-      self.scrollView.addConstraints(constraintsDict: [.Leading:0,.Trailing:0,.Top:50,.Bottom:150],multiplyWithDevice: true)
+      self.scrollView.addConstraints(constraintsDict: [.Leading:0,.Trailing:0,.Top:50,.Bottom:150])
       self.scrollView.delegate = self
       self.scrollView.backgroundColor = .clear
       self.scrollView.alwaysBounceVertical = false
@@ -46,13 +46,13 @@ class IntroViewController: UIViewController, UIScrollViewDelegate {
 
         let imageView = UIFactory.makeImageView(imageName: object.Image)
         mainContaier.addSubview(imageView)
-        imageView.addConstraints(constraintsDict: [.FixHeight:250,.FixWidth:250,.CenterY:0,.CenterX:0],relativeTo: mainContaier,multiplyWithDevice: true)
+        imageView.addConstraints(constraintsDict: [.FixHeight:250,.FixWidth:250,.CenterY:0,.CenterX:0],relativeTo: mainContaier)
         imageView.backgroundColor = .clear
 
         let titleLbl = UIFactory.makeLabel(text: object.title,textColor: WhiteTextColor,font: UIFont(name: fontNameSemiBold, size: BigTitleFontsize) ?? .boldSystemFont(ofSize: 12),alignment: .center)
         mainContaier.addSubview(titleLbl)
-        titleLbl.addConstraints(constraintsDict: [.Leading:50,.Trailing:50,.HeightLessThanOrEqual:120],multiplyWithDevice: true)
-        titleLbl.addConstraints(constraintsDict: [.BelowTo:15],relativeTo: imageView,multiplyWithDevice: true)
+        titleLbl.addConstraints(constraintsDict: [.Leading:50,.Trailing:50,.HeightLessThanOrEqual:120])
+        titleLbl.addConstraints(constraintsDict: [.BelowTo:15],relativeTo: imageView)
         titleLbl.backgroundColor = .clear
 
 
@@ -62,13 +62,13 @@ class IntroViewController: UIViewController, UIScrollViewDelegate {
 
       let btnView = UIFactory.makeContinerView(backgroundColor: .clear)
       self.view.addSubview(btnView)
-      btnView.addConstraints(constraintsDict: [.Leading:15,.Trailing:15,.FixHeight:50],multiplyWithDevice: true)
-      btnView.addConstraints(constraintsDict: [.BelowTo:5],relativeTo: self.scrollView,multiplyWithDevice: true)
+      btnView.addConstraints(constraintsDict: [.Leading:15,.Trailing:15,.FixHeight:50])
+      btnView.addConstraints(constraintsDict: [.BelowTo:5],relativeTo: self.scrollView)
 
 
       let pageControlView = UIFactory.makeContinerView(backgroundColor: .clear)
       btnView.addSubview(pageControlView)
-      pageControlView.addConstraints(constraintsDict: [.FixWidth:100,.FixHeight:20,.CenterX:0,.CenterY:0],multiplyWithDevice: true)
+      pageControlView.addConstraints(constraintsDict: [.FixWidth:100,.FixHeight:20,.CenterX:0,.CenterY:0])
 
       self.pageControl = CHIPageControlAji(frame: CGRect(x: 0, y: 0, width: 100*DeviceMultiplier, height: 20*DeviceMultiplier))
       pageControlView.addSubview(self.pageControl)
@@ -81,21 +81,21 @@ class IntroViewController: UIViewController, UIScrollViewDelegate {
 
       self.leftBtn = UIFactory.makeButton(backgroundColor: .clear,image: "introleftArrow")
       btnView.addSubview(self.leftBtn)
-      self.leftBtn.addConstraints(constraintsDict: [.FixWidth:50,.FixHeight:50,.Leading:0,.CenterY:0],multiplyWithDevice: true)
+      self.leftBtn.addConstraints(constraintsDict: [.FixWidth:50,.FixHeight:50,.Leading:0,.CenterY:0])
       self.leftBtn.tag = 100
       self.leftBtn.addTarget(self, action: #selector(btnClicked), for: .touchUpInside)
       self.leftBtn.isHidden = true
 
       self.rightBtn = UIFactory.makeButton(backgroundColor: .clear,image: "introRightArrow")
       btnView.addSubview(self.rightBtn)
-      self.rightBtn.addConstraints(constraintsDict: [.FixWidth:50,.FixHeight:50,.Trailing:0,.CenterY:0],multiplyWithDevice: true)
+      self.rightBtn.addConstraints(constraintsDict: [.FixWidth:50,.FixHeight:50,.Trailing:0,.CenterY:0])
       self.rightBtn.tag = 101
       self.rightBtn.addTarget(self, action: #selector(btnClicked), for: .touchUpInside)
       self.rightBtn.isHidden = false
 
       self.getStartedBtn = UIFactory.makeButton(title: "Get Started",titleColor: PrimaryTextColor,font: UIFont(name: fontNameBtn, size: DetailTabFontSize) ?? .boldSystemFont(ofSize: 12),backgroundColor: BtnBGColor,cornerRadius: 15*DeviceMultiplier)
       btnView.addSubview(self.getStartedBtn)
-      self.getStartedBtn.addConstraints(constraintsDict: [.FixWidth:80,.FixHeight:30,.Trailing:0,.CenterY:0],multiplyWithDevice: true)
+      self.getStartedBtn.addConstraints(constraintsDict: [.FixWidth:80,.FixHeight:30,.Trailing:0,.CenterY:0])
       self.getStartedBtn.tag = 102
       self.getStartedBtn.addTarget(self, action: #selector(btnClicked), for: .touchUpInside)
       self.getStartedBtn.isHidden = true
