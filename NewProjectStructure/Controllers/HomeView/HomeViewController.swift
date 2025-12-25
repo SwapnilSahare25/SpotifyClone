@@ -262,6 +262,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
 
       let sectionHeader2 = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: NewReleaseCollectionReusableView.identifier, for: indexPath) as! NewReleaseCollectionReusableView
       sectionHeader2.backgroundColor = CellBgColor
+      sectionHeader2.subtitleLbl.text = "NEW RELEASE FROM"
       sectionHeader2.setLeading(deviceMargin)
       sectionHeader2.configure(obj: newRelease)
 
