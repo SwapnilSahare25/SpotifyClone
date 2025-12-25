@@ -51,7 +51,9 @@ var statusBarFrame:CGRect{
         return mainWindow.windowScene?.statusBarManager?.statusBarFrame ?? CGRect.zero
     }
 }
-let topBarHeight = statusBarFrame.size.height + (UINavigationController().navigationBar.frame.height)
+let navBarHeight = UINavigationController().navigationBar.frame.height
+let statusBarHeight = statusBarFrame.size.height
+let topBarHeight = statusBarHeight + (navBarHeight)
 
 let PerPageItem: Int  = 20
 

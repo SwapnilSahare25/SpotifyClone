@@ -95,4 +95,4 @@ var BorderColor = UIColor(red: 220.0/255.0, green: 220.0/255.0, blue: 220.0/255.
 var BorderColorNew = UIColor(red: 67.0/255.0, green: 58.0/255.0, blue: 59.0/255.0, alpha: 1.0)
 var BtnBGColor = UIColor(red: 2/255.0, green: 217/255.0, blue: 88/255.0, alpha: 1.0)
 var ViewBGColor = UIColor(red: 68/255.0, green: 68/255.0, blue: 68/255.0, alpha: 1.0)
-
+var CellBgColor = UIColor(red: 18/255, green: 18/255, blue: 18/255, alpha: 1.0)

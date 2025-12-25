@@ -65,7 +65,7 @@ struct Content: Codable {
 struct Section: Codable {
   let id: String?
   let items: [Item]?
-  let title, type: String?
+  let title, image,type: String?
 }
 
 // MARK: - Item
