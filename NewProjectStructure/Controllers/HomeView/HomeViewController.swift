@@ -10,9 +10,9 @@ import UIKit
 class HomeViewController: UIViewController {
 
 
-  var collectionView:UICollectionView!
+  private var collectionView:UICollectionView!
 
-  var homeSectionArray:[HomeSectionsArray] = []
+  private var homeSectionArray:[HomeSectionsArray] = []
 
 
   override func viewDidLoad() {
@@ -36,7 +36,7 @@ class HomeViewController: UIViewController {
       collectionView.scrollIndicatorInsets = collectionView.contentInset
   }
 
-  func generateHomeSectionArray(object:HomeObject){
+ private func generateHomeSectionArray(object:HomeObject){
     var sectionArray: [HomeSectionsArray] = []
 
     var section1 = HomeSectionsArray()
@@ -95,7 +95,7 @@ class HomeViewController: UIViewController {
   }
 
 
-  func setUpMainView(){
+ private func setUpMainView(){
     let layout = self.createCompositionalLayout()
     layout.register(CustomGradientDecorationCollectionReusableView.self, forDecorationViewOfKind: CustomGradientDecorationCollectionReusableView.identifier)
     layout.register(SectionBgViewCollectionReusableView.self, forDecorationViewOfKind: SectionBgViewCollectionReusableView.identifier)
@@ -123,7 +123,7 @@ class HomeViewController: UIViewController {
   }
 
 
-  func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
+ private func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
     return UICollectionViewCompositionalLayout {[weak self] sectionIndex, environment -> NSCollectionLayoutSection? in
       guard let self = self else {return nil}
       guard sectionIndex < self.homeSectionArray.count else { return nil }
@@ -149,7 +149,7 @@ class HomeViewController: UIViewController {
 
 
 
-  func callHomeApi() {
+ private func callHomeApi() {
     let endPoint = Endpoints.home()
 
     APIManager.shared.request(endpoint: endPoint) { [weak self] (object: HomeObject) in
@@ -170,7 +170,7 @@ class HomeViewController: UIViewController {
   }
 
 
-  func setNavbarRightBtn() {
+ private func setNavbarRightBtn() {
     let profileImage = UIImage(named: "Setting")?.withRenderingMode(.alwaysTemplate)
     let profile = UIBarButtonItem(image:profileImage, style: .plain, target: self, action: #selector(buttonTapped))
     profile.tintColor = .white
@@ -307,7 +307,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
 }
 extension HomeViewController {
 
-  func createQuickAccessSection() -> NSCollectionLayoutSection {
+  private func createQuickAccessSection() -> NSCollectionLayoutSection {
     // Define the Item: Half the width of the group
     let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),heightDimension: .absolute(55))
 
@@ -344,8 +344,8 @@ extension HomeViewController {
 
 
   //
-    func createNewReleaseSection() -> NSCollectionLayoutSection {
-      
+  private func createNewReleaseSection() -> NSCollectionLayoutSection {
+
       let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
       let item = NSCollectionLayoutItem(layoutSize: itemSize)
      // item.contentInsets = NSDirectionalEdgeInsets(top: 0,leading: deviceMargin-5,bottom: 0,trailing: deviceMargin-5)
@@ -365,7 +365,7 @@ extension HomeViewController {
       return section
     }
   
-    func createHorizontalShelfSection(isBlue: Bool,isMoreLike: Bool) -> NSCollectionLayoutSection {
+  private func createHorizontalShelfSection(isBlue: Bool,isMoreLike: Bool) -> NSCollectionLayoutSection {
       let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
       let item = NSCollectionLayoutItem(layoutSize: itemSize)
       item.contentInsets = NSDirectionalEdgeInsets(top: 0,leading: 0,bottom: 0,trailing: 0)
@@ -395,7 +395,7 @@ extension HomeViewController {
       return section
     }
   
-    func createCircularArtistShelfSection() -> NSCollectionLayoutSection {
+  private func createCircularArtistShelfSection() -> NSCollectionLayoutSection {
       let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
       let item = NSCollectionLayoutItem(layoutSize: itemSize)
       item.contentInsets = NSDirectionalEdgeInsets(top: 0,leading: 0,bottom: 0,trailing: 0)

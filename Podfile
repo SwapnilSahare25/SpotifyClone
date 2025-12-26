@@ -11,7 +11,9 @@ target 'NewProjectStructure' do
 	pod 'Alamofire'
 	pod 'IQKeyboardManagerSwift'
   pod 'CHIPageControl'
-  pod 'SOTabBar'
+  #pod 'SOTabBar'
+  pod "SHSearchBar"
+  pod 'MaterialComponents/AppBar'
 
   # Pods for NewProjectStructure
 

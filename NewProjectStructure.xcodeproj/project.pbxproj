@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5509C8C12EFE751100DD5663 /* SearchObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5509C8C02EFE751100DD5663 /* SearchObject.swift */; };
+		5509C8C42EFE8A7300DD5663 /* SearchHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5509C8C32EFE8A7300DD5663 /* SearchHeaderCollectionReusableView.swift */; };
+		5509C8C72EFE8AE800DD5663 /* SearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5509C8C62EFE8AE800DD5663 /* SearchCollectionViewCell.swift */; };
+		5509C8C92EFEBFD400DD5663 /* ActiveSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5509C8C82EFEBFD400DD5663 /* ActiveSearchViewController.swift */; };
+		5509C8CB2EFEC45700DD5663 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5509C8CA2EFEC45700DD5663 /* UIViewController+Extension.swift */; };
 		551F72CF2ED861CE00B44A14 /* ReusabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551F72CE2ED861CE00B44A14 /* ReusabelCell.swift */; };
 		551F72D32ED86DF500B44A14 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551F72D22ED86DF500B44A14 /* SearchViewController.swift */; };
 		551F72D52ED86E1000B44A14 /* LibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551F72D42ED86E1000B44A14 /* LibraryViewController.swift */; };
@@ -69,6 +74,11 @@
 
 /* Begin PBXFileReference section */
 		2ECAF427F4844D641E297B31 /* Pods-NewProjectStructure.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewProjectStructure.debug.xcconfig"; path = "Target Support Files/Pods-NewProjectStructure/Pods-NewProjectStructure.debug.xcconfig"; sourceTree = "<group>"; };
+		5509C8C02EFE751100DD5663 /* SearchObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchObject.swift; sourceTree = "<group>"; };
+		5509C8C32EFE8A7300DD5663 /* SearchHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
+		5509C8C62EFE8AE800DD5663 /* SearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewCell.swift; sourceTree = "<group>"; };
+		5509C8C82EFEBFD400DD5663 /* ActiveSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveSearchViewController.swift; sourceTree = "<group>"; };
+		5509C8CA2EFEC45700DD5663 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		551F72CE2ED861CE00B44A14 /* ReusabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusabelCell.swift; sourceTree = "<group>"; };
 		551F72D22ED86DF500B44A14 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		551F72D42ED86E1000B44A14 /* LibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewController.swift; sourceTree = "<group>"; };
@@ -152,6 +162,27 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		5509C8C22EFE8A5300DD5663 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				559613152EFBE7B6004ED2D4 /* GreetingHeaderCollectionReusableView.swift */,
+				559613172EFBE7C9004ED2D4 /* NewReleaseCollectionReusableView.swift */,
+				559613192EFBE7F0004ED2D4 /* ShelfCollectionReusableView.swift */,
+				5596131B2EFC1CA1004ED2D4 /* EmptyHeaderCollectionReusableView.swift */,
+				5596131D2EFC356E004ED2D4 /* CustomGradientDecorationCollectionReusableView.swift */,
+				559C5BE72EFD242300204C16 /* SectionBgViewCollectionReusableView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		5509C8C52EFE8AAA00DD5663 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				5509C8C62EFE8AE800DD5663 /* SearchCollectionViewCell.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
 		551F72CD2ED861B300B44A14 /* ReusableCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -164,6 +195,7 @@
 			isa = PBXGroup;
 			children = (
 				551F72D22ED86DF500B44A14 /* SearchViewController.swift */,
+				5509C8C82EFEBFD400DD5663 /* ActiveSearchViewController.swift */,
 			);
 			path = SearchView;
 			sourceTree = "<group>";
@@ -222,12 +254,8 @@
 		559613142EFBE78A004ED2D4 /* Header */ = {
 			isa = PBXGroup;
 			children = (
-				559613152EFBE7B6004ED2D4 /* GreetingHeaderCollectionReusableView.swift */,
-				559613172EFBE7C9004ED2D4 /* NewReleaseCollectionReusableView.swift */,
-				559613192EFBE7F0004ED2D4 /* ShelfCollectionReusableView.swift */,
-				5596131B2EFC1CA1004ED2D4 /* EmptyHeaderCollectionReusableView.swift */,
-				5596131D2EFC356E004ED2D4 /* CustomGradientDecorationCollectionReusableView.swift */,
-				559C5BE72EFD242300204C16 /* SectionBgViewCollectionReusableView.swift */,
+				5509C8C22EFE8A5300DD5663 /* Home */,
+				5509C8C32EFE8A7300DD5663 /* SearchHeaderCollectionReusableView.swift */,
 			);
 			path = Header;
 			sourceTree = "<group>";
@@ -271,6 +299,7 @@
 			children = (
 				55CF4CA72ED6F65400A77E05 /* UIKit+Extension.swift */,
 				55CF4CAB2ED6F68200A77E05 /* String+Extension.swift */,
+				5509C8CA2EFEC45700DD5663 /* UIViewController+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -282,6 +311,7 @@
 				559019662ED9CFD6005F9E5E /* SpotifyTokenObject.swift */,
 				558C09B42EEACEF8003D4310 /* NewRelaseObject.swift */,
 				55B4E0102EFAA71500A5CC7A /* HomeObject.swift */,
+				5509C8C02EFE751100DD5663 /* SearchObject.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -359,6 +389,7 @@
 		55CF4CCB2ED727CC00A77E05 /* CollectionViewCells */ = {
 			isa = PBXGroup;
 			children = (
+				5509C8C52EFE8AAA00DD5663 /* Search */,
 				5596130B2EFBBD2F004ED2D4 /* Home */,
 				55CF4CCE2ED7281700A77E05 /* SampleCollectionViewCell.swift */,
 			);
@@ -603,6 +634,7 @@
 				55D70DAF2ED629CE00780590 /* ConfigFile.swift in Sources */,
 				55D70D962ED622F400780590 /* SceneDelegate.swift in Sources */,
 				559613112EFBBDF9004ED2D4 /* HomeSectionShelfCollectionViewCell.swift in Sources */,
+				5509C8C42EFE8A7300DD5663 /* SearchHeaderCollectionReusableView.swift in Sources */,
 				55CF4CCD2ED7280200A77E05 /* SampleTableViewCell.swift in Sources */,
 				559C5BE82EFD242300204C16 /* SectionBgViewCollectionReusableView.swift in Sources */,
 				55CF4CAE2ED6F69F00A77E05 /* UserDefaultManager.swift in Sources */,
@@ -611,6 +643,7 @@
 				559019652ED9C42E005F9E5E /* LoginViewController.swift in Sources */,
 				55CF4CBE2ED6F78C00A77E05 /* Endpoints.swift in Sources */,
 				55CF4CCF2ED7281700A77E05 /* SampleCollectionViewCell.swift in Sources */,
+				5509C8CB2EFEC45700DD5663 /* UIViewController+Extension.swift in Sources */,
 				55CF4CA82ED6F65400A77E05 /* UIKit+Extension.swift in Sources */,
 				5596130F2EFBBDDE004ED2D4 /* NewReleaseCollectionViewCell.swift in Sources */,
 				551F72D82ED8811D00B44A14 /* IntroViewController.swift in Sources */,
@@ -623,6 +656,7 @@
 				55CF4CB22ED6F6D500A77E05 /* Utility.swift in Sources */,
 				55CF4CB42ED6F6EF00A77E05 /* ThirdPartyManager.swift in Sources */,
 				55CF4CD22ED7286E00A77E05 /* EmptyStateView.swift in Sources */,
+				5509C8C72EFE8AE800DD5663 /* SearchCollectionViewCell.swift in Sources */,
 				55CF4CC52ED6F81C00A77E05 /* UIFactory.swift in Sources */,
 				55CF4CC02ED6F79F00A77E05 /* UserAuthenticationService.swift in Sources */,
 				55CF4CD82ED765D000A77E05 /* Strings.swift in Sources */,
@@ -635,6 +669,8 @@
 				551F72CF2ED861CE00B44A14 /* ReusabelCell.swift in Sources */,
 				55CF4CB92ED6F74800A77E05 /* UserObject.swift in Sources */,
 				55CF4CD62ED75AEC00A77E05 /* DeviceHelper.swift in Sources */,
+				5509C8C92EFEBFD400DD5663 /* ActiveSearchViewController.swift in Sources */,
+				5509C8C12EFE751100DD5663 /* SearchObject.swift in Sources */,
 				55D70DAD2ED629BD00780590 /* SplashViewController.swift in Sources */,
 				559613162EFBE7B6004ED2D4 /* GreetingHeaderCollectionReusableView.swift in Sources */,
 			);

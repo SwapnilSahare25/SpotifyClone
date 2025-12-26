@@ -242,3 +242,21 @@ extension UITableView{
     }
     
 }
+extension UIColor {
+    convenience init?(hex: String) {
+        var hexString = hex.trimmingCharacters(in: .whitespacesAndNewlines)
+        if hexString.hasPrefix("#") { hexString.removeFirst() }
+        guard hexString.count == 6 else { return nil }
+
+        let scanner = Scanner(string: hexString)
+        var hexNumber: UInt64 = 0
+        if scanner.scanHexInt64(&hexNumber) {
+            let r = CGFloat((hexNumber & 0xFF0000) >> 16) / 255
+            let g = CGFloat((hexNumber & 0x00FF00) >> 8) / 255
+            let b = CGFloat(hexNumber & 0x0000FF) / 255
+            self.init(red: r, green: g, blue: b, alpha: 1)
+            return
+        }
+        return nil
+    }
+}

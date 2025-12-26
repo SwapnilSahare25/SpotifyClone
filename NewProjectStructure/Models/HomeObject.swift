@@ -78,11 +78,12 @@ struct Item: Codable {
   let subtitle, title: String?
   let type: String?
   let artist, name: String?
+  let color: String?
 
   enum CodingKeys: String, CodingKey {
     case description, id, image, owner
     case songCount = "song_count"
-    case subtitle, title, type, artist, name
+    case subtitle, title, type, artist, name, color
   }
 }
 enum HomeSectionType {
