@@ -29,7 +29,7 @@ class SearchHeaderCollectionReusableView: UICollectionReusableView,ReusableCell 
     titleLbl.addConstraints(constraintsDict: [.Leading:deviceMargin,.Trailing:50,.FixHeight:25,.Top:17])
     titleLbl.backgroundColor = .clear
   }
-  func configure(obj: Section){
+  func configure(obj: SectionObject){
     self.titleLbl.text = obj.title ?? ""
   }
 

@@ -11,6 +11,27 @@ import SHSearchBar
 
 extension UIViewController {
 
+  func setupBackButton(image: String="leftArrow",action: Selector? = nil) {
+
+    let button = UIFactory.makeButton()
+      button.setImage(UIImage(named: image), for: .normal)
+      button.frame = CGRect(x: 0, y: 0, width: 30*DeviceMultiplier, height: 30*DeviceMultiplier)
+      button.layer.cornerRadius = 5*DeviceMultiplier
+
+      if let action = action {
+          button.addTarget(self, action: action, for: .touchUpInside)
+      } else {
+          button.addTarget(self, action: #selector(defaultBackAction), for: .touchUpInside)
+      }
+
+      let barButton = UIBarButtonItem(customView: button)
+      navigationItem.leftBarButtonItem = barButton
+  }
+
+  @objc private func defaultBackAction() {
+      navigationController?.popViewController(animated: true)
+  }
+
   
 //    func setupMaterialSearchAppBar(
 //        largeTitle: Bool,

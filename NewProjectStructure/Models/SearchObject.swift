@@ -10,15 +10,15 @@ import Foundation
 
 struct SearchObject: Codable {
 
-  let sections: [Section]?
+  let sections: [SectionObject]?
   let title, type: String?
 
 
 }
 
 enum SearchType {
-  case topGenres(Section)
-  case browseAll(Section)
+  case topGenres(SectionObject)
+  case browseAll(SectionObject)
   case none
 }
 

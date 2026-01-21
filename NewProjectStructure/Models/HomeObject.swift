@@ -12,7 +12,7 @@ struct HomeObject: Codable {
 
   let gridItems: [GridItem]?
   let newRelease: NewRelease?
-  let sections: [Section]?
+  let sections: [SectionObject]?
 
   enum CodingKeys: String, CodingKey {
     case gridItems = "grid_items"
@@ -62,10 +62,14 @@ struct Content: Codable {
   let type: String?
 }
 // MARK: - Section
-struct Section: Codable {
+struct SectionObject: Codable {
   let id: String?
   let items: [Item]?
   let title, image,type: String?
+
+  enum CodingKeys:String, CodingKey {
+    case id, items, title, image, type
+  }
 }
 
 // MARK: - Item
@@ -89,8 +93,8 @@ struct Item: Codable {
 enum HomeSectionType {
   case quickAccess([GridItem])
   case newRelease(NewRelease)
-  case horizontalShelf(Section)
-  case circularArtistShelf(Section)
+  case horizontalShelf(SectionObject)
+  case circularArtistShelf(SectionObject)
   case none
 }
 

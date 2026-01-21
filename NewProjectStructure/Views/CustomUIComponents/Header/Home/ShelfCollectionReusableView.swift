@@ -26,7 +26,7 @@ class ShelfCollectionReusableView: UICollectionReusableView, ReusableCell {
     titleLbl.backgroundColor = .clear
   }
 
-   func configure(obj: Section){
+   func configure(obj: SectionObject){
     self.titleLbl.text = obj.title ?? ""
   }
 
