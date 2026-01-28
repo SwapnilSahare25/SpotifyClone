@@ -17,6 +17,7 @@ extension UIViewController {
       button.setImage(UIImage(named: image), for: .normal)
       button.frame = CGRect(x: 0, y: 0, width: 30*DeviceMultiplier, height: 30*DeviceMultiplier)
       button.layer.cornerRadius = 5*DeviceMultiplier
+    button.backgroundColor = .red
 
       if let action = action {
           button.addTarget(self, action: action, for: .touchUpInside)

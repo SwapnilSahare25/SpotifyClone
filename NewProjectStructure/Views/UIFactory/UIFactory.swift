@@ -58,7 +58,35 @@ final class UIFactory {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }
-    
+
+  static func getTextSize(text: String, font: UIFont, constrainedSize: CGSize) -> CGSize {
+
+      let paragraphStyle = NSMutableParagraphStyle()
+      paragraphStyle.lineSpacing = 3
+
+      let attributes: [NSAttributedString.Key: Any] = [
+          .font: font,
+          .paragraphStyle: paragraphStyle
+      ]
+
+      let rect = (text as NSString).boundingRect(
+          with: constrainedSize,
+          options: [.usesLineFragmentOrigin, .usesFontLeading],
+          attributes: attributes,
+          context: nil
+      )
+
+      return CGSize(width: ceil(rect.width), height: ceil(rect.height))
+  }
+  static func getTextHeight(text: String, font: UIFont, constrainedSize: CGSize) -> CGFloat {
+      return getTextSize(text: text, font: font, constrainedSize: constrainedSize).height
+  }
+
+  static func getTextWidth(text: String, font: UIFont, constrainedSize: CGSize) -> CGFloat {
+      return getTextSize(text: text, font: font, constrainedSize: constrainedSize).width
+  }
+
+
     // MARK: - UIImageView
     @MainActor static func makeImageView(imageName: String? = nil,contentMode: UIView.ContentMode = .scaleAspectFit,
                                          cornerRadius: CGFloat = 0,clipsToBounds: Bool = true,frame: CGRect? = nil) -> UIImageView {
@@ -124,7 +152,7 @@ final class UIFactory {
     
     // MARK: - UITableView
     static func makeTableView(style: UITableView.Style = .plain,separatorStyle: UITableViewCell.SeparatorStyle = .singleLine,
-                              backgroundColor: UIColor = .white,allowsSelection: Bool = true) -> UITableView {
+                              backgroundColor: UIColor = .clear,allowsSelection: Bool = true) -> UITableView {
         
         let tableView = UITableView(frame: .zero, style: style)
         tableView.separatorStyle = separatorStyle
