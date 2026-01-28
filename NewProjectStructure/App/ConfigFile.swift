@@ -117,3 +117,12 @@ var spotifyTokenExpiry: Date? {
          UserDefaults.standard.set(newValue, forKey: "spotify_token_expiry")
      }
  }
+var userId: Int {
+    get {
+        return UserDefaults.standard.integer(forKey: "user_id")
+    }
+    set {
+        UserDefaults.standard.set(newValue, forKey: "user_id")
+    }
+}
+

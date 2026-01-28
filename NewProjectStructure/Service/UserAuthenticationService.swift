@@ -115,10 +115,16 @@ class UserAuthenticationService {
             KeychainService.shared.save(key: "spotify_refresh_token", value: refresh)
           }
           spotifyTokenExpiry = Date().addingTimeInterval(TimeInterval(token.expires_in))
+          // SYNC WITH BACKEND
+
+          self.syncUserWithBackend { _ in }
+            completion(.success(token))
+
         case .failure(let error):
           print("Token Exchange FAILURE! Error: \(error.localizedDescription)")
+          completion(.failure(error))
         }
-        completion(response.result)
+
 
       }
   }
@@ -147,7 +153,7 @@ class UserAuthenticationService {
 
                  switch response.result {
                  case .success(let token):
-                     print("Refresh SUCCESS → New Access Token:", token.access_token)
+                    // print("Refresh SUCCESS → New Access Token:", token.access_token)
 
                      // Save updated access token
                      KeychainService.shared.save(key: "spotify_access_token", value: token.access_token)
@@ -156,8 +162,9 @@ class UserAuthenticationService {
                          KeychainService.shared.save(key: "spotify_refresh_token", value: newRefresh)
                      }
                    spotifyTokenExpiry = Date().addingTimeInterval(TimeInterval(token.expires_in))
-                     completion(true)
-
+                   self.syncUserWithBackend { _ in }
+                  completion(true)
+                   // Ensure backend is in sync after refresh
                  case .failure(let error):
                      print("Refresh FAILED:", error.localizedDescription)
                      completion(false)
@@ -186,6 +193,48 @@ class UserAuthenticationService {
               completion(success ? KeychainService.shared.load(key: "spotify_access_token") : nil)
           }
       }
+
+
+  // MARK: - Backend Sync
+    private func syncUserWithBackend(completion: @escaping (Bool) -> Void) {
+        getValidAccessToken { token in
+            guard let token = token else { completion(false); return }
+
+          let headers: HTTPHeaders = [
+                     "Authorization": "Bearer \(token)"
+                 ]
+
+          
+          // Get Spotify Profile
+                AF.request("https://api.spotify.com/v1/me", headers: headers).responseDecodable(of: SpotifyProfile.self) { response in
+
+                        guard let profile = response.value else {
+                            print("Spotify profile error:", response.error ?? "Unknown")
+                            completion(false)
+                            return
+                        }
+
+                        let body: [String: Any] = [
+                            "email": profile.email ?? "",
+                            "id": profile.id ?? "",
+                            "display_name": profile.display_name ?? "User"
+                        ]
+
+                        // Send to Backend
+                        AF.request(Host + "auth/spotify",method: .post,parameters: body,encoding: JSONEncoding.default).responseDecodable(of: BackendUserResponse.self) { response in
+
+                                guard let user = response.value else {
+                                    print("Backend sync failed:", response.error ?? "Unknown")
+                                    completion(false)
+                                    return
+                                }
+                                userId = user.user_id ?? 0
+                                completion(true)
+                            }
+                    }
+            }
+    }
+
 
   // Reusable Auth API call
   // - Parameters:

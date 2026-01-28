@@ -28,7 +28,7 @@ class LibraryViewController: UIViewController {
 
     self.headerView = UIFactory.makeContinerView(backgroundColor: Appcolor)
     self.view.addSubview(self.headerView)
-    self.headerView.addConstraints(constraintsDict: [.Leading:0,.Trailing:0,.Top:0,.FixHeight:topBarHeight+55])
+    self.headerView.addConstraints(constraintsDict: [.Leading:0,.Trailing:0,.Top:0,.FixHeight:topBarHeight+65])
 
     let imgView = UIFactory.makeImageView(imageName: "Setting")
     self.headerView.addSubview(imgView)
@@ -42,13 +42,13 @@ class LibraryViewController: UIViewController {
 
     let plusBtn = UIFactory.makeButton(backgroundColor: .clear, image: "plus")
     self.headerView.addSubview(plusBtn)
-    plusBtn.addConstraints(constraintsDict: [.Trailing:deviceMargin,.FixHeight:25,.FixWidth:25,.Top:statusBarHeight+15])
+    plusBtn.addConstraints(constraintsDict: [.Trailing:deviceMargin,.FixHeight:20,.FixWidth:20,.Top:statusBarHeight+20])
     plusBtn.addTarget(self, action: #selector(btnClicked), for: .touchUpInside)
 
     let scrollView = UIFactory.makeScrollView()
     scrollView.backgroundColor = .clear
     self.headerView.addSubview(scrollView)
-    scrollView.belowTo(view: imgView, constant: 10)
+    scrollView.belowTo(view: imgView, constant: 15)
     scrollView.addConstraints(constraintsDict: [.Leading:0,.Trailing:0,.FixHeight:40])
 
     var xAxis: CGFloat = 10*DeviceMultiplier
@@ -128,7 +128,7 @@ class LibraryViewController: UIViewController {
 extension LibraryViewController: UITableViewDelegate, UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 10
+    return 15
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

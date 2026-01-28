@@ -36,5 +36,17 @@ struct SpotifyTokenObject: Codable {
     self.token_type = try container.decode(String.self, forKey: .token_type)
     self.expires_in = try container.decode(Int.self, forKey: .expires_in)
     self.refresh_token = try container.decodeIfPresent(String.self, forKey: .refresh_token)
+
+
   }
+}
+
+
+struct SpotifyProfile: Decodable {
+    let id: String?
+    let email: String?
+    let display_name: String?
+}
+struct BackendUserResponse: Decodable {
+    let user_id: Int? 
 }
