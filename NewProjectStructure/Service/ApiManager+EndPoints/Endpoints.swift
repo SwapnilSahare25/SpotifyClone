@@ -24,6 +24,12 @@ struct Endpoints {
   static func search(q:String="", recent:Bool=false) -> String {
     return "search?q=\(q)&recent=\(recent)"
   }
+
+  static func library(type:String="") -> String {
+    return "library?user_id=\(userId)&filter=\(type)"
+  }
+
+  
   static func getNewReleaseSongs(limit: Int = 10, offset: Int = 0) -> String {
     return "/browse/new-releases?limit=\(limit)&offset=\(offset)"
   }

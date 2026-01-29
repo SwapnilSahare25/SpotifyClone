@@ -74,6 +74,7 @@ class UserAuthenticationService {
     KeychainService.shared.delete(key: "spotify_access_token")
     KeychainService.shared.delete(key: "spotify_refresh_token")
     spotifyTokenExpiry = nil
+    userId = 0
     let loginVc = LoginViewController()
     WindowManager.shared.setRootController(loginVc, animated: true)
   }

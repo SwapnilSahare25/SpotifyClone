@@ -13,14 +13,18 @@ class LibraryViewController: UIViewController {
   private var libraryArray:[(title:String,tag:Int)] = [(title:"All",tag:0),(title:"Playlists",tag:1),(title:"Artists",tag:2),(title:"Albums",tag:3),(title:"Podcasts",tag:4)]
 
   private var tableView:UITableView!
+  private var itemArray:[Item] = []
 
   private var tabViews: [UIView] = []
+  var type = "All"
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = Appcolor
         self.navigationController?.setNavigationBarHidden(true, animated: false)
 
         self.setupMainView()
+      self.callLibraryApi()
     }
     
 
@@ -30,7 +34,7 @@ class LibraryViewController: UIViewController {
     self.view.addSubview(self.headerView)
     self.headerView.addConstraints(constraintsDict: [.Leading:0,.Trailing:0,.Top:0,.FixHeight:topBarHeight+65])
 
-    let imgView = UIFactory.makeImageView(imageName: "Setting")
+    let imgView = UIFactory.makeImageView(imageName: "profileIcon")
     self.headerView.addSubview(imgView)
     imgView.addConstraints(constraintsDict: [.FixHeight:30,.FixWidth:30,.Top:statusBarHeight+10,.Leading:deviceMargin])
 
@@ -45,13 +49,13 @@ class LibraryViewController: UIViewController {
     plusBtn.addConstraints(constraintsDict: [.Trailing:deviceMargin,.FixHeight:20,.FixWidth:20,.Top:statusBarHeight+20])
     plusBtn.addTarget(self, action: #selector(btnClicked), for: .touchUpInside)
 
-    let scrollView = UIFactory.makeScrollView()
+    let scrollView = UIFactory.makeScrollView(showsHorizontalScrollIndicator: false)
     scrollView.backgroundColor = .clear
     self.headerView.addSubview(scrollView)
     scrollView.belowTo(view: imgView, constant: 15)
     scrollView.addConstraints(constraintsDict: [.Leading:0,.Trailing:0,.FixHeight:40])
 
-    var xAxis: CGFloat = 10*DeviceMultiplier
+    var xAxis: CGFloat = 15*DeviceMultiplier
 
     for object in libraryArray{
 
@@ -73,11 +77,10 @@ class LibraryViewController: UIViewController {
 
       tabViews.append(mainContainer)
 
-        xAxis += buttonWidth + (10*DeviceMultiplier)
+        xAxis += buttonWidth + (15*DeviceMultiplier)
     }
 
     scrollView.contentSize.width = xAxis
-
 
 
     let dividerLine = UIFactory.makeContinerView(backgroundColor: DisableColor)
@@ -108,32 +111,58 @@ class LibraryViewController: UIViewController {
         }
       }
     }
+
+
   }
 
 
   @objc func containerClicked(_ sender: UITapGestureRecognizer){
 
     guard let index = sender.view?.tag else { return }
-
+    let obj = self.libraryArray[index]
+    self.type = obj.title
     self.selectTab(index: index)
+    self.callLibraryApi()
+
   }
 
   @objc func btnClicked(_ sender: UIButton){
    //UserAuthenticationService.shared.logout()
   }
 
- 
+  private func callLibraryApi() {
+    let endPoint = Endpoints.library(type: self.type)
+
+     APIManager.shared.request(endpoint: endPoint) { [weak self] (object: LibraryObject) in
+
+       if let self = self {
+         if let items = object.items {
+           self.itemArray = items
+         }
+
+         self.tableView.reloadData()
+
+       }else{
+         print("No Data Found")
+       }
+     } onFailure: { error in
+       print(error)
+     }
+
+   }
+
 
 }
 extension LibraryViewController: UITableViewDelegate, UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 15
+    return self.itemArray.count
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: LibraryTableViewCell.identifier, for: indexPath) as! LibraryTableViewCell
-
+    cell.configure(obj: self.itemArray[indexPath.row])
+    cell.dividerLine.isHidden = indexPath.row == self.itemArray.count-1
     return cell
   }
   
