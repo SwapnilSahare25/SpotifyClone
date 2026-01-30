@@ -27,10 +27,14 @@
 		551F72FD2ED8864C00B44A14 /* Inter_18pt-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 551F72F42ED8864C00B44A14 /* Inter_18pt-Regular.ttf */; };
 		551F72FE2ED8864C00B44A14 /* Inter_18pt-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 551F72F52ED8864C00B44A14 /* Inter_18pt-Bold.ttf */; };
 		554779C32F1E6E7B00895C0B /* ActiveSearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554779C22F1E6E7B00895C0B /* ActiveSearchCollectionViewCell.swift */; };
+		558822382F2BC090004EBBBB /* LikedSongsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558822372F2BC090004EBBBB /* LikedSongsViewController.swift */; };
+		5588223B2F2BCE26004EBBBB /* LikedSongsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5588223A2F2BCE26004EBBBB /* LikedSongsTableViewCell.swift */; };
+		5588223E2F2BD084004EBBBB /* GradientLikedSongsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5588223D2F2BD084004EBBBB /* GradientLikedSongsView.swift */; };
 		558C09B52EEACEF8003D4310 /* LibraryObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558C09B42EEACEF8003D4310 /* LibraryObject.swift */; };
 		559019652ED9C42E005F9E5E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559019642ED9C42E005F9E5E /* LoginViewController.swift */; };
 		559019672ED9CFD6005F9E5E /* SpotifyTokenObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559019662ED9CFD6005F9E5E /* SpotifyTokenObject.swift */; };
 		55907B322EE89E180064C0DA /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55907B312EE89E180064C0DA /* KeychainService.swift */; };
+		55955D042F2D10DC0028016B /* SongsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55955D032F2D10DC0028016B /* SongsObject.swift */; };
 		5596130D2EFBBDC9004ED2D4 /* HomeGreetingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5596130C2EFBBDC9004ED2D4 /* HomeGreetingCollectionViewCell.swift */; };
 		5596130F2EFBBDDE004ED2D4 /* NewReleaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5596130E2EFBBDDE004ED2D4 /* NewReleaseCollectionViewCell.swift */; };
 		559613112EFBBDF9004ED2D4 /* HomeSectionShelfCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559613102EFBBDF9004ED2D4 /* HomeSectionShelfCollectionViewCell.swift */; };
@@ -96,10 +100,14 @@
 		551F72F42ED8864C00B44A14 /* Inter_18pt-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter_18pt-Regular.ttf"; sourceTree = "<group>"; };
 		551F72F52ED8864C00B44A14 /* Inter_18pt-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter_18pt-Bold.ttf"; sourceTree = "<group>"; };
 		554779C22F1E6E7B00895C0B /* ActiveSearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveSearchCollectionViewCell.swift; sourceTree = "<group>"; };
+		558822372F2BC090004EBBBB /* LikedSongsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedSongsViewController.swift; sourceTree = "<group>"; };
+		5588223A2F2BCE26004EBBBB /* LikedSongsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedSongsTableViewCell.swift; sourceTree = "<group>"; };
+		5588223D2F2BD084004EBBBB /* GradientLikedSongsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientLikedSongsView.swift; sourceTree = "<group>"; };
 		558C09B42EEACEF8003D4310 /* LibraryObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryObject.swift; sourceTree = "<group>"; };
 		559019642ED9C42E005F9E5E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		559019662ED9CFD6005F9E5E /* SpotifyTokenObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyTokenObject.swift; sourceTree = "<group>"; };
 		55907B312EE89E180064C0DA /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
+		55955D032F2D10DC0028016B /* SongsObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsObject.swift; sourceTree = "<group>"; };
 		5596130C2EFBBDC9004ED2D4 /* HomeGreetingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGreetingCollectionViewCell.swift; sourceTree = "<group>"; };
 		5596130E2EFBBDDE004ED2D4 /* NewReleaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReleaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		559613102EFBBDF9004ED2D4 /* HomeSectionShelfCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSectionShelfCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -237,6 +245,30 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		558822362F2BC072004EBBBB /* LikedSongs */ = {
+			isa = PBXGroup;
+			children = (
+				558822372F2BC090004EBBBB /* LikedSongsViewController.swift */,
+			);
+			path = LikedSongs;
+			sourceTree = "<group>";
+		};
+		558822392F2BCE0E004EBBBB /* LikedSongs */ = {
+			isa = PBXGroup;
+			children = (
+				5588223A2F2BCE26004EBBBB /* LikedSongsTableViewCell.swift */,
+			);
+			path = LikedSongs;
+			sourceTree = "<group>";
+		};
+		5588223C2F2BD05D004EBBBB /* LikedSongs */ = {
+			isa = PBXGroup;
+			children = (
+				5588223D2F2BD084004EBBBB /* GradientLikedSongsView.swift */,
+			);
+			path = LikedSongs;
+			sourceTree = "<group>";
+		};
 		559019632ED9C416005F9E5E /* LoginView */ = {
 			isa = PBXGroup;
 			children = (
@@ -259,6 +291,7 @@
 		559613142EFBE78A004ED2D4 /* Header */ = {
 			isa = PBXGroup;
 			children = (
+				5588223C2F2BD05D004EBBBB /* LikedSongs */,
 				5509C8C22EFE8A5300DD5663 /* Home */,
 				5509C8C32EFE8A7300DD5663 /* SearchHeaderCollectionReusableView.swift */,
 			);
@@ -325,6 +358,7 @@
 				558C09B42EEACEF8003D4310 /* LibraryObject.swift */,
 				55B4E0102EFAA71500A5CC7A /* HomeObject.swift */,
 				5509C8C02EFE751100DD5663 /* SearchObject.swift */,
+				55955D032F2D10DC0028016B /* SongsObject.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -394,6 +428,7 @@
 		55CF4CCA2ED727C200A77E05 /* TableViewCells */ = {
 			isa = PBXGroup;
 			children = (
+				558822392F2BCE0E004EBBBB /* LikedSongs */,
 				559C701B2F2A372E0011696F /* Library */,
 				55CF4CCC2ED7280200A77E05 /* SampleTableViewCell.swift */,
 			);
@@ -491,6 +526,7 @@
 		55D70DB22ED6325B00780590 /* HomeView */ = {
 			isa = PBXGroup;
 			children = (
+				558822362F2BC072004EBBBB /* LikedSongs */,
 				55D70D972ED622F400780590 /* HomeViewController.swift */,
 			);
 			path = HomeView;
@@ -639,10 +675,12 @@
 				5596131E2EFC356E004ED2D4 /* CustomGradientDecorationCollectionReusableView.swift in Sources */,
 				5596131A2EFBE7F0004ED2D4 /* ShelfCollectionReusableView.swift in Sources */,
 				55D70D982ED622F400780590 /* HomeViewController.swift in Sources */,
+				5588223E2F2BD084004EBBBB /* GradientLikedSongsView.swift in Sources */,
 				559019672ED9CFD6005F9E5E /* SpotifyTokenObject.swift in Sources */,
 				55D70DAA2ED6284A00780590 /* TabBarManager.swift in Sources */,
 				55D70DB12ED62F3700780590 /* NavigationManager.swift in Sources */,
 				55D70D942ED622F400780590 /* AppDelegate.swift in Sources */,
+				558822382F2BC090004EBBBB /* LikedSongsViewController.swift in Sources */,
 				55CF4CB02ED6F6C700A77E05 /* AutoLayoutConstraints.swift in Sources */,
 				551F72D52ED86E1000B44A14 /* LibraryViewController.swift in Sources */,
 				55D70DAF2ED629CE00780590 /* ConfigFile.swift in Sources */,
@@ -651,6 +689,7 @@
 				559613112EFBBDF9004ED2D4 /* HomeSectionShelfCollectionViewCell.swift in Sources */,
 				5509C8C42EFE8A7300DD5663 /* SearchHeaderCollectionReusableView.swift in Sources */,
 				55CF4CCD2ED7280200A77E05 /* SampleTableViewCell.swift in Sources */,
+				5588223B2F2BCE26004EBBBB /* LikedSongsTableViewCell.swift in Sources */,
 				559C5BE82EFD242300204C16 /* SectionBgViewCollectionReusableView.swift in Sources */,
 				55CF4CAE2ED6F69F00A77E05 /* UserDefaultManager.swift in Sources */,
 				55CF4CAC2ED6F68200A77E05 /* String+Extension.swift in Sources */,
@@ -662,6 +701,7 @@
 				55CF4CA82ED6F65400A77E05 /* UIKit+Extension.swift in Sources */,
 				5596130F2EFBBDDE004ED2D4 /* NewReleaseCollectionViewCell.swift in Sources */,
 				551F72D82ED8811D00B44A14 /* IntroViewController.swift in Sources */,
+				55955D042F2D10DC0028016B /* SongsObject.swift in Sources */,
 				55CF4CA32ED6F5F300A77E05 /* Constant.swift in Sources */,
 				55907B322EE89E180064C0DA /* KeychainService.swift in Sources */,
 				559613182EFBE7C9004ED2D4 /* NewReleaseCollectionReusableView.swift in Sources */,

@@ -29,6 +29,10 @@ struct Endpoints {
     return "library?user_id=\(userId)&filter=\(type)"
   }
 
+  static func getLikedSongs() -> String {
+    return "me/likes?user_id=\(userId)"
+  }
+
   
   static func getNewReleaseSongs(limit: Int = 10, offset: Int = 0) -> String {
     return "/browse/new-releases?limit=\(limit)&offset=\(offset)"

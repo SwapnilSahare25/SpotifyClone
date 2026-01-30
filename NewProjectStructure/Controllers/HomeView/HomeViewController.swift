@@ -27,6 +27,10 @@ class HomeViewController: UIViewController {
 
 
   }
+  override func viewWillAppear(_ animated: Bool) {
+      super.viewWillAppear(animated)
+      navigationController?.setNavigationBarHidden(true, animated: false)
+  }
 
   override func viewDidLayoutSubviews() {
       super.viewDidLayoutSubviews()
@@ -245,6 +249,31 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
       return UICollectionViewCell()
     }
   }
+
+
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+
+    let sectionData = homeSectionArray[indexPath.section]
+
+    switch sectionData.homeSectionType {
+    case .quickAccess(let items):
+      let obj = items[indexPath.row]
+
+      let likeVC = LikedSongsViewController()
+      likeVC.hidesBottomBarWhenPushed = true
+      self.navigationController?.pushViewController(likeVC, animated: true)
+
+    case .newRelease(let newRelease):
+      break
+    case .horizontalShelf(let sectionObj):
+      break
+    case .circularArtistShelf(let sectionObj):
+      break
+    case .none:
+      break
+    }
+  }
+
 
   func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
     let sectionData = homeSectionArray[indexPath.section]

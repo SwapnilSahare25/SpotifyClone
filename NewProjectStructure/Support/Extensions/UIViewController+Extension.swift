@@ -6,8 +6,7 @@
 //
 
 import UIKit
-import MaterialComponents
-import SHSearchBar
+
 
 extension UIViewController {
 
@@ -32,8 +31,77 @@ extension UIViewController {
   @objc private func defaultBackAction() {
       navigationController?.popViewController(animated: true)
   }
+//
+//  func setNavBarColor(_ color: UIColor) {
+//         guard let navBar = navigationController?.navigationBar else { return }
+//
+//         let appearance = UINavigationBarAppearance()
+//         appearance.configureWithOpaqueBackground()
+//         appearance.backgroundColor = color
+//         appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+//
+//         navBar.standardAppearance = appearance
+//         navBar.scrollEdgeAppearance = appearance
+//         navBar.compactAppearance = appearance
+//
+//         //navBar.tintColor = .white // back button color
+//     }
 
-  
+   func setNavBarColor(_ color: UIColor?) {
+
+      let appearance = UINavigationBarAppearance()
+      appearance.configureWithTransparentBackground()
+      appearance.backgroundColor = color
+
+      appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+
+      navigationController?.navigationBar.standardAppearance = appearance
+      navigationController?.navigationBar.scrollEdgeAppearance = appearance
+  }
+
+
+  func setNavBarGradient(colors: [UIColor]) {
+      guard let navBar = navigationController?.navigationBar else { return }
+
+      let gradient = CAGradientLayer()
+      gradient.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 120)
+      gradient.colors = colors.map { $0.cgColor }
+      gradient.startPoint = CGPoint(x: 0.5, y: 0)
+      gradient.endPoint = CGPoint(x: 0.5, y: 1)
+
+      let renderer = UIGraphicsImageRenderer(size: gradient.frame.size)
+      let image = renderer.image { ctx in
+          gradient.render(in: ctx.cgContext)
+      }
+
+      let appearance = UINavigationBarAppearance()
+      appearance.configureWithOpaqueBackground()
+      appearance.backgroundImage = image
+
+      navBar.standardAppearance = appearance
+      navBar.scrollEdgeAppearance = appearance
+      navBar.compactAppearance = appearance
+      navBar.tintColor = .white
+  }
+
+  // MARK: - Screen Gradient
+  func setGradientBackground(colors: [UIColor]) {
+
+      // Remove old gradient
+      view.layer.sublayers?.filter { $0.name == "CommonGradient" }
+          .forEach { $0.removeFromSuperlayer() }
+
+      let gradient = CAGradientLayer()
+      gradient.name = "CommonGradient"
+      gradient.frame = view.bounds
+      gradient.colors = colors.map { $0.cgColor }
+
+      gradient.startPoint = CGPoint(x: 0.5, y: 0)
+      gradient.endPoint   = CGPoint(x: 0.5, y: 1)
+
+      view.layer.insertSublayer(gradient, at: 0)
+  }
+
 //    func setupMaterialSearchAppBar(
 //        largeTitle: Bool,
 //        isSearchTypable: Bool,

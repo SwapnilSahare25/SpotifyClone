@@ -16,7 +16,7 @@ class LibraryViewController: UIViewController {
   private var itemArray:[Item] = []
 
   private var tabViews: [UIView] = []
-  var type = "All"
+  private var type = "All"
 
     override func viewDidLoad() {
         super.viewDidLoad()

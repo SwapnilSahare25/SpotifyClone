@@ -12,6 +12,7 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
       self.view.backgroundColor = .black
+      self.navigationController?.setNavigationBarHidden(false, animated: false)
       self.setupBackButton()
       self.setupMainView()
      // self.callgetCurrentUserApi()
