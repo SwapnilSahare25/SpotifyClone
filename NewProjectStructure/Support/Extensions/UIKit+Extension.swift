@@ -77,7 +77,7 @@ extension UIView {
     }
     
     // MARK: - Gradient Background
-  func setGradientBackground(colors: [UIColor], locations: [NSNumber]) {
+  func setGradientBackground(colors: [UIColor], locations: [NSNumber],startPoint:CGPoint = CGPoint(x: 0, y: 0),endPoint:CGPoint = CGPoint(x: 1, y: 1)) {
           // Remove old gradients to prevent stacking/color muddiness
     self.layer.sublayers?.filter({ $0 is CAGradientLayer }).forEach({ $0.removeFromSuperlayer() })
 
@@ -87,8 +87,8 @@ extension UIView {
 
             // --- THIS IS THE KEY CHANGE ---
             // Top-left to bottom-right diagonal creates that "glow" look
-            gradientLayer.startPoint = CGPoint(x: 0, y: 0)
-            gradientLayer.endPoint = CGPoint(x: 1, y: 1)
+            gradientLayer.startPoint = startPoint
+            gradientLayer.endPoint = endPoint
 
             gradientLayer.frame = self.bounds
             self.layer.insertSublayer(gradientLayer, at: 0)
@@ -243,20 +243,18 @@ extension UITableView{
     
 }
 extension UIColor {
-    convenience init?(hex: String) {
-        var hexString = hex.trimmingCharacters(in: .whitespacesAndNewlines)
-        if hexString.hasPrefix("#") { hexString.removeFirst() }
-        guard hexString.count == 6 else { return nil }
+    convenience init(hex: String) {
+        var hexFormatted = hex.trimmingCharacters(in: .whitespacesAndNewlines)
+        hexFormatted = hexFormatted.replacingOccurrences(of: "#", with: "")
 
-        let scanner = Scanner(string: hexString)
-        var hexNumber: UInt64 = 0
-        if scanner.scanHexInt64(&hexNumber) {
-            let r = CGFloat((hexNumber & 0xFF0000) >> 16) / 255
-            let g = CGFloat((hexNumber & 0x00FF00) >> 8) / 255
-            let b = CGFloat(hexNumber & 0x0000FF) / 255
-            self.init(red: r, green: g, blue: b, alpha: 1)
-            return
-        }
-        return nil
+        var rgbValue: UInt64 = 0
+        Scanner(string: hexFormatted).scanHexInt64(&rgbValue)
+
+        self.init(
+            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+            alpha: 1.0
+        )
     }
 }

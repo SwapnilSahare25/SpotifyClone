@@ -258,10 +258,22 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     switch sectionData.homeSectionType {
     case .quickAccess(let items):
       let obj = items[indexPath.row]
+      if obj.type == "playlist"{
+        let likeVC = LikedSongsViewController()
+        likeVC.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(likeVC, animated: true)
+      }else if obj.type == "album"{
+        let albumVC = AlbumDetailsViewController()
+        albumVC.albumId = obj.id ?? 0
+        albumVC.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(albumVC, animated: true)
+      }else{
+        let likeVC = LikedSongsViewController()
+        likeVC.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(likeVC, animated: true)
+      }
 
-      let likeVC = LikedSongsViewController()
-      likeVC.hidesBottomBarWhenPushed = true
-      self.navigationController?.pushViewController(likeVC, animated: true)
+
 
     case .newRelease(let newRelease):
       break

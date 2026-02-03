@@ -33,7 +33,10 @@ struct Endpoints {
     return "me/likes?user_id=\(userId)"
   }
 
-  
+  static func getAlbumDetails(albumId:Int) -> String {
+    return "/album/\(albumId)"
+  }
+
   static func getNewReleaseSongs(limit: Int = 10, offset: Int = 0) -> String {
     return "/browse/new-releases?limit=\(limit)&offset=\(offset)"
   }
