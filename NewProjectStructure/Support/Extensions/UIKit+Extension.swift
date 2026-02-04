@@ -77,22 +77,45 @@ extension UIView {
     }
     
     // MARK: - Gradient Background
-  func setGradientBackground(colors: [UIColor], locations: [NSNumber],startPoint:CGPoint = CGPoint(x: 0, y: 0),endPoint:CGPoint = CGPoint(x: 1, y: 1)) {
-          // Remove old gradients to prevent stacking/color muddiness
-    self.layer.sublayers?.filter({ $0 is CAGradientLayer }).forEach({ $0.removeFromSuperlayer() })
+//  func setGradientBackground(colors: [UIColor], locations: [NSNumber],startPoint:CGPoint = CGPoint(x: 0, y: 0),endPoint:CGPoint = CGPoint(x: 1, y: 1)) {
+//          // Remove old gradients to prevent stacking/color muddiness
+//    self.layer.sublayers?.filter({ $0 is CAGradientLayer }).forEach({ $0.removeFromSuperlayer() })
+//
+//            let gradientLayer = CAGradientLayer()
+//            gradientLayer.colors = colors.map { $0.cgColor }
+//            gradientLayer.locations = locations
+//
+//            // --- THIS IS THE KEY CHANGE ---
+//            // Top-left to bottom-right diagonal creates that "glow" look
+//            gradientLayer.startPoint = startPoint
+//            gradientLayer.endPoint = endPoint
+//
+//            gradientLayer.frame = self.bounds
+//            self.layer.insertSublayer(gradientLayer, at: 0)
+//      }
 
-            let gradientLayer = CAGradientLayer()
-            gradientLayer.colors = colors.map { $0.cgColor }
-            gradientLayer.locations = locations
+  func setGradientBackground(colors: [UIColor],locations: [NSNumber],startPoint: CGPoint = CGPoint(x: 0.5, y: 0.0),endPoint: CGPoint = CGPoint(x: 0.5, y: 1.0)) {
 
-            // --- THIS IS THE KEY CHANGE ---
-            // Top-left to bottom-right diagonal creates that "glow" look
-            gradientLayer.startPoint = startPoint
-            gradientLayer.endPoint = endPoint
+          let gradientLayer: CAGradientLayer
 
-            gradientLayer.frame = self.bounds
-            self.layer.insertSublayer(gradientLayer, at: 0)
+          if let existingLayer = layer.sublayers?
+              .first(where: { $0.name == "ReusableGradientLayer" }) as? CAGradientLayer {
+              gradientLayer = existingLayer
+          } else {
+              let newLayer = CAGradientLayer()
+              newLayer.name = "ReusableGradientLayer"
+              layer.insertSublayer(newLayer, at: 0)
+              gradientLayer = newLayer
+          }
+
+          gradientLayer.colors = colors.map { $0.cgColor }
+          gradientLayer.locations = locations
+          gradientLayer.startPoint = startPoint
+          gradientLayer.endPoint = endPoint
+          gradientLayer.frame = bounds
       }
+
+
     func fadeIn(duration: TimeInterval = 0.3) {
         self.alpha = 0
         self.isHidden = false

@@ -53,6 +53,7 @@ struct Artist: Codable {
   let image: String?
   let name: String?
   let id: Int?
+  let type: String?
 }
 
 // MARK: - Content

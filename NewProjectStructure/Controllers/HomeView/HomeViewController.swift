@@ -310,9 +310,10 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         self.navigationController?.pushViewController(playListVC, animated: true)
       }
     case .circularArtistShelf(let artistObj):
-      let obj = artistObj.items?[indexPath.row]
 
+      let obj = artistObj.items?[indexPath.row]
       let vc = ArtistProfileViewController()
+      vc.artistId = obj?.id ?? 0
       vc.hidesBottomBarWhenPushed = true
       self.navigationController?.pushViewController(vc, animated: true)
 

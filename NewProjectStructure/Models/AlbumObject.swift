@@ -9,11 +9,13 @@ import Foundation
 
 
 struct AlbumObject: Codable {
-    let artist: String?
-    let id: Int?
-    let image: String?
-    let title: String?
-    let tracks: Tracks?
-    let type, year: String?
+  let artist: String?
+  let id: Int?
+  let image: String?
+  let title: String?
+  let tracks: Tracks?
+  let type, year: String?
+  let description: String?
+  let subtitle: String?
 }
 
