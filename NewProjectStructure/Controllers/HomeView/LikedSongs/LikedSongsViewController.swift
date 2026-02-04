@@ -30,8 +30,6 @@ class LikedSongsViewController: UIViewController, APParallaxViewDelegate {
     navigationController?.navigationBar.shadowImage = UIImage()
     navigationController?.navigationBar.isTranslucent = true
     navigationController?.navigationBar.backgroundColor = .clear
-
-    //self.setNavBarGradient(colors: [topPurple, midBlue])
     self.setupBackButton()
     self.setUpMainView()
     self.callLikedSongsApi()

@@ -45,12 +45,14 @@ struct NewRelease: Codable {
   let artist: Artist?
   let content: Content?
   let type: String?
+  let id: Int?
 }
 
 // MARK: - Artist
 struct Artist: Codable {
   let image: String?
   let name: String?
+  let id: Int?
 }
 
 // MARK: - Content

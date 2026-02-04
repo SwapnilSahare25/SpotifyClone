@@ -189,6 +189,13 @@ class HomeViewController: UIViewController {
     self.navigationController?.pushViewController(vc, animated: true)
   }
 
+  @objc private func sectionHeaderClicked(_ sender: UITapGestureRecognizer) {
+
+    let vc = ArtistProfileViewController()
+    vc.hidesBottomBarWhenPushed = true
+    self.navigationController?.pushViewController(vc, animated: true)
+  }
+
 }
 
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -259,9 +266,18 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     case .quickAccess(let items):
       let obj = items[indexPath.row]
       if obj.type == "playlist"{
-        let likeVC = LikedSongsViewController()
-        likeVC.hidesBottomBarWhenPushed = true
-        self.navigationController?.pushViewController(likeVC, animated: true)
+        if obj.pinned == true {
+
+          let likeVC = LikedSongsViewController()
+          likeVC.hidesBottomBarWhenPushed = true
+          self.navigationController?.pushViewController(likeVC, animated: true)
+        }else{
+          let playListVC = PlayListDetailsViewController()
+          playListVC.playListId = obj.id ?? 0
+          playListVC.hidesBottomBarWhenPushed = true
+          self.navigationController?.pushViewController(playListVC, animated: true)
+        }
+
       }else if obj.type == "album"{
         let albumVC = AlbumDetailsViewController()
         albumVC.albumId = obj.id ?? 0
@@ -272,15 +288,34 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         likeVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(likeVC, animated: true)
       }
-
-
-
     case .newRelease(let newRelease):
-      break
-    case .horizontalShelf(let sectionObj):
-      break
-    case .circularArtistShelf(let sectionObj):
-      break
+      let albumVC = AlbumDetailsViewController()
+      albumVC.albumId = newRelease.id ?? 0
+      albumVC.hidesBottomBarWhenPushed = true
+      self.navigationController?.pushViewController(albumVC, animated: true)
+
+    case .horizontalShelf(let horizontalSectionObj):
+      let obj = horizontalSectionObj.items?[indexPath.row]
+      if obj?.type == "album" || obj?.type == "single"{
+
+        let albumVC = AlbumDetailsViewController()
+        albumVC.albumId = obj?.id ?? 0
+        albumVC.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(albumVC, animated: true)
+
+      }else if obj?.type == "playlist" {
+        let playListVC = PlayListDetailsViewController()
+        playListVC.playListId = obj?.id ?? 0
+        playListVC.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(playListVC, animated: true)
+      }
+    case .circularArtistShelf(let artistObj):
+      let obj = artistObj.items?[indexPath.row]
+
+      let vc = ArtistProfileViewController()
+      vc.hidesBottomBarWhenPushed = true
+      self.navigationController?.pushViewController(vc, animated: true)
+
     case .none:
       break
     }
@@ -306,6 +341,8 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
       sectionHeader2.subtitleLbl.text = "NEW RELEASE FROM"
       sectionHeader2.setLeading(deviceMargin)
       sectionHeader2.configure(obj: newRelease)
+      sectionHeader2.isUserInteractionEnabled = true
+      sectionHeader2.addTarget(self, action: #selector(self.sectionHeaderClicked))
 
 
       return sectionHeader2

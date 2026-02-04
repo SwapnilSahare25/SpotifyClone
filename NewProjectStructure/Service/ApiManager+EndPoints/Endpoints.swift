@@ -37,6 +37,10 @@ struct Endpoints {
     return "/album/\(albumId)"
   }
 
+  static func getPlayListDetails(playListId:Int) -> String {
+    return "/playlists/\(playListId)"
+  }
+
   static func getNewReleaseSongs(limit: Int = 10, offset: Int = 0) -> String {
     return "/browse/new-releases?limit=\(limit)&offset=\(offset)"
   }
