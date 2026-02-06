@@ -90,11 +90,13 @@ struct Item: Codable {
   let album: String?
   let duration: String?
   let url: String?
+  let playCount: Int64?
 
   enum CodingKeys: String, CodingKey {
     case description, id, image, owner
     case songCount = "song_count"
     case subtitle, title, type, artist, name, color, pinned, album, duration, url
+    case playCount = "play_count"
   }
 }
 enum HomeSectionType {

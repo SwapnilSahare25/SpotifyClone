@@ -284,9 +284,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         albumVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(albumVC, animated: true)
       }else{
-        let likeVC = LikedSongsViewController()
-        likeVC.hidesBottomBarWhenPushed = true
-        self.navigationController?.pushViewController(likeVC, animated: true)
+        print("Add Player To Play the song")
       }
     case .newRelease(let newRelease):
       let albumVC = AlbumDetailsViewController()
@@ -295,6 +293,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
       self.navigationController?.pushViewController(albumVC, animated: true)
 
     case .horizontalShelf(let horizontalSectionObj):
+      
       let obj = horizontalSectionObj.items?[indexPath.row]
       if obj?.type == "album" || obj?.type == "single"{
 
@@ -364,16 +363,15 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let horizontalShelfSectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ShelfCollectionReusableView.identifier, for: indexPath) as! ShelfCollectionReusableView
 
         horizontalShelfSectionHeader.configure(obj: sectionObj)
-
+        horizontalShelfSectionHeader.setBottom(13*DeviceMultiplier)
         return horizontalShelfSectionHeader
 
       }
 
     case .circularArtistShelf(let sectionObj):
       let circularShelfSectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ShelfCollectionReusableView.identifier, for: indexPath) as! ShelfCollectionReusableView
-
       circularShelfSectionHeader.configure(obj: sectionObj)
-
+      circularShelfSectionHeader.setBottom(13*DeviceMultiplier)
       return circularShelfSectionHeader
     default:
       let emptyHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: EmptyHeaderCollectionReusableView.identifier, for: indexPath) as! EmptyHeaderCollectionReusableView

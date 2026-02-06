@@ -11,12 +11,9 @@ target 'NewProjectStructure' do
 	pod 'Alamofire'
 	pod 'IQKeyboardManagerSwift'
   pod 'CHIPageControl'
+  pod 'SwipeCellKit'
   #pod 'SOTabBar'
  # pod "SHSearchBar"
-  #pod 'MaterialComponents/AppBar'
-  #pod 'MXParallaxHeader'
-  pod 'APParallaxHeader'
-  pod 'ParallaxHeader', '~> 3.0.0'
 
   # Pods for NewProjectStructure
 

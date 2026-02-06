@@ -39,6 +39,7 @@ struct PopularTrack: Codable {
     let image: String?
     let title, type: String?
     let url: String?
+    let play_count: Int64?
 }
 
 //// MARK: - RelatedArtist

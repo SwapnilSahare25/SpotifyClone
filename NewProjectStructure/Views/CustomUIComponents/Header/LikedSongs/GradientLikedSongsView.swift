@@ -17,6 +17,9 @@ class GradientLikedSongsView: UIView {
   private var imgView:UIImageView!
   private var playPauseBtn:UIButton!
 
+  private var likeBtn:UIButton!
+  private var shuffleBtn:UIButton!
+  private var moreOptsBtn:UIButton!
 
   func configure(count: Int) {
          subTitle.text = "\(count) songs"
@@ -32,30 +35,46 @@ class GradientLikedSongsView: UIView {
 
   private func setUpUI(){
 
-    self.imgView = UIFactory.makeImageView(imageName: "likedSongs",contentMode: .scaleAspectFit,cornerRadius: 0,clipsToBounds: true)
+    self.imgView = UIFactory.makeImageView(imageName: "likedSongs",contentMode: .scaleAspectFit,clipsToBounds: true)
     self.addSubview(imgView)
-    imgView.addConstraints(constraintsDict: [.Trailing:75,.FixHeight:190,.Top:topBarHeight,.Leading:75])
+    imgView.addConstraints(constraintsDict: [.Trailing:30,.FixHeight:200,.Top:statusBarHeight,.Leading:30])
 
 
-    self.titleLbl = UIFactory.makeLabel(text:"Liked Songs",textColor: WhiteTextColor,font: UIFont(name: fontNameBlack, size: (HeaderFontSize+6).scaled) ?? .boldSystemFont(ofSize: 25),alignment: .center)
+    self.titleLbl = UIFactory.makeLabel(text:"Liked Songs",textColor: WhiteTextColor,font: UIFont(name: fontNameBlack, size: (HugeTitleFontSize+6).scaled) ?? .boldSystemFont(ofSize: HugeTitleFontSize+6),alignment: .left)
     self.addSubview(titleLbl)
-    titleLbl.addConstraints(constraintsDict: [.Trailing:deviceMargin,.FixHeight:30,.Leading:deviceMargin])
-    titleLbl.addConstraints(constraintsDict: [.BelowTo: 10],relativeTo: imgView)
+    titleLbl.addConstraints(constraintsDict: [.Trailing:80,.FixHeight:35,.Leading:deviceMargin])
+    titleLbl.addConstraints(constraintsDict: [.BelowTo: 25],relativeTo: imgView)
     titleLbl.backgroundColor = .clear
 
-    self.subTitle = UIFactory.makeLabel(text:"10 Songs",textColor: SecondaryTextColor,font: UIFont(name: fontNameRegular, size: (DetailTabFontSize).scaled) ?? .boldSystemFont(ofSize: DetailTabFontSize),alignment: .center)
+    self.subTitle = UIFactory.makeLabel(text:"10 Songs",textColor: SecondaryTextColor,font: UIFont(name: fontNameRegular, size: (DetailTabFontSize).scaled) ?? .boldSystemFont(ofSize: DetailTabFontSize),alignment: .left)
     self.addSubview(subTitle)
-    subTitle.addConstraints(constraintsDict: [.Trailing:deviceMargin,.FixHeight:15,.Leading:deviceMargin])
-    subTitle.addConstraints(constraintsDict: [.BelowTo: 10],relativeTo: titleLbl)
+    subTitle.addConstraints(constraintsDict: [.Trailing:80,.FixHeight:15,.Leading:deviceMargin])
+    subTitle.addConstraints(constraintsDict: [.BelowTo: 5],relativeTo: titleLbl)
     subTitle.backgroundColor = .clear
 
     self.playPauseBtn = UIFactory.makeButton(backgroundColor: .clear,cornerRadius: 25,image: "playSong")
     self.addSubview(self.playPauseBtn)
-    self.playPauseBtn.addConstraints(constraintsDict: [.FixWidth:50,.FixHeight:50,.Trailing:deviceMargin])
-    self.playPauseBtn.addConstraints(constraintsDict: [.BelowTo: 10],relativeTo: titleLbl)
+    self.playPauseBtn.addConstraints(constraintsDict: [.FixWidth:50,.FixHeight:50,.Trailing:deviceMargin,.Bottom:10])
+   // self.playPauseBtn.addConstraints(constraintsDict: [.BelowTo: 10],relativeTo: titleLbl)
     //self.playPauseBtn.tag = 100
    // self.playPauseBtn.addTarget(self, action: #selector(btnClicked), for: .touchUpInside)
 //    self.playPauseBtn.isHidden = true
+
+    self.likeBtn = UIFactory.makeButton(backgroundColor: .clear,image: "unlike")
+    self.addSubview(likeBtn)
+    likeBtn.addConstraints(constraintsDict: [.FixWidth:25,.FixHeight:25,.Leading:deviceMargin,.Bottom:15])
+
+
+    self.shuffleBtn = UIFactory.makeButton(backgroundColor: .clear,image: "shuffleOff")
+    self.addSubview(shuffleBtn)
+    shuffleBtn.addConstraints(constraintsDict: [.FixWidth:25,.FixHeight:25,.Bottom:15])
+    self.shuffleBtn.addConstraints(constraintsDict: [.LeftTo: 15],relativeTo: self.playPauseBtn)
+
+
+    self.moreOptsBtn = UIFactory.makeButton(backgroundColor: .clear,image: "moreOptsHori")
+    self.addSubview(self.moreOptsBtn)
+    self.moreOptsBtn.addConstraints(constraintsDict: [.FixWidth:15,.FixHeight:15,.Bottom:20])
+    self.moreOptsBtn.addConstraints(constraintsDict: [.RightTo:15],relativeTo: self.likeBtn)
 
     let spaceView = UIView()
     self.addSubview(spaceView)

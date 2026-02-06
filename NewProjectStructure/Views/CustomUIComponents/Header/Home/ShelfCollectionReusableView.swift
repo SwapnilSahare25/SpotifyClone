@@ -11,6 +11,12 @@ class ShelfCollectionReusableView: UICollectionReusableView, ReusableCell {
         
 
   var titleLbl:UILabel!
+  private var bottomConstraint: NSLayoutConstraint!
+
+  func setBottom(_ value: CGFloat) {
+    bottomConstraint.constant = -value
+    }
+
   override init(frame: CGRect) {
     super.init(frame: frame)
     self.backgroundColor = .clear
@@ -22,8 +28,11 @@ class ShelfCollectionReusableView: UICollectionReusableView, ReusableCell {
 
     titleLbl = UIFactory.makeLabel(text:"",textColor: WhiteTextColor,font: UIFont(name: fontNameBold, size: HeaderFontSize.scaled) ?? .boldSystemFont(ofSize: 19),alignment: .left)
     self.addSubview(titleLbl)
-    titleLbl.addConstraints(constraintsDict: [.Leading:0,.Trailing:50,.FixHeight:25,.Bottom:13])
+    titleLbl.addConstraints(constraintsDict: [.Leading:0,.Trailing:50,.FixHeight:25])
+    bottomConstraint = titleLbl.bottomAnchor.constraint(equalTo: bottomAnchor,constant: -13*DeviceMultiplier)
+    bottomConstraint.isActive = true
     titleLbl.backgroundColor = .clear
+    
   }
 
    func configure(obj: SectionObject){

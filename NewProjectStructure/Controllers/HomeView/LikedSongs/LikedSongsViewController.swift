@@ -6,10 +6,10 @@
 //
 
 import UIKit
-import APParallaxHeader
-import ParallaxHeader
+import SwipeCellKit
 
-class LikedSongsViewController: UIViewController, APParallaxViewDelegate {
+class LikedSongsViewController: UIViewController {
+
 
   private var tableView: UITableView!
 
@@ -18,9 +18,9 @@ class LikedSongsViewController: UIViewController, APParallaxViewDelegate {
   let midBlue = UIColor(red: 83/255, green: 129/255, blue: 196/255, alpha: 1)
 
   var songsObj: Tracks?
-  private var headerView: GradientLikedSongsView?
+ // private var headerView: GradientLikedSongsView?
 
-  private var isHeaderSet = false
+ // private var isHeaderSet = false
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -32,17 +32,10 @@ class LikedSongsViewController: UIViewController, APParallaxViewDelegate {
     navigationController?.navigationBar.backgroundColor = .clear
     self.setupBackButton()
     self.setUpMainView()
+    self.setupHeader()
     self.callLikedSongsApi()
 
 
-  }
-
-  override func viewDidLayoutSubviews() {
-    super.viewDidLayoutSubviews()
-
-    if !self.isHeaderSet {
-      self.setupParallaxHeader()
-    }
   }
 
 
@@ -53,6 +46,7 @@ class LikedSongsViewController: UIViewController, APParallaxViewDelegate {
     self.tableView.delegate = self
     self.tableView.dataSource = self
     self.tableView.backgroundColor = .clear
+    self.tableView.contentInsetAdjustmentBehavior = .never
     self.tableView.register(LikedSongsTableViewCell.self, forCellReuseIdentifier: LikedSongsTableViewCell.identifier)
     self.tableView.addConstraints(constraintsDict: [.Leading:0,.Trailing:0,.Bottom:0,.Top:0])
 
@@ -60,20 +54,14 @@ class LikedSongsViewController: UIViewController, APParallaxViewDelegate {
   }
 
 
-  private func setupParallaxHeader() {
+  private func setupHeader() {
 
-    if self.isHeaderSet { return }
 
-    let headerHeight: CGFloat = 300*DeviceMultiplier
-    let width = self.tableView.bounds.width > 0 ? self.tableView.bounds.width : DeviceWidth
-    let gradientView = GradientLikedSongsView(frame: CGRect(x: 0, y: 0, width: width, height: headerHeight))
+    let gradientView = GradientLikedSongsView(frame: CGRect(x: 0, y: 0, width: DeviceWidth, height: 390*DeviceMultiplier))
     gradientView.clipsToBounds = true
-    self.headerView = gradientView
-    self.tableView.addParallax(with: gradientView, andHeight: headerHeight)
-    gradientView.configure(count: 0)
-    self.tableView.parallaxView.delegate = self
-    self.tableView.showsParallax = true
-    self.isHeaderSet = true
+    gradientView.configure(count: self.songsObj?.total ?? 0)
+    self.tableView.tableHeaderView = gradientView
+
 
   }
 
@@ -88,7 +76,8 @@ class LikedSongsViewController: UIViewController, APParallaxViewDelegate {
          if let items = object.tracks {
            self.songsObj = items
          }
-         self.headerView?.configure(count: self.songsObj?.total ?? 0)
+         self.setupHeader()
+         //self.headerView?.configure(count: self.songsObj?.total ?? 0)
 
          self.tableView.reloadData()
 
@@ -107,7 +96,7 @@ class LikedSongsViewController: UIViewController, APParallaxViewDelegate {
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
 
     let offsetY = scrollView.contentOffset.y
-    let triggerOffset = (tableView.parallaxView?.frame.height ?? 300) - 120*DeviceMultiplier
+    let triggerOffset = (tableView.tableHeaderView?.frame.height ?? 300) - 120*DeviceMultiplier
 
     if offsetY >= triggerOffset {
       navigationItem.title = "Liked Songs"
@@ -127,6 +116,7 @@ extension LikedSongsViewController: UITableViewDelegate, UITableViewDataSource {
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: LikedSongsTableViewCell.identifier, for: indexPath) as! LikedSongsTableViewCell
+    cell.delegate = self
     if let items = self.songsObj?.items{
       cell.configure(obj: items[indexPath.row])
       cell.dividerLine.isHidden = indexPath.row == items.count-1
@@ -136,7 +126,40 @@ extension LikedSongsViewController: UITableViewDelegate, UITableViewDataSource {
   }
 
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    return 75*DeviceMultiplier
+    return 65*DeviceMultiplier
   }
+
+}
+
+extension LikedSongsViewController: SwipeTableViewCellDelegate{
+
+  func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeCellKit.SwipeActionsOrientation) -> [SwipeCellKit.SwipeAction]? {
+    guard orientation == .right else { return nil }
+
+       let deleteAction = SwipeAction(style: .destructive, title: "Remove") { action, indexPath in
+
+         action.fulfill(with: .delete)
+
+       }
+       deleteAction.image = UIImage(named: "remove")
+
+       return [deleteAction]
+  }
+
+//  func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeCellKit.SwipeActionsOrientation) -> SwipeCellKit.SwipeOptions {
+//    <#code#>
+//  }
+
+//  func tableView(_ tableView: UITableView, willBeginEditingRowAt indexPath: IndexPath, for orientation: SwipeCellKit.SwipeActionsOrientation) {
+//    <#code#>
+//  }
+//
+//  func tableView(_ tableView: UITableView, didEndEditingRowAt indexPath: IndexPath?, for orientation: SwipeCellKit.SwipeActionsOrientation) {
+//    <#code#>
+//  }
+//
+//  func visibleRect(for tableView: UITableView) -> CGRect? {
+//    <#code#>
+//  }
 
 }

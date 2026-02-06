@@ -84,7 +84,6 @@ class ArtistProfileViewController: UIViewController, UICollectionViewDelegate, U
     var artistArray: [ArtistSectionsArray] = []
 
     var obj1 = ArtistSectionsArray()
-
     obj1.headerHeight = 0
     obj1.artistSectionType = .header(object)
 
@@ -134,6 +133,7 @@ class ArtistProfileViewController: UIViewController, UICollectionViewDelegate, U
   }
 
   private func callArtistProfileApi() {
+
     let endPoint = Endpoints.getArtistProfileDetails(artistId: self.artistId)
 
      APIManager.shared.request(endpoint: endPoint) { [weak self] (object: ArtistObject) in
@@ -187,21 +187,23 @@ class ArtistProfileViewController: UIViewController, UICollectionViewDelegate, U
 
     case .popularTracks(let popularTracks):
       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PopularTrackCollectionViewCell.identifier, for: indexPath) as! PopularTrackCollectionViewCell
-     // cell.configure(obj: newRelease)
+
+    cell.configure(object: popularTracks[indexPath.item], index: indexPath.item)
+
       return cell
 
     case .album(let album):
       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DiscographyCollectionViewCell.identifier, for: indexPath) as! DiscographyCollectionViewCell
-//      if let items = sectionObj.items{
-//        cell.configure(obj: items[indexPath.item])
-//      }
+      
+      cell.configure(object: album[indexPath.item])
+
       return cell
 
     case .relatedArtist(let relatedArtist):
       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RelatedArtistCollectionViewCell.identifier, for: indexPath) as! RelatedArtistCollectionViewCell
-//      if let items = sectionObj.items{
-//        cell.configure(obj: items[indexPath.item])
-//      }
+
+      cell.configure(object: relatedArtist[indexPath.item])
+
       return cell
 
     default:
@@ -216,9 +218,8 @@ class ArtistProfileViewController: UIViewController, UICollectionViewDelegate, U
 
     case .popularTracks(_),.album(_),.relatedArtist(_):
       let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ShelfCollectionReusableView.identifier, for: indexPath) as! ShelfCollectionReusableView
-
       sectionHeader.titleLbl.text = sectionData.sectionHeaderTitleStr
-
+      sectionHeader.setBottom(5*DeviceMultiplier)
       return sectionHeader
 
     default:
@@ -267,14 +268,14 @@ extension ArtistProfileViewController {
       let item = NSCollectionLayoutItem(layoutSize: itemSize)
      // item.contentInsets = NSDirectionalEdgeInsets(top: 0,leading: deviceMargin-5,bottom: 0,trailing: deviceMargin-5)
 
-      let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(75))
+      let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(55))
       let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
       //group.contentInsets = NSDirectionalEdgeInsets(top: 0,leading: deviceMargin-5,bottom: 0,trailing: deviceMargin-5)
 
       let section = NSCollectionLayoutSection(group: group)
       section.contentInsets = NSDirectionalEdgeInsets(top: 0,leading: deviceMargin,bottom: 0,trailing: deviceMargin)
 
-      let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(60))
+      let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(50))
 
       let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
       section.boundarySupplementaryItems = [header]
@@ -289,7 +290,7 @@ extension ArtistProfileViewController {
       let item = NSCollectionLayoutItem(layoutSize: itemSize)
       item.contentInsets = NSDirectionalEdgeInsets(top: 0,leading: 0,bottom: 0,trailing: 0)
 
-      let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(120), heightDimension: .absolute(150))
+      let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(120), heightDimension: .absolute(155))
       let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
       //group.interItemSpacing = .fixed(10)
       //group.contentInsets = NSDirectionalEdgeInsets(top: 0,leading: deviceMargin,bottom: 0,trailing: deviceMargin)
@@ -300,7 +301,7 @@ extension ArtistProfileViewController {
       section.contentInsets = NSDirectionalEdgeInsets(top: 0,leading: deviceMargin,bottom: 0,trailing: deviceMargin)
 
 
-      let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(60))
+      let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(50))
       let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
       section.boundarySupplementaryItems = [header]
 
@@ -314,7 +315,7 @@ extension ArtistProfileViewController {
       let item = NSCollectionLayoutItem(layoutSize: itemSize)
       item.contentInsets = NSDirectionalEdgeInsets(top: 0,leading: 0,bottom: 0,trailing: 0)
 
-      let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(160), heightDimension: .absolute(190))
+      let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(105), heightDimension: .absolute(150))
       let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
       //group.interItemSpacing = .fixed(10)
       //group.contentInsets = NSDirectionalEdgeInsets(top: 0,leading: deviceMargin,bottom: 0,trailing: deviceMargin)
@@ -325,7 +326,7 @@ extension ArtistProfileViewController {
       section.contentInsets = NSDirectionalEdgeInsets(top: 0,leading: deviceMargin,bottom: 0,trailing: deviceMargin)
 
 
-      let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(60))
+      let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(50))
       let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
       section.boundarySupplementaryItems = [header]
 

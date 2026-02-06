@@ -61,25 +61,51 @@ class AlbumDetailsViewController: UIViewController {
 
     let type = self.albumDetails?.type?.capitalized ?? ""
     let artist = self.albumDetails?.artist ?? ""
-    let year = self.albumDetails?.year ?? ""
+    let year = self.albumDetails?.year ?? 0
 
     let subTitleText = "\(type):- \(artist) - \(year)"
 
     let subTitle = UIFactory.makeLabel(text:subTitleText,textColor: SecondaryTextColor,font: UIFont(name: fontNameRegular, size: (DetailTabFontSize)) ?? .boldSystemFont(ofSize: DetailTabFontSize),alignment: .left)
     headerView.addSubview(subTitle)
     subTitle.addConstraints(constraintsDict: [.Trailing:deviceMargin,.FixHeight:15,.Leading:deviceMargin])
-    subTitle.addConstraints(constraintsDict: [.BelowTo: 20],relativeTo: titleLbl)
+    subTitle.addConstraints(constraintsDict: [.BelowTo: 5],relativeTo: titleLbl)
     subTitle.backgroundColor = .clear
+
+
+    let songsCount = self.albumDetails?.tracks?.total ?? 0
+    let totalDuration = self.albumDetails?.totalDuration ?? ""
+
+    let songsCountAndDuretionTitleText = "\(songsCount) songs - \(totalDuration)"
+
+
+    let songsCountAndDuretionTitle = UIFactory.makeLabel(text:songsCountAndDuretionTitleText,textColor: SecondaryTextColor,font: UIFont(name: fontNameRegular, size: (DetailTabFontSize)) ?? .boldSystemFont(ofSize: DetailTabFontSize),alignment: .left)
+    headerView.addSubview(songsCountAndDuretionTitle)
+    songsCountAndDuretionTitle.addConstraints(constraintsDict: [.Trailing:50,.FixHeight:15,.Leading:deviceMargin])
+    songsCountAndDuretionTitle.addConstraints(constraintsDict: [.BelowTo: 5],relativeTo: subTitle)
+    songsCountAndDuretionTitle.backgroundColor = .clear
 
     let playBtn = UIFactory.makeButton(backgroundColor: .clear,cornerRadius: 25*DeviceMultiplier,image: "playSong")
     headerView.addSubview(playBtn)
     playBtn.addConstraints(constraintsDict: [.FixWidth:60,.FixHeight:60,.Trailing:deviceMargin,.Bottom:5])
     //playBtn.addTarget(self, action: #selector(btnClicked), for: .touchUpInside)
 
+    let shuffleBtn = UIFactory.makeButton(backgroundColor: .clear,image: "shuffleOff")
+    headerView.addSubview(shuffleBtn)
+    shuffleBtn.addConstraints(constraintsDict: [.FixWidth:25,.FixHeight:25,.Bottom:15])
+    shuffleBtn.addConstraints(constraintsDict: [.LeftTo: 15],relativeTo: playBtn)
+
+
     let likeBtn = UIFactory.makeButton(backgroundColor: .clear,image: "unlike")
     headerView.addSubview(likeBtn)
     likeBtn.addConstraints(constraintsDict: [.FixWidth:25,.FixHeight:25,.Leading:deviceMargin,.Bottom:5])
     //likeBtn.addTarget(self, action: #selector(btnClicked), for: .touchUpInside)
+
+
+    let moreOptsBtn = UIFactory.makeButton(backgroundColor: .clear,image: "moreOptsHori")
+    headerView.addSubview(moreOptsBtn)
+    moreOptsBtn.addConstraints(constraintsDict: [.FixWidth:15,.FixHeight:15,.Bottom:10])
+    moreOptsBtn.addConstraints(constraintsDict: [.RightTo:15],relativeTo: likeBtn)
+
 
     self.tableView.tableHeaderView = headerView
 
@@ -139,6 +165,6 @@ extension AlbumDetailsViewController: UITableViewDelegate, UITableViewDataSource
   }
 
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    return 75*DeviceMultiplier
+    return 60*DeviceMultiplier
   }
 }
