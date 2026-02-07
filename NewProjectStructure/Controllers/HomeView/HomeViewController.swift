@@ -7,11 +7,18 @@
 
 import UIKit
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController, NewReleaseHeaderDelegate {
+
+  func didTapNewReleaseHeader(id: Int) {
+    let vc = ArtistProfileViewController()
+    vc.artistId = id
+    vc.hidesBottomBarWhenPushed = true
+    self.navigationController?.pushViewController(vc, animated: true)
+  }
+  
 
 
   private var collectionView:UICollectionView!
-
   private var homeSectionArray:[HomeSectionsArray] = []
 
 
@@ -189,12 +196,12 @@ class HomeViewController: UIViewController {
     self.navigationController?.pushViewController(vc, animated: true)
   }
 
-  @objc private func sectionHeaderClicked(_ sender: UITapGestureRecognizer) {
-
-    let vc = ArtistProfileViewController()
-    vc.hidesBottomBarWhenPushed = true
-    self.navigationController?.pushViewController(vc, animated: true)
-  }
+//  @objc private func sectionHeaderClicked(_ sender: UITapGestureRecognizer) {
+//
+//    let vc = ArtistProfileViewController()
+//    vc.hidesBottomBarWhenPushed = true
+//    self.navigationController?.pushViewController(vc, animated: true)
+//  }
 
 }
 
@@ -285,6 +292,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         self.navigationController?.pushViewController(albumVC, animated: true)
       }else{
         print("Add Player To Play the song")
+        AudioPlayerManager.shared.playSong(song: obj)
       }
     case .newRelease(let newRelease):
       let albumVC = AlbumDetailsViewController()
@@ -341,8 +349,10 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
       sectionHeader2.subtitleLbl.text = "NEW RELEASE FROM"
       sectionHeader2.setLeading(deviceMargin)
       sectionHeader2.configure(obj: newRelease)
-      sectionHeader2.isUserInteractionEnabled = true
-      sectionHeader2.addTarget(self, action: #selector(self.sectionHeaderClicked))
+      sectionHeader2.artistId = newRelease.artist?.id ?? 0
+      sectionHeader2.delegate = self
+      //sectionHeader2.isUserInteractionEnabled = true
+      //sectionHeader2.addTarget(self, action: #selector(self.sectionHeaderClicked))
 
 
       return sectionHeader2
@@ -356,7 +366,8 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         horizontalShelfSectionHeader.profileImage.setImage(urlStr: sectionObj.image ?? "")
         horizontalShelfSectionHeader.titleLbl.text = sectionObj.title ?? ""
         horizontalShelfSectionHeader.subtitleLbl.text = "MORE LIKE"
-
+        horizontalShelfSectionHeader.artistId = sectionObj.associatedItem?.id ?? 0
+        horizontalShelfSectionHeader.delegate = self
         return horizontalShelfSectionHeader
 
       }else{

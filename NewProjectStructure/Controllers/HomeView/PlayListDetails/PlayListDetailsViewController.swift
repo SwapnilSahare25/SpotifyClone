@@ -43,26 +43,53 @@ class PlayListDetailsViewController: UIViewController, UITableViewDelegate, UITa
 
     let titleLbl = UIFactory.makeLabel(text: self.playListObj?.title ?? "",textColor: WhiteTextColor,font: UIFont(name: fontNameBlack, size: (HugeTitleFontSize+4)) ?? .boldSystemFont(ofSize: BigTitleFontsize),alignment: .left)
     headerView.addSubview(titleLbl)
-    titleLbl.addConstraints(constraintsDict: [.Trailing:deviceMargin,.FixHeight:35,.Leading:deviceMargin])
+    titleLbl.addConstraints(constraintsDict: [.Trailing:deviceMargin,.HeightLessThanOrEqual:50,.Leading:deviceMargin])
     titleLbl.addConstraints(constraintsDict: [.BelowTo: 25],relativeTo: imgView)
     titleLbl.backgroundColor = .clear
 
 
-    let subTitle = UIFactory.makeLabel(text:self.playListObj?.subtitle ?? "",textColor: SecondaryTextColor,font: UIFont(name: fontNameRegular, size: (DetailTabFontSize)) ?? .boldSystemFont(ofSize: DetailTabFontSize),alignment: .left)
+    let descTitle = UIFactory.makeLabel(text:self.playListObj?.description ?? "",textColor: SecondaryTextColor,font: UIFont(name: fontNameRegular, size: (DetailTabFontSize)) ?? .boldSystemFont(ofSize: DetailTabFontSize),alignment: .left)
+    headerView.addSubview(descTitle)
+    descTitle.addConstraints(constraintsDict: [.Trailing:deviceMargin,.FixHeight:15,.Leading:deviceMargin])
+    descTitle.addConstraints(constraintsDict: [.BelowTo: 5],relativeTo: titleLbl)
+    descTitle.backgroundColor = .clear
+
+
+    let songsCount = self.playListObj?.songCount ?? 0
+    let totalDuration = self.playListObj?.totalDuration ?? ""
+    let likeCount = self.playListObj?.likesCount ?? ""
+
+    let songsCountAndDuretionTitleText = "\(songsCount) songs - \(totalDuration) - \(likeCount)"
+
+
+    let subTitle = UIFactory.makeLabel(text:songsCountAndDuretionTitleText,textColor: SecondaryTextColor,font: UIFont(name: fontNameRegular, size: (DetailTabFontSize)) ?? .boldSystemFont(ofSize: DetailTabFontSize),alignment: .left)
     headerView.addSubview(subTitle)
     subTitle.addConstraints(constraintsDict: [.Trailing:deviceMargin,.FixHeight:15,.Leading:deviceMargin])
-    subTitle.addConstraints(constraintsDict: [.BelowTo: 15],relativeTo: titleLbl)
+    subTitle.addConstraints(constraintsDict: [.BelowTo: 5],relativeTo: descTitle)
     subTitle.backgroundColor = .clear
+
 
     let playBtn = UIFactory.makeButton(backgroundColor: .clear,cornerRadius: 25*DeviceMultiplier,image: "playSong")
     headerView.addSubview(playBtn)
     playBtn.addConstraints(constraintsDict: [.FixWidth:60,.FixHeight:60,.Trailing:deviceMargin,.Bottom:5])
     //playBtn.addTarget(self, action: #selector(btnClicked), for: .touchUpInside)
 
+    let shuffleBtn = UIFactory.makeButton(backgroundColor: .clear,image: "shuffleOff")
+    headerView.addSubview(shuffleBtn)
+    shuffleBtn.addConstraints(constraintsDict: [.FixWidth:25,.FixHeight:25,.Bottom:15])
+    shuffleBtn.addConstraints(constraintsDict: [.LeftTo: 15],relativeTo: playBtn)
+
+
     let likeBtn = UIFactory.makeButton(backgroundColor: .clear,image: "unlike")
     headerView.addSubview(likeBtn)
     likeBtn.addConstraints(constraintsDict: [.FixWidth:25,.FixHeight:25,.Leading:deviceMargin,.Bottom:5])
     //likeBtn.addTarget(self, action: #selector(btnClicked), for: .touchUpInside)
+
+    let moreOptsBtn = UIFactory.makeButton(backgroundColor: .clear,image: "moreOptsHori")
+    headerView.addSubview(moreOptsBtn)
+    moreOptsBtn.addConstraints(constraintsDict: [.FixWidth:15,.FixHeight:15,.Bottom:10])
+    moreOptsBtn.addConstraints(constraintsDict: [.RightTo:15],relativeTo: likeBtn)
+
 
     self.tableView.tableHeaderView = headerView
 
@@ -105,6 +132,19 @@ class PlayListDetailsViewController: UIViewController, UITableViewDelegate, UITa
 
    }
 
+  func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    let offsetY = scrollView.contentOffset.y
+    let triggerOffset = 300*DeviceMultiplier
+
+    if offsetY >= triggerOffset {
+      navigationItem.title = self.playListObj?.title ?? ""
+      self.setNavBarGradient(colors: [UIColor(hex: "#2E4E8C"),UIColor(hex: "#050708")])
+    } else {
+      navigationItem.title = ""
+      setNavBarColor(.clear)
+    }
+  }
+
 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return self.playListObj?.tracks?.items?.count ?? 0
@@ -121,7 +161,7 @@ class PlayListDetailsViewController: UIViewController, UITableViewDelegate, UITa
   }
 
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    return 75*DeviceMultiplier
+    return 58*DeviceMultiplier
   }
 
 }

@@ -10,7 +10,7 @@ import Foundation
 
 struct HomeObject: Codable {
 
-  let gridItems: [GridItem]?
+  let gridItems: [Item]?
   let newRelease: NewRelease?
   let sections: [SectionObject]?
 
@@ -21,25 +21,51 @@ struct HomeObject: Codable {
   }
 }
 
-// MARK: - GridItem
-struct GridItem: Codable {
+//// MARK: - GridItem
+//struct GridItem: Codable {
+//  let id: Int?
+//  let image: String?
+//  let pinned: Bool?
+//  let title, type, album, artist: String?
+//  let duration: String?
+//  let url: String?
+//  let description: String?
+//  let owner: String?
+//  let songCount: Int?
+//  let subtitle: String?
+//
+//  enum CodingKeys: String, CodingKey {
+//    case id, image, pinned, title, type, album, artist, duration, url, description, owner
+//    case songCount = "song_count"
+//    case subtitle
+//  }
+//}
+
+// MARK: - Item
+struct Item: Codable {
+  let description: String?
   let id: Int?
   let image: String?
-  let pinned: Bool?
-  let title, type, album, artist: String?
-  let duration: String?
-  let url: String?
-  let description: String?
   let owner: String?
   let songCount: Int?
-  let subtitle: String?
+  let subtitle, title: String?
+  let type: String?
+  let artist, name: String?
+  let color: String?
+  let pinned: Bool?
+  let album: String?
+  let duration: String?
+  let url: String?
+  let playCount: Int64?
 
   enum CodingKeys: String, CodingKey {
-    case id, image, pinned, title, type, album, artist, duration, url, description, owner
+    case description, id, image, owner
     case songCount = "song_count"
-    case subtitle
+    case subtitle, title, type, artist, name, color, pinned, album, duration, url
+    case playCount = "play_count"
   }
 }
+
 // MARK: - NewRelease
 struct NewRelease: Codable {
   let artist: Artist?
@@ -69,38 +95,22 @@ struct SectionObject: Codable {
   let id: String?
   let items: [Item]?
   let title, image,type: String?
+  let associatedItem: AssociatedItem?
 
   enum CodingKeys:String, CodingKey {
     case id, items, title, image, type
+    case associatedItem = "associated_item"
   }
 }
-
-// MARK: - Item
-struct Item: Codable {
-  let description: String?
-  let id: Int?
-  let image: String?
-  let owner: String?
-  let songCount: Int?
-  let subtitle, title: String?
-  let type: String?
-  let artist, name: String?
-  let color: String?
-  let pinned: Bool?
-  let album: String?
-  let duration: String?
-  let url: String?
-  let playCount: Int64?
-
-  enum CodingKeys: String, CodingKey {
-    case description, id, image, owner
-    case songCount = "song_count"
-    case subtitle, title, type, artist, name, color, pinned, album, duration, url
-    case playCount = "play_count"
-  }
+struct AssociatedItem: Codable {
+    let id: Int?
+    let subtitle, title: String?
+    let type: String?
 }
+
+
 enum HomeSectionType {
-  case quickAccess([GridItem])
+  case quickAccess([Item])
   case newRelease(NewRelease)
   case horizontalShelf(SectionObject)
   case circularArtistShelf(SectionObject)

@@ -7,6 +7,11 @@
 
 import UIKit
 
+protocol NewReleaseHeaderDelegate: AnyObject {
+    func didTapNewReleaseHeader(id: Int)
+}
+
+
 class NewReleaseCollectionReusableView: UICollectionReusableView, ReusableCell {
         
 
@@ -16,10 +21,16 @@ class NewReleaseCollectionReusableView: UICollectionReusableView, ReusableCell {
   var subtitleLbl:UILabel!
  private var profileLeadingConstraint: NSLayoutConstraint!
 
+  var artistId: Int = 0
+  weak var delegate: NewReleaseHeaderDelegate?
+
   override init(frame: CGRect) {
     super.init(frame: frame)
     self.backgroundColor = CellBgColor
     self.setUpUi()
+    let tap = UITapGestureRecognizer(target: self, action: #selector(headerTapped))
+    self.addGestureRecognizer(tap)
+    self.isUserInteractionEnabled = true
 
   }
   func setLeading(_ value: CGFloat) {
@@ -57,6 +68,11 @@ class NewReleaseCollectionReusableView: UICollectionReusableView, ReusableCell {
     subtitleLbl.aboveTo(view: titleLbl, constant: 2)
     subtitleLbl.backgroundColor = .clear
   }
+
+  @objc private func headerTapped() {
+    //guard let artistId = self.artistId else { return }
+    delegate?.didTapNewReleaseHeader(id: self.artistId)
+   }
 
   func configure(obj: NewRelease) {
 

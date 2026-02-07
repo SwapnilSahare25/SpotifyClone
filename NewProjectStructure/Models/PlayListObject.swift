@@ -17,10 +17,14 @@ struct PlayListObject: Codable {
     let subtitle, title: String?
     let tracks: Tracks?
     let type: String?
+    let likesCount: String?
+    let totalDuration: String?
 
     enum CodingKeys: String, CodingKey {
         case description, id, image, owner
         case songCount = "song_count"
         case subtitle, title, tracks, type
+        case likesCount = "likes_count"
+        case totalDuration = "total_duration"
     }
 }

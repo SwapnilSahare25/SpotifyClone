@@ -18,7 +18,7 @@ class HomeGreetingCollectionViewCell: UICollectionViewCell,ReusableCell {
 
   override init(frame: CGRect) {
     super.init(frame: frame)
-    //contentView.backgroundColor = .white.withAlphaComponent(0.1)
+  
     self.backgroundColor = .clear
 
     self.setUpUi()
@@ -47,7 +47,7 @@ class HomeGreetingCollectionViewCell: UICollectionViewCell,ReusableCell {
     self.titleLbl.addConstraints(constraintsDict: [.FixHeight:15,.CenterY:0,.Trailing:0])
     self.titleLbl.addConstraints(constraintsDict: [.RightTo:0],relativeTo: self.imgView)
   }
-  func configure(obj: GridItem) {
+  func configure(obj: Item) {
     self.titleLbl.text = obj.title ?? ""
     self.imgView.setImage(urlStr: obj.image ?? "")
   }

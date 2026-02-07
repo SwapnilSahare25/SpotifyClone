@@ -10,13 +10,13 @@ import UIKit
 
 extension UIViewController {
 
-  func setupBackButton(image: String="leftArrow",action: Selector? = nil) {
+  func setupBackButton(image: String="back",action: Selector? = nil) {
 
     let button = UIFactory.makeButton()
       button.setImage(UIImage(named: image), for: .normal)
       button.frame = CGRect(x: 0, y: 0, width: 30*DeviceMultiplier, height: 30*DeviceMultiplier)
       button.layer.cornerRadius = 5*DeviceMultiplier
-    button.backgroundColor = .red
+    button.backgroundColor = .clear
 
       if let action = action {
           button.addTarget(self, action: action, for: .touchUpInside)

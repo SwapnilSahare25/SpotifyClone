@@ -16,6 +16,7 @@ class ArtistProfileViewController: UIViewController, UICollectionViewDelegate, U
   private var artistSectionArray:[ArtistSectionsArray] = []
 
   var artistId: Int = 0
+  var artistName: String = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -139,7 +140,7 @@ class ArtistProfileViewController: UIViewController, UICollectionViewDelegate, U
      APIManager.shared.request(endpoint: endPoint) { [weak self] (object: ArtistObject) in
 
        if let self = self {
-
+         self.artistName = object.name ?? ""
          self.generateArtistProfileArray(object: object)
 
          self.collectionView.reloadData()
@@ -152,6 +153,19 @@ class ArtistProfileViewController: UIViewController, UICollectionViewDelegate, U
      }
 
    }
+
+  func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    let offsetY = scrollView.contentOffset.y
+    let triggerOffset = 200*DeviceMultiplier
+
+    if offsetY >= triggerOffset {
+      navigationItem.title = self.artistName
+      self.setNavBarGradient(colors: [UIColor.black])
+    } else {
+      navigationItem.title = ""
+      setNavBarColor(.clear)
+    }
+  }
 
 
   func numberOfSections(in collectionView: UICollectionView) -> Int {

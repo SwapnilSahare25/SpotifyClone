@@ -107,5 +107,21 @@ extension String {
             return strNewTime
         }
     }
-    
+
+  func toSeconds() -> Double? {
+          let components = self.split(separator: ":")
+          guard components.count >= 2 else { return Double(self) } // Fallback for plain numbers
+
+          let parts = components.compactMap { Double($0) }
+
+          if parts.count == 3 {
+              // HH:MM:SS
+              return (parts[0] * 3600) + (parts[1] * 60) + parts[2]
+          } else if parts.count == 2 {
+              // MM:SS
+              return (parts[0] * 60) + parts[1]
+          }
+          return nil
+      }
+
 }
