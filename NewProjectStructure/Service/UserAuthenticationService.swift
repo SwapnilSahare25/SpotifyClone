@@ -229,6 +229,7 @@ class UserAuthenticationService {
                                     completion(false)
                                     return
                                 }
+                          print(user.user_id ?? 0,"User ID is ")
                                 userId = user.user_id ?? 0
                                 completion(true)
                             }

@@ -29,6 +29,8 @@ class AudioPlayerManager {
 
   private var timeObserver: Any?
 
+  var isMiniPlayerVisible: Bool = false
+
   private init() {}
 
   func playSong(song: Item){

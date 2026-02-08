@@ -9,6 +9,15 @@ import UIKit
 
 class HomeViewController: UIViewController, NewReleaseHeaderDelegate {
 
+//  func miniPlayerVisibilityChanged(isVisible: Bool, height: CGFloat) {
+//        var inset = collectionView.contentInset
+//        inset.bottom = height
+//        UIView.animate(withDuration: 0.25) {
+//            self.collectionView.contentInset = inset
+//            self.collectionView.scrollIndicatorInsets = inset
+//        }
+//    }
+
   func didTapNewReleaseHeader(id: Int) {
     let vc = ArtistProfileViewController()
     vc.artistId = id
@@ -28,6 +37,11 @@ class HomeViewController: UIViewController, NewReleaseHeaderDelegate {
     navigationController?.setNavigationBarHidden(true, animated: false)
     edgesForExtendedLayout = [.top]
     extendedLayoutIncludesOpaqueBars = true
+
+//    if let tabManager = self.tabBarController as? TabBarManager {
+//              tabManager.miniPlayerDelegate = self
+//          }
+
     self.setUpMainView()
     self.callHomeApi()
 
@@ -39,13 +53,13 @@ class HomeViewController: UIViewController, NewReleaseHeaderDelegate {
       navigationController?.setNavigationBarHidden(true, animated: false)
   }
 
-  override func viewDidLayoutSubviews() {
-      super.viewDidLayoutSubviews()
-
-      collectionView.contentInset = UIEdgeInsets(top: 0,left: 0,bottom: 15,right: 0)
-
-      collectionView.scrollIndicatorInsets = collectionView.contentInset
-  }
+//  override func viewDidLayoutSubviews() {
+//      super.viewDidLayoutSubviews()
+//
+//      collectionView.contentInset = UIEdgeInsets(top: 0,left: 0,bottom: 15,right: 0)
+//
+//      collectionView.scrollIndicatorInsets = collectionView.contentInset
+//  }
 
  private func generateHomeSectionArray(object:HomeObject){
     var sectionArray: [HomeSectionsArray] = []

@@ -59,7 +59,8 @@ let PerPageItem: Int  = 20
 
 var AuthorizeUrl = "https://accounts.spotify.com/authorize"
 //var Host = "https://api.spotify.com/v1"
-var Host = "http://127.0.0.1:5001/"
+//var Host =  "http://127.0.0.1:5001/"
+var Host =  "http://192.168.1.33:5001/"
 var scopes = "user-read-private user-read-email playlist-read-private"
 var spotifyClientID: String = "262b23b768d84dafb4129b71109f66e4"
 var spotifyClientSecret: String = "8b08ca74b389477cb40b8470b314234d"

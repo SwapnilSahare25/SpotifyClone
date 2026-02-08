@@ -18,9 +18,7 @@ class LikedSongsViewController: UIViewController {
   let midBlue = UIColor(red: 83/255, green: 129/255, blue: 196/255, alpha: 1)
 
   var songsObj: Tracks?
- // private var headerView: GradientLikedSongsView?
 
- // private var isHeaderSet = false
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -38,6 +36,18 @@ class LikedSongsViewController: UIViewController {
 
   }
 
+  override func viewWillAppear(_ animated: Bool) {
+      super.viewWillAppear(animated)
+    self.tableView.contentInsetAdjustmentBehavior = .never
+      // Manual Check
+      if AudioPlayerManager.shared.isMiniPlayerVisible {
+          let playerHeight: CGFloat = 56.0*DeviceMultiplier
+          tableView.contentInset.bottom = playerHeight + 25*DeviceMultiplier
+      } else {
+          tableView.contentInset.bottom = 0
+      }
+  }
+
 
   private func setUpMainView(){
 
@@ -46,7 +56,7 @@ class LikedSongsViewController: UIViewController {
     self.tableView.delegate = self
     self.tableView.dataSource = self
     self.tableView.backgroundColor = .clear
-    self.tableView.contentInsetAdjustmentBehavior = .never
+    //self.tableView.contentInsetAdjustmentBehavior = .never
     self.tableView.register(LikedSongsTableViewCell.self, forCellReuseIdentifier: LikedSongsTableViewCell.identifier)
     self.tableView.addConstraints(constraintsDict: [.Leading:0,.Trailing:0,.Bottom:0,.Top:0])
 

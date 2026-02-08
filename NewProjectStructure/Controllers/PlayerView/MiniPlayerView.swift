@@ -126,14 +126,16 @@ class MiniPlayerView: UIView {
       switch gesture.state {
       case .began:
           originalCenter = targetView.center
+
       case .changed:
-          // Only allow dragging DOWN
-          if translation.y > 0 {
-              targetView.center = CGPoint(x: originalCenter.x, y: originalCenter.y + translation.y)
+          // Only allow dragging LEFT
+          if translation.x < 0 {
+              targetView.center = CGPoint(x: originalCenter.x + translation.x, y: originalCenter.y)
           }
-      case .ended:
-          // If dragged down more than 50 points, close it
-          if translation.y > 50 {
+
+      case .ended, .cancelled:
+          // If dragged left more than 50 points, close it
+          if translation.x < -50 {
               delegate?.didSwipeToClose()
           } else {
               // Return to original position
@@ -141,6 +143,7 @@ class MiniPlayerView: UIView {
                   targetView.center = self.originalCenter
               }
           }
+
       default:
           break
       }
