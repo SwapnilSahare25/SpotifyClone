@@ -26,6 +26,8 @@
 		551F72FC2ED8864C00B44A14 /* Inter_18pt-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 551F72F32ED8864C00B44A14 /* Inter_18pt-Light.ttf */; };
 		551F72FD2ED8864C00B44A14 /* Inter_18pt-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 551F72F42ED8864C00B44A14 /* Inter_18pt-Regular.ttf */; };
 		551F72FE2ED8864C00B44A14 /* Inter_18pt-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 551F72F52ED8864C00B44A14 /* Inter_18pt-Bold.ttf */; };
+		55223A752F3A33DB00D4E4FC /* MusicProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55223A742F3A33DB00D4E4FC /* MusicProgressView.swift */; };
+		55223A782F3A363800D4E4FC /* ToggleLikeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55223A772F3A363800D4E4FC /* ToggleLikeButton.swift */; };
 		554779C32F1E6E7B00895C0B /* ActiveSearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554779C22F1E6E7B00895C0B /* ActiveSearchCollectionViewCell.swift */; };
 		554D23412F3797A4008E3345 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554D23402F3797A4008E3345 /* PlayerViewController.swift */; };
 		554D23432F3797E0008E3345 /* AudioPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554D23422F3797E0008E3345 /* AudioPlayerManager.swift */; };
@@ -33,6 +35,7 @@
 		558822382F2BC090004EBBBB /* LikedSongsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558822372F2BC090004EBBBB /* LikedSongsViewController.swift */; };
 		5588223B2F2BCE26004EBBBB /* LikedSongsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5588223A2F2BCE26004EBBBB /* LikedSongsTableViewCell.swift */; };
 		5588223E2F2BD084004EBBBB /* GradientLikedSongsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5588223D2F2BD084004EBBBB /* GradientLikedSongsView.swift */; };
+		5588DA0A2F392191008B9704 /* PlayerPresentAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5588DA092F392191008B9704 /* PlayerPresentAnimator.swift */; };
 		558C09B52EEACEF8003D4310 /* LibraryObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558C09B42EEACEF8003D4310 /* LibraryObject.swift */; };
 		558EBC7D2F33474000089494 /* PlayListDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558EBC7C2F33474000089494 /* PlayListDetailsViewController.swift */; };
 		558EBC802F33536E00089494 /* PlayListDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558EBC7F2F33536E00089494 /* PlayListDetailsTableViewCell.swift */; };
@@ -114,6 +117,8 @@
 		551F72F32ED8864C00B44A14 /* Inter_18pt-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter_18pt-Light.ttf"; sourceTree = "<group>"; };
 		551F72F42ED8864C00B44A14 /* Inter_18pt-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter_18pt-Regular.ttf"; sourceTree = "<group>"; };
 		551F72F52ED8864C00B44A14 /* Inter_18pt-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter_18pt-Bold.ttf"; sourceTree = "<group>"; };
+		55223A742F3A33DB00D4E4FC /* MusicProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicProgressView.swift; sourceTree = "<group>"; };
+		55223A772F3A363800D4E4FC /* ToggleLikeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleLikeButton.swift; sourceTree = "<group>"; };
 		554779C22F1E6E7B00895C0B /* ActiveSearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveSearchCollectionViewCell.swift; sourceTree = "<group>"; };
 		554D23402F3797A4008E3345 /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
 		554D23422F3797E0008E3345 /* AudioPlayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerManager.swift; sourceTree = "<group>"; };
@@ -121,6 +126,7 @@
 		558822372F2BC090004EBBBB /* LikedSongsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedSongsViewController.swift; sourceTree = "<group>"; };
 		5588223A2F2BCE26004EBBBB /* LikedSongsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedSongsTableViewCell.swift; sourceTree = "<group>"; };
 		5588223D2F2BD084004EBBBB /* GradientLikedSongsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientLikedSongsView.swift; sourceTree = "<group>"; };
+		5588DA092F392191008B9704 /* PlayerPresentAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerPresentAnimator.swift; sourceTree = "<group>"; };
 		558C09B42EEACEF8003D4310 /* LibraryObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryObject.swift; sourceTree = "<group>"; };
 		558EBC7C2F33474000089494 /* PlayListDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayListDetailsViewController.swift; sourceTree = "<group>"; };
 		558EBC7F2F33536E00089494 /* PlayListDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayListDetailsTableViewCell.swift; sourceTree = "<group>"; };
@@ -275,12 +281,22 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		55223A762F3A360800D4E4FC /* CustomButtons */ = {
+			isa = PBXGroup;
+			children = (
+				55223A772F3A363800D4E4FC /* ToggleLikeButton.swift */,
+			);
+			path = CustomButtons;
+			sourceTree = "<group>";
+		};
 		554D233F2F37977C008E3345 /* PlayerView */ = {
 			isa = PBXGroup;
 			children = (
 				554D23402F3797A4008E3345 /* PlayerViewController.swift */,
 				554D23422F3797E0008E3345 /* AudioPlayerManager.swift */,
 				554D23442F37A0B3008E3345 /* MiniPlayerView.swift */,
+				5588DA092F392191008B9704 /* PlayerPresentAnimator.swift */,
+				55223A742F3A33DB00D4E4FC /* MusicProgressView.swift */,
 			);
 			path = PlayerView;
 			sourceTree = "<group>";
@@ -504,6 +520,7 @@
 		55CF4CC62ED6F82B00A77E05 /* CustomUIComponents */ = {
 			isa = PBXGroup;
 			children = (
+				55223A762F3A360800D4E4FC /* CustomButtons */,
 				559613142EFBE78A004ED2D4 /* Header */,
 				55CF4CC72ED7277E00A77E05 /* CustomButton.swift */,
 			);
@@ -800,6 +817,7 @@
 				559C5BE82EFD242300204C16 /* SectionBgViewCollectionReusableView.swift in Sources */,
 				5591721F2F326E4D006F9400 /* AlbumDetailsTableViewCell.swift in Sources */,
 				55CF4CAE2ED6F69F00A77E05 /* UserDefaultManager.swift in Sources */,
+				55223A752F3A33DB00D4E4FC /* MusicProgressView.swift in Sources */,
 				55CF4CAC2ED6F68200A77E05 /* String+Extension.swift in Sources */,
 				55D70DB52ED6327C00780590 /* ProfileViewController.swift in Sources */,
 				559019652ED9C42E005F9E5E /* LoginViewController.swift in Sources */,
@@ -827,6 +845,8 @@
 				5509C8C72EFE8AE800DD5663 /* SearchCollectionViewCell.swift in Sources */,
 				55CF4CC52ED6F81C00A77E05 /* UIFactory.swift in Sources */,
 				55CF4CC02ED6F79F00A77E05 /* UserAuthenticationService.swift in Sources */,
+				5588DA0A2F392191008B9704 /* PlayerPresentAnimator.swift in Sources */,
+				55223A782F3A363800D4E4FC /* ToggleLikeButton.swift in Sources */,
 				55CF4CD82ED765D000A77E05 /* Strings.swift in Sources */,
 				55B4E0112EFAA71500A5CC7A /* HomeObject.swift in Sources */,
 				551F72DA2ED8829300B44A14 /* WindowManager.swift in Sources */,

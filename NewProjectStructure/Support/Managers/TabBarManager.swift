@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import AHKNavigationController
+import StickyTabBarViewController
 
 struct TabItem {
   let viewController: UIViewController
@@ -41,18 +42,8 @@ class TabBarManager: UITabBarController, UITabBarControllerDelegate {
 
   private func setupMiniPlayerUI(_ isHidden: Bool = false) {
 
-   // view.addSubview(miniPlayerView)
-    // Important: Insert visually below the TabBar so it looks like it sits 'under' or 'connected' to it,
-            // but physically purely above it on the Y-axis.
-            // Actually, we want it ON TOP of content, but perhaps BEHIND the TabBar's background blurring?
-            // Standard practice: Insert below Tab Bar.
     view.insertSubview(miniPlayerView, belowSubview: tabBar)
-          // miniPlayerView.translatesAutoresizingMaskIntoConstraints = false
-
-
-
     miniPlayerView.addConstraints(constraintsDict: [.Leading:0,.Trailing:0,.FixHeight:kMiniPlayerHeight])
-
     playerBottomConstraint = miniPlayerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
     playerBottomConstraint?.isActive = true
     miniPlayerView.isHidden = isHidden // Hidden by default until song plays
@@ -75,55 +66,43 @@ class TabBarManager: UITabBarController, UITabBarControllerDelegate {
   }
 
   private func updatePlayerPosition() {
-      guard !miniPlayerView.isHidden else { return }
+    guard !miniPlayerView.isHidden else { return }
 
-      // 1. Determine where the player *should* be bottom-aligned to.
-      // Option A: If TabBar is visible and on-screen, sit on top of it.
-      // Option B: If TabBar is hidden or off-screen, sit at Safe Area Bottom.
+    // 1. Determine where the player *should* be bottom-aligned to.
+    // Option A: If TabBar is visible and on-screen, sit on top of it.
+    // Option B: If TabBar is hidden or off-screen, sit at Safe Area Bottom.
 
-      //let tabBarHeight = tabBar.frame.height
-      let tabBarY = tabBar.frame.origin.y
-      let viewHeight = view.frame.height
+    //let tabBarHeight = tabBar.frame.height
+    let tabBarY = tabBar.frame.origin.y
+    let viewHeight = view.frame.height
 
-      // Check if TabBar is effectively hidden
-      // It is hidden if isHidden=true OR if it is pushed off screen (Y >= viewHeight)
-      let isTabBarHidden = tabBar.isHidden || (tabBarY >= viewHeight)
+    // Check if TabBar is effectively hidden
+    // It is hidden if isHidden=true OR if it is pushed off screen (Y >= viewHeight)
+    let isTabBarHidden = tabBar.isHidden || (tabBarY >= viewHeight)
 
-      let bottomOffset: CGFloat
+    let bottomOffset: CGFloat
 
-      if isTabBarHidden {
-          // Dock to Safe Area Bottom
-          // We use negative inset because constraint is to view.bottomAnchor
-          bottomOffset = -view.safeAreaInsets.bottom
-      } else {
-          // Dock to Tab Bar Top
-          // The Tab Bar Top relative to View Bottom is -(viewHeight - tabBarY)
-          // Ideally, this is just -tabBarHeight, but during animation tabBarY changes.
-          bottomOffset = -(viewHeight - tabBarY)
-      }
+    if isTabBarHidden {
+      // Dock to Safe Area Bottom
+      // We use negative inset because constraint is to view.bottomAnchor
+      bottomOffset = -view.safeAreaInsets.bottom
+    } else {
+      // Dock to Tab Bar Top
+      // The Tab Bar Top relative to View Bottom is -(viewHeight - tabBarY)
+      // Ideally, this is just -tabBarHeight, but during animation tabBarY changes.
+      bottomOffset = -(viewHeight - tabBarY)
+    }
 
-      // Apply smooth constraint update
-      if playerBottomConstraint?.constant != bottomOffset {
-          playerBottomConstraint?.constant = bottomOffset
+    // Apply smooth constraint update
+    if playerBottomConstraint?.constant != bottomOffset {
+      playerBottomConstraint?.constant = bottomOffset
 
-          // If we are in an animation block, this will animate automatically.
-          // If not, it snaps (which is fine for layout passes).
-      }
+      // If we are in an animation block, this will animate automatically.
+      // If not, it snaps (which is fine for layout passes).
+    }
 
-      view.bringSubviewToFront(miniPlayerView)
+    view.bringSubviewToFront(miniPlayerView)
   }
-
-//  // MARK: - Content Insets (The Fix)
-//     private func updateContentInsets() {
-//         let isVisible = !miniPlayerView.isHidden
-//         let padding = isVisible ? kMiniPlayerHeight : 0
-//
-//         // Apply to all child ViewControllers
-//         viewControllers?.forEach { vc in
-//             vc.additionalSafeAreaInsets.bottom = padding
-//         }
-//     }
-
 
   private func setupTabs(with items: [TabItem]) {
 
@@ -178,11 +157,11 @@ class TabBarManager: UITabBarController, UITabBarControllerDelegate {
     }
 
     // Fix for iOS 15+ tab bar hidden/shown bug
-       tabBar.itemWidth = tabBar.frame.width / CGFloat(tabBar.items?.count ?? 1)
-       tabBar.itemPositioning = .centered
-       tabBar.tintColor = WhiteBgColor
-       tabBar.unselectedItemTintColor = .gray
-       tabBar.clipsToBounds = true
+    tabBar.itemWidth = tabBar.frame.width / CGFloat(tabBar.items?.count ?? 1)
+    tabBar.itemPositioning = .centered
+    tabBar.tintColor = WhiteBgColor
+    tabBar.unselectedItemTintColor = .gray
+    tabBar.clipsToBounds = true
 
   }
 
@@ -219,43 +198,53 @@ extension TabBarManager: AudioPlayerDelegate {
 
 
   func didPause() {
-      miniPlayerView.setPlaying(false)
+    miniPlayerView.setPlaying(false)
   }
 
   func didResume() {
-      miniPlayerView.setPlaying(true)
+    miniPlayerView.setPlaying(true)
   }
 
   func didStop() {
     AudioPlayerManager.shared.isMiniPlayerVisible = false
     //NotificationCenter.default.post(name: NSNotification.Name("MiniPlayerStateChanged"), object: nil)
-        UIView.animate(withDuration: 0.3, animations: {
-            self.miniPlayerView.alpha = 0
-        }) { _ in
-            self.miniPlayerView.isHidden = true
-            self.miniPlayerView.alpha = 1
-            //self.updateContentInsets()
-        }
+    UIView.animate(withDuration: 0.3, animations: {
+      self.miniPlayerView.alpha = 0
+    }) { _ in
+      self.miniPlayerView.isHidden = true
+      self.miniPlayerView.alpha = 1
+      //self.updateContentInsets()
     }
+  }
 
   func didUpdateProgress(currentTime: Double, duration: Double) {
-      let progress = Float(currentTime / duration)
-      miniPlayerView.setProgress(progress)
+    let progress = Float(currentTime / duration)
+    miniPlayerView.setProgress(progress)
   }
 }
 // MARK: - Mini Player Interaction
 extension TabBarManager: MiniPlayerDelegate {
-    func didTapMiniPlayer() {
-        let playerVC = UINavigationController(rootViewController: PlayerViewController())
-        playerVC.modalPresentationStyle = .fullScreen
-        self.present(playerVC, animated: true)
-    }
+  func didTapMiniPlayer() {
 
-    func didTapPlayPause() {
-        AudioPlayerManager.shared.togglePlayPause()
-    }
+    let playerVC = PlayerViewController()
+    let navVC = UINavigationController(rootViewController: playerVC)
 
-    func didSwipeToClose() {
-        AudioPlayerManager.shared.stop()
-    }
+    // Get mini player frame for transition
+    let frame = miniPlayerView.convert(miniPlayerView.bounds, to: view)
+    let transitionDelegate = PlayerTransitioningDelegate()
+    transitionDelegate.originFrame = frame
+    navVC.transitioningDelegate = transitionDelegate
+    navVC.modalPresentationStyle = .custom
+    self.present(navVC, animated: true)
+
+
+  }
+
+  func didTapPlayPause() {
+    AudioPlayerManager.shared.togglePlayPause()
+  }
+
+  func didSwipeToClose() {
+    AudioPlayerManager.shared.stop()
+  }
 }

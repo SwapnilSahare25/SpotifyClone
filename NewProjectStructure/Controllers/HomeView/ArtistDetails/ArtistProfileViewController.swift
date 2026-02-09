@@ -304,7 +304,7 @@ extension ArtistProfileViewController {
       let item = NSCollectionLayoutItem(layoutSize: itemSize)
       item.contentInsets = NSDirectionalEdgeInsets(top: 0,leading: 0,bottom: 0,trailing: 0)
 
-      let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(120), heightDimension: .absolute(155))
+      let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(120), heightDimension: .absolute(170))
       let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
       //group.interItemSpacing = .fixed(10)
       //group.contentInsets = NSDirectionalEdgeInsets(top: 0,leading: deviceMargin,bottom: 0,trailing: deviceMargin)

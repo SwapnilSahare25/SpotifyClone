@@ -38,10 +38,16 @@ class DiscographyCollectionViewCell: UICollectionViewCell, ReusableCell {
     titleLbl.addConstraints(constraintsDict: [.BelowTo:2],relativeTo: self.imgView)
     titleLbl.backgroundColor = .clear
 
-    self.subTitleLbl = UIFactory.makeLabel(text:"Start Now",textColor: SecondaryTextColor,font: UIFont(name: fontNameMedium, size: (SmallFontSize-3).scaled) ?? .boldSystemFont(ofSize: SmallFontSize-3),alignment: .center)
+    self.subTitleLbl = UIFactory.makeLabel(text:"Start Now",textColor: SecondaryTextColor,font: UIFont(name: fontNameMedium, size: (SmallFontSize-3).scaled) ?? .boldSystemFont(ofSize: SmallFontSize-3),alignment: .center,numberOfLines: 2)
     self.containerView.addSubview(subTitleLbl)
-    subTitleLbl.addConstraints(constraintsDict: [.Trailing:0,.HeightLessThanOrEqual:30,.Bottom:2,.Leading:0])
+    subTitleLbl.addConstraints(constraintsDict: [.Trailing:0,.HeightLessThanOrEqual:50,.Leading:0])
+    subTitleLbl.addConstraints(constraintsDict: [.BelowTo:2],relativeTo: self.titleLbl)
     subTitleLbl.backgroundColor = .clear
+
+    let space = UILabel()
+    self.containerView.addSubview(space)
+    space.addConstraints(constraintsDict: [.Trailing:0,.Bottom:2,.Leading:0])
+    space.addConstraints(constraintsDict: [.BelowTo:0],relativeTo: self.subTitleLbl)
 
 
   }
