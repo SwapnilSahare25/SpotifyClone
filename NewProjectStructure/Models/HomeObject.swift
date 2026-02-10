@@ -57,6 +57,7 @@ struct Item: Codable {
   let duration: String?
   let url: String?
   let playCount: Int64?
+  var isCurrentlyPlaying: Bool = false
 
   enum CodingKeys: String, CodingKey {
     case description, id, image, owner

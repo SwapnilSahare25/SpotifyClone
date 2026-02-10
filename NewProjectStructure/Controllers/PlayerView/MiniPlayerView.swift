@@ -42,7 +42,8 @@ class MiniPlayerView: UIView {
      private func setupUI() {
        self.translatesAutoresizingMaskIntoConstraints = false
 
-       self.backgroundColor = MiniPlayerBgColor
+       self.backgroundColor = UIColor(hex: "#141f3f")
+       //self.setGradientBackground(colors: [UIColor(hex: "#141f3f"),UIColor(hex: "#0b1225"),UIColor.black], locations: [0.30,0.55,1.0])
 
        self.progressBar.trackTintColor = .white.withAlphaComponent(0.3)
        self.progressBar.progressTintColor = .white
@@ -77,8 +78,15 @@ class MiniPlayerView: UIView {
        self.likeBtn = UIFactory.makeButton(backgroundColor: .clear,image: "unlike")
        self.addSubview(likeBtn)
        likeBtn.addConstraints(constraintsDict: [.FixWidth:25,.FixHeight:25,.CenterY:0])
-       likeBtn.addConstraints(constraintsDict: [.LeftTo:10],relativeTo: playPauseButton)
+       likeBtn.addConstraints(constraintsDict: [.LeftTo:15],relativeTo: playPauseButton)
        //likeBtn.addTarget(self, action: #selector(playPauseTapped), for: .touchUpInside)
+
+
+       let expandBtn = UIFactory.makeButton(backgroundColor: ViewBGColor, cornerRadius: 12.5*DeviceMultiplier,image: "up")
+       self.addSubview(expandBtn)
+       expandBtn.addConstraints(constraintsDict: [.FixWidth:25,.FixHeight:25,.CenterY:0])
+       expandBtn.addConstraints(constraintsDict: [.LeftTo: 15],relativeTo: likeBtn)
+       expandBtn.addTarget(self, action: #selector(handleTap), for: .touchUpInside)
 
 
      }

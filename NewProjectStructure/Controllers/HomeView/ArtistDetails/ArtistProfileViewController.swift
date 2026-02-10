@@ -18,66 +18,66 @@ class ArtistProfileViewController: UIViewController, UICollectionViewDelegate, U
   var artistId: Int = 0
   var artistName: String = ""
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-      self.view.backgroundColor = .black
-      self.navigationController?.setNavigationBarHidden(false, animated: false)
-      navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-      navigationController?.navigationBar.shadowImage = UIImage()
-      navigationController?.navigationBar.isTranslucent = true
-      navigationController?.navigationBar.backgroundColor = .clear
-      self.setupBackButton()
-      self.setUpMainView()
-      self.callArtistProfileApi()
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    self.view.backgroundColor = .black
+    self.navigationController?.setNavigationBarHidden(false, animated: false)
+    navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+    navigationController?.navigationBar.shadowImage = UIImage()
+    navigationController?.navigationBar.isTranslucent = true
+    navigationController?.navigationBar.backgroundColor = .clear
+    self.setupBackButton()
+    self.setUpMainView()
+    self.callArtistProfileApi()
 
 
-    }
+  }
 
   private func setUpMainView(){
 
 
-     let layout = self.createCompositionalLayout()
-     self.collectionView = UIFactory.makeCollectionView(layout: layout,backgroundColor: .black)
-     self.collectionView.delegate = self
-     self.collectionView.dataSource = self
-     self.collectionView.contentInsetAdjustmentBehavior = .never
+    let layout = self.createCompositionalLayout()
+    self.collectionView = UIFactory.makeCollectionView(layout: layout,backgroundColor: .black)
+    self.collectionView.delegate = self
+    self.collectionView.dataSource = self
+    self.collectionView.contentInsetAdjustmentBehavior = .never
 
-     self.collectionView.register(PopularTrackCollectionViewCell.self, forCellWithReuseIdentifier: PopularTrackCollectionViewCell.identifier)
-     self.collectionView.register(DiscographyCollectionViewCell.self, forCellWithReuseIdentifier: DiscographyCollectionViewCell.identifier)
-     self.collectionView.register(RelatedArtistCollectionViewCell.self, forCellWithReuseIdentifier: RelatedArtistCollectionViewCell.identifier)
+    self.collectionView.register(PopularTrackCollectionViewCell.self, forCellWithReuseIdentifier: PopularTrackCollectionViewCell.identifier)
+    self.collectionView.register(DiscographyCollectionViewCell.self, forCellWithReuseIdentifier: DiscographyCollectionViewCell.identifier)
+    self.collectionView.register(RelatedArtistCollectionViewCell.self, forCellWithReuseIdentifier: RelatedArtistCollectionViewCell.identifier)
     self.collectionView.register(HeaderCollectionViewCell.self, forCellWithReuseIdentifier: HeaderCollectionViewCell.identifier)
 
-     self.collectionView.register(ShelfCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ShelfCollectionReusableView.identifier)
+    self.collectionView.register(ShelfCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ShelfCollectionReusableView.identifier)
 
 
-     self.view.addSubview(self.collectionView)
+    self.view.addSubview(self.collectionView)
     self.collectionView.addConstraints(constraintsDict: [.Leading:0,.Trailing:0,.Top:0])
-     NSLayoutConstraint.activate([
-       self.collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-     ])
-   }
+    NSLayoutConstraint.activate([
+      self.collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+    ])
+  }
 
   private func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
-     return UICollectionViewCompositionalLayout {[weak self] sectionIndex, environment -> NSCollectionLayoutSection? in
-       guard let self = self else {return nil}
-       guard sectionIndex < self.artistSectionArray.count else { return nil }
-       let sectionData = self.artistSectionArray[sectionIndex]
+    return UICollectionViewCompositionalLayout {[weak self] sectionIndex, environment -> NSCollectionLayoutSection? in
+      guard let self = self else {return nil}
+      guard sectionIndex < self.artistSectionArray.count else { return nil }
+      let sectionData = self.artistSectionArray[sectionIndex]
 
-       switch sectionData.artistSectionType {
-       case .popularTracks:
-         return self.createPopularTracksSection()
-       case .album:
-         return self.createAlbumSection()
-       case .relatedArtist:
-         return self.createRelatedArtistSection()
-       case .header:
-         return self.createTopHeaderSection()
-       case .none:
-         return nil
+      switch sectionData.artistSectionType {
+      case .popularTracks:
+        return self.createPopularTracksSection()
+      case .album:
+        return self.createAlbumSection()
+      case .relatedArtist:
+        return self.createRelatedArtistSection()
+      case .header:
+        return self.createTopHeaderSection()
+      case .none:
+        return nil
 
-       }
-     }
-   }
+      }
+    }
+  }
 
 
   private func generateArtistProfileArray(object: ArtistObject){
@@ -137,22 +137,22 @@ class ArtistProfileViewController: UIViewController, UICollectionViewDelegate, U
 
     let endPoint = Endpoints.getArtistProfileDetails(artistId: self.artistId)
 
-     APIManager.shared.request(endpoint: endPoint) { [weak self] (object: ArtistObject) in
+    APIManager.shared.request(endpoint: endPoint) { [weak self] (object: ArtistObject) in
 
-       if let self = self {
-         self.artistName = object.name ?? ""
-         self.generateArtistProfileArray(object: object)
+      if let self = self {
+        self.artistName = object.name ?? ""
+        self.generateArtistProfileArray(object: object)
 
-         self.collectionView.reloadData()
+        self.collectionView.reloadData()
 
-       }else{
-         print("No Data Found")
-       }
-     } onFailure: { error in
-       print(error)
-     }
+      }else{
+        print("No Data Found")
+      }
+    } onFailure: { error in
+      print(error)
+    }
 
-   }
+  }
 
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
     let offsetY = scrollView.contentOffset.y
@@ -180,7 +180,7 @@ class ArtistProfileViewController: UIViewController, UICollectionViewDelegate, U
     case .popularTracks(let popularTrackArray):
       return popularTrackArray.count
     case .album(let albumArray):
-      return albumArray.count 
+      return albumArray.count
     case .relatedArtist(let relatedArtist):
       return relatedArtist.count
     default:
@@ -202,13 +202,13 @@ class ArtistProfileViewController: UIViewController, UICollectionViewDelegate, U
     case .popularTracks(let popularTracks):
       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PopularTrackCollectionViewCell.identifier, for: indexPath) as! PopularTrackCollectionViewCell
 
-    cell.configure(object: popularTracks[indexPath.item], index: indexPath.item)
+      cell.configure(object: popularTracks[indexPath.item], index: indexPath.item)
 
       return cell
 
     case .album(let album):
       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DiscographyCollectionViewCell.identifier, for: indexPath) as! DiscographyCollectionViewCell
-      
+
       cell.configure(object: album[indexPath.item])
 
       return cell
@@ -244,7 +244,36 @@ class ArtistProfileViewController: UIViewController, UICollectionViewDelegate, U
 
   }
 
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    let sectionData = artistSectionArray[indexPath.section]
 
+    switch sectionData.artistSectionType {
+    case .popularTracks(let popularTracks):
+
+      AudioPlayerManager.shared.playSongs(popularTracks, startIndex: indexPath.item)
+
+    case .album(let album):
+
+      let albumVC = AlbumDetailsViewController()
+      albumVC.albumId = album[indexPath.item].id ?? 0
+      albumVC.hidesBottomBarWhenPushed = true
+      self.navigationController?.pushViewController(albumVC, animated: true)
+
+    case .relatedArtist(let relatedArtist):
+
+      let obj = relatedArtist[indexPath.row]
+      let vc = ArtistProfileViewController()
+      vc.artistId = obj.id ?? 0
+      vc.hidesBottomBarWhenPushed = true
+      self.navigationController?.pushViewController(vc, animated: true)
+
+    default:
+      break
+
+    }
+
+
+  }
 }
 
 

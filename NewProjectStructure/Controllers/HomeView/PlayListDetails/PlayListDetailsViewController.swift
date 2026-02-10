@@ -164,5 +164,12 @@ class PlayListDetailsViewController: UIViewController, UITableViewDelegate, UITa
     return 58*DeviceMultiplier
   }
 
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
+    guard let items = self.playListObj?.tracks?.items else { return }
+    AudioPlayerManager.shared.playSongs(items, startIndex: indexPath.row)
+
+  }
+
 }
 

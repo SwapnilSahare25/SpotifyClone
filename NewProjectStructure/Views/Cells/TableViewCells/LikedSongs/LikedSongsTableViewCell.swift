@@ -64,11 +64,13 @@ class LikedSongsTableViewCell: SwipeTableViewCell, ReusableCell {
 
   }
 
-  func configure(obj: Item) {
+  func configure(obj: Item,isCurrentSong: Bool) {
     self.titleLbl.text = obj.title ?? ""
     self.subTitle.text = obj.artist ?? ""
     self.imgView.setImage(urlStr: obj.image ?? "")
-  
+    self.titleLbl.textColor = isCurrentSong ? UIColor(hex: "#141f3f"): WhiteTextColor
+    self.subTitle.textColor = isCurrentSong ? UIColor(hex: "#141f3f") : WhiteTextColor
+
   }
 
   required init?(coder: NSCoder) {

@@ -12,6 +12,7 @@ target 'NewProjectStructure' do
 	pod 'IQKeyboardManagerSwift'
   pod 'CHIPageControl'
   pod 'SwipeCellKit'
+  pod 'StickyTabBarViewController'
   #pod 'SOTabBar'
  # pod "SHSearchBar"
 

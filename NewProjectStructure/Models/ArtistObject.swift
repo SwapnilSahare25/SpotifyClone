@@ -14,7 +14,7 @@ struct ArtistObject: Codable {
     let id: Int?
     let image: String?
     let name: String?
-    let popularTracks: [PopularTrack]?
+    let popularTracks: [Item]?
     let relatedArtists: [Artist]?
 
     enum CodingKeys: String, CodingKey {
@@ -32,15 +32,15 @@ struct ArtistObject: Codable {
 //    let subtitle, title, type: String?
 //}
 
-// MARK: - PopularTrack
-struct PopularTrack: Codable {
-    let album, artist, description, duration: String?
-    let id: Int?
-    let image: String?
-    let title, type: String?
-    let url: String?
-    let play_count: Int64?
-}
+//// MARK: - PopularTrack
+//struct PopularTrack: Codable {
+//    let album, artist, description, duration: String?
+//    let id: Int?
+//    let image: String?
+//    let title, type: String?
+//    let url: String?
+//    let play_count: Int64?
+//}
 
 //// MARK: - RelatedArtist
 //struct RelatedArtist: Codable {
@@ -52,7 +52,7 @@ struct PopularTrack: Codable {
 
 enum ArtistSectionType {
   case header(ArtistObject)
-  case popularTracks([PopularTrack])
+  case popularTracks([Item])
   case album([AlbumObject])
   case relatedArtist([Artist])
   case none

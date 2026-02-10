@@ -16,7 +16,7 @@ class PlayerViewController: UIViewController, UIScrollViewDelegate {
         super.viewDidLoad()
      // self.view.backgroundColor = .black
       self.view.setGradientBackground(colors: [UIColor(hex: "#141f3f"),UIColor(hex: "#0b1225"),UIColor.black], locations: [0.30,0.55,1.0])
-      self.setupBackButton(action: #selector(self.dismissView))
+      self.setupBackButton(image: "down",action: #selector(self.dismissView))
       self.setUpMainView()
 
     }
@@ -69,40 +69,6 @@ class PlayerViewController: UIViewController, UIScrollViewDelegate {
     progressView.addConstraints(constraintsDict: [.Leading:30,.Trailing:30,.FixHeight:60])
     progressView.addConstraints(constraintsDict: [.BelowTo: 10],relativeTo: subTitle)
 
-
-//    let btnStackView = UIFactory.makeContinerView(backgroundColor: .clear)
-//    self.mainContainer.addSubview(btnStackView)
-//    btnStackView.backgroundColor = .gray
-//    btnStackView.addConstraints(constraintsDict: [.Leading:30,.Trailing:30,.FixHeight:90])
-//    btnStackView.addConstraints(constraintsDict: [.BelowTo:0],relativeTo: progressView)
-//    btnStackView.bottomAnchor.constraint(equalTo: mainContainer.bottomAnchor, constant: -20).isActive = true
-//
-//
-//    let shuffleBtn = UIFactory.makeButton(backgroundColor: .red,image: "shuffleOff")
-//    btnStackView.addSubview(shuffleBtn)
-//    shuffleBtn.addConstraints(constraintsDict: [.FixWidth:30,.FixHeight:30,.Leading:0,.CenterY:0])
-//
-//    let previousBtn = UIFactory.makeButton(backgroundColor: .yellow,image: "previous")
-//    btnStackView.addSubview(previousBtn)
-//    previousBtn.addConstraints(constraintsDict: [.FixWidth:30,.FixHeight:30,.CenterY:0])
-//    previousBtn.addConstraints(constraintsDict: [.RightTo:30],relativeTo: shuffleBtn)
-//
-//
-//    let playPauseBtn = UIFactory.makeImageView(imageName: "pauseSong",contentMode: .scaleAspectFit,cornerRadius: 37.5*DeviceMultiplier,clipsToBounds: true)
-//    btnStackView.addSubview(playPauseBtn)
-//    playPauseBtn.addConstraints(constraintsDict: [.FixWidth:75,.FixHeight:75,.CenterX:0,.CenterY:0])
-//
-//
-//    let replyBtn = UIFactory.makeButton(backgroundColor: .purple,image: "replyOne")
-//    btnStackView.addSubview(replyBtn)
-//    replyBtn.addConstraints(constraintsDict: [.FixWidth:30,.FixHeight:30,.Trailing:0,.CenterY:0])
-//
-//    let nextBtn = UIFactory.makeButton(backgroundColor: .green,image: "next")
-//    btnStackView.addSubview(nextBtn)
-//    nextBtn.addConstraints(constraintsDict: [.FixWidth:30,.FixHeight:30,.CenterY:0])
-//    nextBtn.addConstraints(constraintsDict: [.LeftTo:30],relativeTo: replyBtn)
-
-   // Using Stack View
 
     let btnStackView = UIStackView()
     btnStackView.axis = .horizontal

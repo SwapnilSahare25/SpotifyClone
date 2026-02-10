@@ -167,4 +167,10 @@ extension AlbumDetailsViewController: UITableViewDelegate, UITableViewDataSource
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     return 60*DeviceMultiplier
   }
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
+    guard let items = self.albumDetails?.tracks?.items else { return }
+    AudioPlayerManager.shared.playSongs(items, startIndex: indexPath.row)
+
+  }
 }

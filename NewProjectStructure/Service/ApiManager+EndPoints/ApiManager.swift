@@ -12,8 +12,8 @@ class APIManager {
     
     static let shared = APIManager()
     private init() {}
-    //private let baseURL = "http://127.0.0.1:5001/"
-  private let baseURL = "http://192.168.1.33:5001/"
+    private let baseURL = "http://127.0.0.1:8080/"
+  //private let baseURL = "http://192.168.1.34:8080/"
     var currentToken: String?
 
   private func createAuthenticatedHeaders(with token: String? = nil) -> HTTPHeaders {

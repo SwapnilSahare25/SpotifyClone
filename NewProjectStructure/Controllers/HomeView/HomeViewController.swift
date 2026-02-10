@@ -304,9 +304,10 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         albumVC.albumId = obj.id ?? 0
         albumVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(albumVC, animated: true)
+
       }else{
-        print("Add Player To Play the song")
-        AudioPlayerManager.shared.playSong(song: obj)
+
+        AudioPlayerManager.shared.playSongs([obj])
       }
     case .newRelease(let newRelease):
       let albumVC = AlbumDetailsViewController()

@@ -53,7 +53,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     ]
 
     // 2. Initialize the Manager
-    let tabManager = TabBarManager(tabs: tabs)
+    let tabManager = TabBarController(tabs: tabs)
 
     guard let window = self.window else { return }
 

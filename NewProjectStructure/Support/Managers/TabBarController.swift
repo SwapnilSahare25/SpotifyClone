@@ -17,7 +17,7 @@ struct TabItem {
   let unSelectedImageName: String
 }
 
-class TabBarManager: UITabBarController, UITabBarControllerDelegate {
+class TabBarController: UITabBarController, UITabBarControllerDelegate {
 
 
   private let miniPlayerView = MiniPlayerView()
@@ -26,7 +26,7 @@ class TabBarManager: UITabBarController, UITabBarControllerDelegate {
   private var playerBottomConstraint: NSLayoutConstraint?
 
   // weak var miniPlayerDelegate: MiniPlayerVisibilityDelegate?
-
+  private let transitionManager = MiniPlayerTransitionManager()
 
   init(tabs:[TabItem]){
     super.init(nibName: nil, bundle: nil)
@@ -171,7 +171,12 @@ class TabBarManager: UITabBarController, UITabBarControllerDelegate {
 
 }
 
-extension TabBarManager: AudioPlayerDelegate {
+extension TabBarController: AudioPlayerDelegate {
+  func reloadData(Index: Int) {
+    
+  }
+  
+
 
   func didStartPlaying(song: Item) {
     miniPlayerView.configure(title: song.title ?? "", subtitle: song.artist ?? "", imageURL: song.image)
@@ -223,20 +228,28 @@ extension TabBarManager: AudioPlayerDelegate {
   }
 }
 // MARK: - Mini Player Interaction
-extension TabBarManager: MiniPlayerDelegate {
+extension TabBarController: MiniPlayerDelegate {
+
+
   func didTapMiniPlayer() {
 
-    let playerVC = PlayerViewController()
-    let navVC = UINavigationController(rootViewController: playerVC)
+    let playerVC = UINavigationController(rootViewController: PlayerViewController())
 
-    // Get mini player frame for transition
-    let frame = miniPlayerView.convert(miniPlayerView.bounds, to: view)
-    let transitionDelegate = PlayerTransitioningDelegate()
-    transitionDelegate.originFrame = frame
-    navVC.transitioningDelegate = transitionDelegate
-    navVC.modalPresentationStyle = .custom
-    self.present(navVC, animated: true)
+          // 1. Calculate the frame of the Mini Player in the Window's coordinate system
+          if let window = view.window {
+              let frame = miniPlayerView.convert(miniPlayerView.bounds, to: window)
+              transitionManager.originFrame = frame
+          } else {
+              transitionManager.originFrame = miniPlayerView.frame
+          }
 
+          // 2. Set the transition delegate
+          playerVC.transitioningDelegate = transitionManager
+
+          // 3. Use .custom for custom transitions -> keeps presenting view (TabBar) visible behind
+          playerVC.modalPresentationStyle = .custom
+
+          self.present(playerVC, animated: true)
 
   }
 

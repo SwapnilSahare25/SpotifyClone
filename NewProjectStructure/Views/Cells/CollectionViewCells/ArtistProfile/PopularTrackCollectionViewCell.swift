@@ -67,13 +67,13 @@ class PopularTrackCollectionViewCell: UICollectionViewCell, ReusableCell {
 
   }
 
-  func configure(object: PopularTrack,index:Int){
+  func configure(object: Item,index:Int){
 
 //    self.countLbl.text = "\(index+1)"
 //    self.countLbl.alpha = 0.7
 
     self.titleLbl.text = object.title ?? ""
-    self.subTitle.text = object.play_count ?? 0 > 0 ? "\(object.play_count ?? 0) plays" : "\(object.play_count ?? 0)"
+    self.subTitle.text = object.playCount ?? 0 > 0 ? "\(object.playCount ?? 0) plays" : "\(object.playCount ?? 0)"
     self.duretionLbl.text = object.duration ?? ""
     self.imgView.setImage(urlStr: object.image ?? "")
 
