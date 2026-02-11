@@ -37,7 +37,7 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
     self.setupMiniPlayerUI(true)
     self.selectedIndex = 0
 
-    AudioPlayerManager.shared.delegate = self
+    AudioPlayerManager.shared.addDelegate(self)
   }
 
   private func setupMiniPlayerUI(_ isHidden: Bool = false) {
@@ -68,37 +68,19 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
   private func updatePlayerPosition() {
     guard !miniPlayerView.isHidden else { return }
 
-    // 1. Determine where the player *should* be bottom-aligned to.
-    // Option A: If TabBar is visible and on-screen, sit on top of it.
-    // Option B: If TabBar is hidden or off-screen, sit at Safe Area Bottom.
-
-    //let tabBarHeight = tabBar.frame.height
     let tabBarY = tabBar.frame.origin.y
     let viewHeight = view.frame.height
-
-    // Check if TabBar is effectively hidden
-    // It is hidden if isHidden=true OR if it is pushed off screen (Y >= viewHeight)
     let isTabBarHidden = tabBar.isHidden || (tabBarY >= viewHeight)
 
     let bottomOffset: CGFloat
 
     if isTabBarHidden {
-      // Dock to Safe Area Bottom
-      // We use negative inset because constraint is to view.bottomAnchor
       bottomOffset = -view.safeAreaInsets.bottom
     } else {
-      // Dock to Tab Bar Top
-      // The Tab Bar Top relative to View Bottom is -(viewHeight - tabBarY)
-      // Ideally, this is just -tabBarHeight, but during animation tabBarY changes.
       bottomOffset = -(viewHeight - tabBarY)
     }
-
-    // Apply smooth constraint update
     if playerBottomConstraint?.constant != bottomOffset {
       playerBottomConstraint?.constant = bottomOffset
-
-      // If we are in an animation block, this will animate automatically.
-      // If not, it snaps (which is fine for layout passes).
     }
 
     view.bringSubviewToFront(miniPlayerView)
@@ -169,14 +151,16 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
     print("Selected tab: \(viewController.title ?? "")")
   }
 
+  deinit {
+      AudioPlayerManager.shared.removeDelegate(self)
+  }
+
 }
 
 extension TabBarController: AudioPlayerDelegate {
-  func reloadData(Index: Int) {
+  func reloadData(index: Int) {
     
   }
-  
-
 
   func didStartPlaying(song: Item) {
     miniPlayerView.configure(title: song.title ?? "", subtitle: song.artist ?? "", imageURL: song.image)
@@ -234,7 +218,6 @@ extension TabBarController: MiniPlayerDelegate {
   func didTapMiniPlayer() {
 
     let playerVC = UINavigationController(rootViewController: PlayerViewController())
-
           // 1. Calculate the frame of the Mini Player in the Window's coordinate system
           if let window = view.window {
               let frame = miniPlayerView.convert(miniPlayerView.bounds, to: window)
@@ -242,13 +225,10 @@ extension TabBarController: MiniPlayerDelegate {
           } else {
               transitionManager.originFrame = miniPlayerView.frame
           }
-
           // 2. Set the transition delegate
           playerVC.transitioningDelegate = transitionManager
-
           // 3. Use .custom for custom transitions -> keeps presenting view (TabBar) visible behind
           playerVC.modalPresentationStyle = .custom
-
           self.present(playerVC, animated: true)
 
   }

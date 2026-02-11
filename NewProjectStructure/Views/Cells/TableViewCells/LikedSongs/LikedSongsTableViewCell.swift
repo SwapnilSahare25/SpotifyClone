@@ -59,18 +59,38 @@ class LikedSongsTableViewCell: SwipeTableViewCell, ReusableCell {
     dividerLine.addConstraints(constraintsDict: [.Leading:0,.Trailing:0,.Bottom:0,.FixHeight:0.5])
 
 
-
-
-
   }
 
   func configure(obj: Item,isCurrentSong: Bool) {
     self.titleLbl.text = obj.title ?? ""
     self.subTitle.text = obj.artist ?? ""
     self.imgView.setImage(urlStr: obj.image ?? "")
-    self.titleLbl.textColor = isCurrentSong ? UIColor(hex: "#141f3f"): WhiteTextColor
-    self.subTitle.textColor = isCurrentSong ? UIColor(hex: "#141f3f") : WhiteTextColor
+    self.duretionLbl.text = obj.duration ?? ""
+    self.titleLbl.textColor = isCurrentSong ? UIColor(hex: "#1DB954"): WhiteTextColor
+    self.subTitle.textColor = isCurrentSong ? UIColor(hex: "#1DB954") : WhiteTextColor
+    self.duretionLbl.textColor = isCurrentSong ? UIColor(hex: "#1DB954") : SecondaryTextColor
 
+  }
+
+  func updateProgress(currentTime: Double, totalDuration: String?) {
+      guard let total = totalDuration?.toSeconds() else {
+        duretionLbl.text = totalDuration ?? "0:00"
+          return
+      }
+
+      let elapsedMinutes = Int(currentTime) / 60
+      let elapsedSeconds = Int(currentTime) % 60
+
+      let totalMinutes = Int(total) / 60
+      let totalSeconds = Int(total) % 60
+
+    duretionLbl.text = String(format: "%d:%02d",
+                                  elapsedMinutes, elapsedSeconds,
+                                  totalMinutes, totalSeconds)
+  }
+
+  func resetDuration(totalDuration: String?) {
+    duretionLbl.text = totalDuration ?? "0:00"
   }
 
   required init?(coder: NSCoder) {

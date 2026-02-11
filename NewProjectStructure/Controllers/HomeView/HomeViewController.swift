@@ -7,7 +7,31 @@
 
 import UIKit
 
-class HomeViewController: UIViewController, NewReleaseHeaderDelegate {
+class HomeViewController: UIViewController, NewReleaseHeaderDelegate, AudioPlayerDelegate {
+  func didStartPlaying(song: Item) {
+
+  }
+  
+  func didPause() {
+
+  }
+  
+  func didResume() {
+
+  }
+  
+  func didStop() {
+
+  }
+  
+  func didUpdateProgress(currentTime: Double, duration: Double) {
+
+  }
+  
+  func reloadData(index: Int) {
+
+  }
+  
 
 //  func miniPlayerVisibilityChanged(isVisible: Bool, height: CGFloat) {
 //        var inset = collectionView.contentInset
@@ -38,10 +62,6 @@ class HomeViewController: UIViewController, NewReleaseHeaderDelegate {
     edgesForExtendedLayout = [.top]
     extendedLayoutIncludesOpaqueBars = true
 
-//    if let tabManager = self.tabBarController as? TabBarManager {
-//              tabManager.miniPlayerDelegate = self
-//          }
-
     self.setUpMainView()
     self.callHomeApi()
 
@@ -51,6 +71,11 @@ class HomeViewController: UIViewController, NewReleaseHeaderDelegate {
   override func viewWillAppear(_ animated: Bool) {
       super.viewWillAppear(animated)
       navigationController?.setNavigationBarHidden(true, animated: false)
+    AudioPlayerManager.shared.addDelegate(self)
+  }
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    AudioPlayerManager.shared.removeDelegate(self)
   }
 
 //  override func viewDidLayoutSubviews() {
@@ -288,7 +313,6 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
       let obj = items[indexPath.row]
       if obj.type == "playlist"{
         if obj.pinned == true {
-
           let likeVC = LikedSongsViewController()
           likeVC.hidesBottomBarWhenPushed = true
           self.navigationController?.pushViewController(likeVC, animated: true)

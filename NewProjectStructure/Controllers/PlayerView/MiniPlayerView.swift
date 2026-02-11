@@ -117,13 +117,17 @@ class MiniPlayerView: UIView {
      }
 
      func setPlaying(_ isPlaying: Bool) {
-
+       DispatchQueue.main.async {
          let iconName = isPlaying ? "miniPause" : "miniPlay"
-         playPauseButton.setImage(UIImage(named: iconName), for: .normal)
+         self.playPauseButton.setImage(UIImage(named: iconName), for: .normal)
+       }
+
      }
 
      func setProgress(_ progress: Float) {
-         progressBar.setProgress(progress, animated: true)
+       DispatchQueue.main.async {
+         self.progressBar.setProgress(progress, animated: true)
+       }
      }
 
 

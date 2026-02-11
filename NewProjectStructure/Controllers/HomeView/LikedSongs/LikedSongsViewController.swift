@@ -10,28 +10,56 @@ import SwipeCellKit
 
 class LikedSongsViewController: UIViewController, AudioPlayerDelegate {
   func didStartPlaying(song: Item) {
-
+    //indexpath = AudioPlayerManager.shared.currentIndex
+        tableView.reloadData()
+       // updateTableViewInset()
   }
   
   func didPause() {
-
+    tableView.reloadData()
+//    if let index = indexpath {
+//               tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
+//           }
   }
   
   func didResume() {
-
+    tableView.reloadData()
+//    if let index = indexpath {
+//               tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
+//           }
   }
   
   func didStop() {
-
+    tableView.reloadData()
+//    let previous = indexpath
+//        indexpath = nil
+//
+//           if let previous = previous {
+//               tableView.reloadRows(at: [IndexPath(row: previous, section: 0)], with: .none)
+//           }
+    //updateTableViewInset()
   }
   
   func didUpdateProgress(currentTime: Double, duration: Double) {
-
+    self.currentTime = currentTime
+    tableView.reloadData()
   }
   
-  func reloadData(Index: Int) {
-    //print(Index,"Index is NUmber")
-    //self.tableView.reloadData()
+  func reloadData(index: Int) {
+    tableView.reloadData()
+
+//    let previousIndex = indexpath
+//    indexpath = index
+//
+//    var rowsToReload: [IndexPath] = []
+//
+//    if let previous = previousIndex {
+//        rowsToReload.append(IndexPath(row: previous, section: 0))
+//    }
+//
+//    rowsToReload.append(IndexPath(row: index, section: 0))
+//
+//    tableView.reloadRows(at: rowsToReload, with: .none)
   }
 
 
@@ -44,7 +72,7 @@ class LikedSongsViewController: UIViewController, AudioPlayerDelegate {
   let midBlue = UIColor(red: 83/255, green: 129/255, blue: 196/255, alpha: 1)
 
   var songsObj: Tracks?
-
+  var currentTime: Double = 0
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -58,26 +86,31 @@ class LikedSongsViewController: UIViewController, AudioPlayerDelegate {
     self.setUpMainView()
     self.setupHeader()
     self.callLikedSongsApi()
-   // AudioPlayerManager.shared.delegate = self
+
 
   }
 
   override func viewWillAppear(_ animated: Bool) {
       super.viewWillAppear(animated)
     self.tableView.contentInsetAdjustmentBehavior = .never
-      // Manual Check
-      if AudioPlayerManager.shared.isMiniPlayerVisible {
-          let playerHeight: CGFloat = 56.0*DeviceMultiplier
-          tableView.contentInset.bottom = playerHeight + 25*DeviceMultiplier
-
-      } else {
-          tableView.contentInset.bottom = 0
-      }
+    AudioPlayerManager.shared.addDelegate(self)
+    updateTableViewInset()
+    tableView.reloadData()
   }
- // override func viewWillDisappear(_ animated: Bool) {
-//      super.viewWillDisappear(animated)
-//      AudioPlayerManager.shared.delegate = nil
-//  }
+
+  private func updateTableViewInset() {
+    if AudioPlayerManager.shared.isMiniPlayerVisible {
+               let playerHeight: CGFloat = 56.0*DeviceMultiplier
+               tableView.contentInset.bottom = playerHeight + 25*DeviceMultiplier
+           } else {
+               tableView.contentInset.bottom = 0
+           }
+  }
+
+  override func viewWillDisappear(_ animated: Bool) {
+      super.viewWillDisappear(animated)
+    AudioPlayerManager.shared.removeDelegate(self)
+  }
 
 
   private func setUpMainView(){
@@ -159,10 +192,16 @@ extension LikedSongsViewController: UITableViewDelegate, UITableViewDataSource {
     let cell = tableView.dequeueReusableCell(withIdentifier: LikedSongsTableViewCell.identifier, for: indexPath) as! LikedSongsTableViewCell
     cell.delegate = self
     if let items = self.songsObj?.items{
+      let currentSong = AudioPlayerManager.shared.currentSong
+      let currentSongPlaying = currentSong?.id == items[indexPath.row].id
 
-     // let currentSongPlaying = AudioPlayerManager.shared.currentSong?.id == items[indexPath.row].id
+      cell.configure(obj: items[indexPath.row],isCurrentSong: currentSongPlaying)
+      if currentSongPlaying {
+        cell.updateProgress(currentTime: currentTime, totalDuration: items[indexPath.row].duration)
+      } else {
+        cell.resetDuration(totalDuration: items[indexPath.row].duration)
+      }
 
-      cell.configure(obj: items[indexPath.row],isCurrentSong: true)
       cell.dividerLine.isHidden = indexPath.row == items.count-1
     }
 
@@ -172,11 +211,11 @@ extension LikedSongsViewController: UITableViewDelegate, UITableViewDataSource {
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     return 65*DeviceMultiplier
   }
+  
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
     guard let items = self.songsObj?.items else { return }
     AudioPlayerManager.shared.playSongs(items, startIndex: indexPath.row)
-    self.tableView.reloadData()
+    self.updateTableViewInset()
 
   }
 
