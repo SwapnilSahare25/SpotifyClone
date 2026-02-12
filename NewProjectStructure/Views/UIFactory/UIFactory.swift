@@ -188,3 +188,36 @@ final class UIFactory {
    
 
 }
+
+extension UIFactory {
+
+  static func updateProgress(currentTime: Double, totalDuration: String?) -> String {
+    var remainingTime: String = ""
+      guard let total = totalDuration?.toSeconds() else {
+        //remainingTime = totalDuration ?? "0:00"
+          return totalDuration ?? "0:00"
+      }
+
+      let elapsedMinutes = Int(currentTime) / 60
+      let elapsedSeconds = Int(currentTime) % 60
+
+      let totalMinutes = Int(total) / 60
+      let totalSeconds = Int(total) % 60
+
+    remainingTime = String(format: "%d:%02d",elapsedMinutes, elapsedSeconds,totalMinutes, totalSeconds)
+
+    return remainingTime
+  }
+
+  static func resetDuration(totalDuration: String?) -> String {
+
+    var remainingTime: String = ""
+
+    remainingTime = totalDuration ?? "0:00"
+
+    return remainingTime
+
+  }
+
+
+}

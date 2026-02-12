@@ -7,28 +7,77 @@
 
 import UIKit
 
-class AlbumDetailsViewController: UIViewController {
+class AlbumDetailsViewController: UIViewController, AudioPlayerDelegate {
+  func didStartPlaying(song: Item) {
+    self.currentTime = 0
+    tableView.reloadData()
+  }
 
-  
+  func didPause() {
+    tableView.reloadData()
+  }
+
+  func didResume() {
+    tableView.reloadData()
+  }
+
+  func didStop() {
+    tableView.reloadData()
+  }
+
+  func didUpdateProgress(currentTime: Double, duration: Double) {
+    self.currentTime = currentTime
+    tableView.reloadData()
+  }
+
+  func reloadData(index: Int) {
+    tableView.reloadData()
+  }
+
+
+
 
   private var tableView: UITableView!
   var albumId:Int = 0
   var albumDetails: AlbumObject?
+  var currentTime: Double = 0
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-      self.view.backgroundColor = .black
-      self.navigationController?.setNavigationBarHidden(false, animated: false)
-      navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-      navigationController?.navigationBar.shadowImage = UIImage()
-      navigationController?.navigationBar.isTranslucent = true
-      navigationController?.navigationBar.backgroundColor = .clear
-      self.setupBackButton()
-      self.setUpMainView()
-      self.setupHeader()
-      self.callAlbumDetailsApi()
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    self.view.backgroundColor = .black
+    self.navigationController?.setNavigationBarHidden(false, animated: false)
+    navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+    navigationController?.navigationBar.shadowImage = UIImage()
+    navigationController?.navigationBar.isTranslucent = true
+    navigationController?.navigationBar.backgroundColor = .clear
+    self.setupBackButton()
+    self.setUpMainView()
+    self.setupHeader()
+    self.callAlbumDetailsApi()
+  }
+
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    self.tableView.contentInsetAdjustmentBehavior = .never
+    AudioPlayerManager.shared.addDelegate(self)
+    tableView.reloadData()
+    updateTableViewInset()
+
+  }
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    AudioPlayerManager.shared.removeDelegate(self)
+  }
+  private func updateTableViewInset() {
+    if AudioPlayerManager.shared.isMiniPlayerVisible {
+      let playerHeight: CGFloat = 56.0*DeviceMultiplier
+      tableView.contentInset.bottom = playerHeight + 25*DeviceMultiplier
+    } else {
+      tableView.contentInset.bottom = 0
     }
-    
+  }
+
+
   private func setUpMainView(){
 
     self.tableView = UIFactory.makeTableView(separatorStyle: .none)
@@ -115,22 +164,22 @@ class AlbumDetailsViewController: UIViewController {
   private func callAlbumDetailsApi() {
     let endPoint = Endpoints.getAlbumDetails(albumId: self.albumId)
 
-     APIManager.shared.request(endpoint: endPoint) { [weak self] (object: AlbumObject) in
+    APIManager.shared.request(endpoint: endPoint) { [weak self] (object: AlbumObject) in
 
-       if let self = self {
-           self.albumDetails = object
-         self.setupHeader()
+      if let self = self {
+        self.albumDetails = object
+        self.setupHeader()
 
-         self.tableView.reloadData()
+        self.tableView.reloadData()
 
-       }else{
-         print("No Data Found")
-       }
-     } onFailure: { error in
-       print(error)
-     }
+      }else{
+        print("No Data Found")
+      }
+    } onFailure: { error in
+      print(error)
+    }
 
-   }
+  }
 
 
 
@@ -158,7 +207,9 @@ extension AlbumDetailsViewController: UITableViewDelegate, UITableViewDataSource
     let cell = tableView.dequeueReusableCell(withIdentifier: AlbumDetailsTableViewCell.identifier, for: indexPath) as! AlbumDetailsTableViewCell
 
     if let items = self.albumDetails?.tracks?.items{
-      cell.configure(obj: items[indexPath.row], index: indexPath.row)
+      let currentSong = AudioPlayerManager.shared.currentSong
+      let currentSongPlaying = currentSong?.id == items[indexPath.row].id
+      cell.configure(obj: items[indexPath.row], index: indexPath.row,isCurrentSong: currentSongPlaying,currectTime: currentTime)
     }
 
     return cell
@@ -171,6 +222,7 @@ extension AlbumDetailsViewController: UITableViewDelegate, UITableViewDataSource
 
     guard let items = self.albumDetails?.tracks?.items else { return }
     AudioPlayerManager.shared.playSongs(items, startIndex: indexPath.row)
+    self.updateTableViewInset()
 
   }
 }

@@ -11,6 +11,7 @@ import SwipeCellKit
 class LikedSongsViewController: UIViewController, AudioPlayerDelegate {
   func didStartPlaying(song: Item) {
     //indexpath = AudioPlayerManager.shared.currentIndex
+    self.currentTime = 0
         tableView.reloadData()
        // updateTableViewInset()
   }
@@ -195,12 +196,7 @@ extension LikedSongsViewController: UITableViewDelegate, UITableViewDataSource {
       let currentSong = AudioPlayerManager.shared.currentSong
       let currentSongPlaying = currentSong?.id == items[indexPath.row].id
 
-      cell.configure(obj: items[indexPath.row],isCurrentSong: currentSongPlaying)
-      if currentSongPlaying {
-        cell.updateProgress(currentTime: currentTime, totalDuration: items[indexPath.row].duration)
-      } else {
-        cell.resetDuration(totalDuration: items[indexPath.row].duration)
-      }
+      cell.configure(obj: items[indexPath.row],isCurrentSong: currentSongPlaying,currectTime: currentTime)
 
       cell.dividerLine.isHidden = indexPath.row == items.count-1
     }
@@ -214,6 +210,7 @@ extension LikedSongsViewController: UITableViewDelegate, UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     guard let items = self.songsObj?.items else { return }
+    self.currentTime = 0
     AudioPlayerManager.shared.playSongs(items, startIndex: indexPath.row)
     self.updateTableViewInset()
 

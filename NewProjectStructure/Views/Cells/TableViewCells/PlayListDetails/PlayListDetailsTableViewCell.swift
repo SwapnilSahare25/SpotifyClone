@@ -73,12 +73,22 @@ class PlayListDetailsTableViewCell: UITableViewCell, ReusableCell {
   }
 
 
-  func configure(obj: Item, index: Int) {
+  func configure(obj: Item, index: Int,isCurrentSong: Bool,currectTime: Double) {
+    if isCurrentSong {
+      self.duretionLbl.text = UIFactory.updateProgress(currentTime: currectTime, totalDuration: obj.duration)
+    } else {
+      self.duretionLbl.text = UIFactory.resetDuration(totalDuration: obj.duration)
+    }
+
     self.countLbl.text = "\(index+1)."
     self.countLbl.alpha = 0.7
     self.titleLbl.text = obj.title ?? ""
-    self.duretionLbl.text = obj.duration ?? ""
+   // self.duretionLbl.text = obj.duration ?? ""
     self.subTitle.text = obj.artist ?? ""
+
+    self.titleLbl.textColor = isCurrentSong ? UIColor(hex: "#1DB954"): WhiteTextColor
+    self.subTitle.textColor = isCurrentSong ? UIColor(hex: "#1DB954") : WhiteTextColor
+    self.duretionLbl.textColor = isCurrentSong ? UIColor(hex: "#1DB954") : SecondaryTextColor
 
   }
   required init?(coder: NSCoder) {

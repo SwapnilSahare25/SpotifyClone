@@ -7,7 +7,35 @@
 
 import UIKit
 
-class ArtistProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class ArtistProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, AudioPlayerDelegate {
+  func didStartPlaying(song: Item) {
+    self.currentTime = 0
+    self.collectionView.reloadData()
+
+  }
+  
+  func didPause() {
+    self.collectionView.reloadData()
+  }
+  
+  func didResume() {
+    self.collectionView.reloadData()
+  }
+  
+  func didStop() {
+    self.collectionView.reloadData()
+    self.updateInset()
+  }
+  
+  func didUpdateProgress(currentTime: Double, duration: Double) {
+    self.currentTime = currentTime
+    self.collectionView.reloadData()
+  }
+  
+  func reloadData(index: Int) {
+    self.collectionView.reloadData()
+  }
+  
 
 
 
@@ -17,6 +45,7 @@ class ArtistProfileViewController: UIViewController, UICollectionViewDelegate, U
 
   var artistId: Int = 0
   var artistName: String = ""
+  var currentTime: Double = 0
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -31,6 +60,25 @@ class ArtistProfileViewController: UIViewController, UICollectionViewDelegate, U
     self.callArtistProfileApi()
 
 
+  }
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    self.collectionView.contentInsetAdjustmentBehavior = .never
+    AudioPlayerManager.shared.addDelegate(self)
+    self.updateInset()
+    self.collectionView.reloadData()
+  }
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    AudioPlayerManager.shared.removeDelegate(self)
+  }
+  private func updateInset() {
+    if AudioPlayerManager.shared.isMiniPlayerVisible {
+      let playerHeight: CGFloat = 56.0*DeviceMultiplier
+      collectionView.contentInset.bottom = playerHeight + 25*DeviceMultiplier
+    } else {
+      collectionView.contentInset.bottom = 0
+    }
   }
 
   private func setUpMainView(){
@@ -202,7 +250,10 @@ class ArtistProfileViewController: UIViewController, UICollectionViewDelegate, U
     case .popularTracks(let popularTracks):
       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PopularTrackCollectionViewCell.identifier, for: indexPath) as! PopularTrackCollectionViewCell
 
-      cell.configure(object: popularTracks[indexPath.item], index: indexPath.item)
+//      cell.configure(object: popularTracks[indexPath.item], index: indexPath.item)
+      let currentSong = AudioPlayerManager.shared.currentSong
+      let currentSongPlaying = currentSong?.id == popularTracks[indexPath.row].id
+      cell.configure(object: popularTracks[indexPath.item], index: indexPath.row,isCurrentSong: currentSongPlaying,currectTime: currentTime)
 
       return cell
 
@@ -251,6 +302,7 @@ class ArtistProfileViewController: UIViewController, UICollectionViewDelegate, U
     case .popularTracks(let popularTracks):
 
       AudioPlayerManager.shared.playSongs(popularTracks, startIndex: indexPath.item)
+      self.updateInset()
 
     case .album(let album):
 

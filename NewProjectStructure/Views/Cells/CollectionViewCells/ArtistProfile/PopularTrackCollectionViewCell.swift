@@ -67,15 +67,25 @@ class PopularTrackCollectionViewCell: UICollectionViewCell, ReusableCell {
 
   }
 
-  func configure(object: Item,index:Int){
+  func configure(object: Item,index:Int,isCurrentSong: Bool,currectTime: Double){
 
 //    self.countLbl.text = "\(index+1)"
 //    self.countLbl.alpha = 0.7
 
+    if isCurrentSong {
+      self.duretionLbl.text = UIFactory.updateProgress(currentTime: currectTime, totalDuration: object.duration)
+    } else {
+      self.duretionLbl.text = UIFactory.resetDuration(totalDuration: object.duration)
+    }
+
+
     self.titleLbl.text = object.title ?? ""
     self.subTitle.text = object.playCount ?? 0 > 0 ? "\(object.playCount ?? 0) plays" : "\(object.playCount ?? 0)"
-    self.duretionLbl.text = object.duration ?? ""
+   // self.duretionLbl.text = object.duration ?? ""
     self.imgView.setImage(urlStr: object.image ?? "")
+    self.titleLbl.textColor = isCurrentSong ? UIColor(hex: "#1DB954"): WhiteTextColor
+    self.subTitle.textColor = isCurrentSong ? UIColor(hex: "#1DB954") : WhiteTextColor
+    self.duretionLbl.textColor = isCurrentSong ? UIColor(hex: "#1DB954") : SecondaryTextColor
 
   }
 

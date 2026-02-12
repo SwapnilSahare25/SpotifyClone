@@ -64,12 +64,23 @@ class AlbumDetailsTableViewCell: UITableViewCell, ReusableCell {
   }
 
 
-  func configure(obj: Item, index: Int) {
+  func configure(obj: Item, index: Int,isCurrentSong: Bool,currectTime: Double) {
+
+    if isCurrentSong {
+      self.duretionTitle.text = UIFactory.updateProgress(currentTime: currectTime, totalDuration: obj.duration)
+    } else {
+      self.duretionTitle.text = UIFactory.resetDuration(totalDuration: obj.duration)
+    }
+
     self.countLbl.text = "\(index+1)."
     self.countLbl.alpha = 0.7
     self.titleLbl.text = obj.title ?? ""
-    self.duretionTitle.text = obj.duration ?? ""
+   // self.duretionTitle.text = obj.duration ?? ""
     self.subTitle.text = obj.playCount ?? 0 > 0 ? "\(obj.playCount ?? 0) plays" : "\(obj.playCount ?? 0)"
+    
+    self.titleLbl.textColor = isCurrentSong ? UIColor(hex: "#1DB954"): WhiteTextColor
+    self.subTitle.textColor = isCurrentSong ? UIColor(hex: "#1DB954") : WhiteTextColor
+    self.duretionTitle.textColor = isCurrentSong ? UIColor(hex: "#1DB954") : SecondaryTextColor
 
   }
 

@@ -7,7 +7,33 @@
 
 import UIKit
 
-class PlayListDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class PlayListDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, AudioPlayerDelegate {
+  func didStartPlaying(song: Item) {
+    self.currentTime = 0
+        tableView.reloadData()
+  }
+  
+  func didPause() {
+    tableView.reloadData()
+  }
+  
+  func didResume() {
+    tableView.reloadData()
+  }
+  
+  func didStop() {
+    tableView.reloadData()
+  }
+  
+  func didUpdateProgress(currentTime: Double, duration: Double) {
+    self.currentTime = currentTime
+    tableView.reloadData()
+  }
+  
+  func reloadData(index: Int) {
+    tableView.reloadData()
+  }
+  
 
   
 
@@ -15,6 +41,7 @@ class PlayListDetailsViewController: UIViewController, UITableViewDelegate, UITa
   private var tableView: UITableView!
   var playListId: Int = 0
   var playListObj: PlayListObject?
+  var currentTime: Double = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +58,26 @@ class PlayListDetailsViewController: UIViewController, UITableViewDelegate, UITa
 
       
     }
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    self.tableView.contentInsetAdjustmentBehavior = .never
+    AudioPlayerManager.shared.addDelegate(self)
+    tableView.reloadData()
+    updateTableViewInset()
+
+  }
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    AudioPlayerManager.shared.removeDelegate(self)
+  }
+  private func updateTableViewInset() {
+    if AudioPlayerManager.shared.isMiniPlayerVisible {
+      let playerHeight: CGFloat = 56.0*DeviceMultiplier
+      tableView.contentInset.bottom = playerHeight + 25*DeviceMultiplier
+    } else {
+      tableView.contentInset.bottom = 0
+    }
+  }
 
   private func setupHeader(){
 
@@ -154,7 +201,10 @@ class PlayListDetailsViewController: UIViewController, UITableViewDelegate, UITa
     let cell = tableView.dequeueReusableCell(withIdentifier: PlayListDetailsTableViewCell.identifier, for: indexPath) as! PlayListDetailsTableViewCell
 
     if let items = self.playListObj?.tracks?.items{
-      cell.configure(obj: items[indexPath.row], index: indexPath.row)
+      let currentSong = AudioPlayerManager.shared.currentSong
+      let currentSongPlaying = currentSong?.id == items[indexPath.row].id
+      cell.configure(obj: items[indexPath.row], index: indexPath.row,isCurrentSong: currentSongPlaying,currectTime: currentTime)
+      //cell.configure(obj: items[indexPath.row], index: indexPath.row)
     }
 
     return cell
@@ -168,7 +218,7 @@ class PlayListDetailsViewController: UIViewController, UITableViewDelegate, UITa
 
     guard let items = self.playListObj?.tracks?.items else { return }
     AudioPlayerManager.shared.playSongs(items, startIndex: indexPath.row)
-
+    self.updateTableViewInset()
   }
 
 }
