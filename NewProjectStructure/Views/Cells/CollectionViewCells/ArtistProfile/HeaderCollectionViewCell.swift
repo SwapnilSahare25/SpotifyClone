@@ -13,7 +13,7 @@ class HeaderCollectionViewCell: UICollectionViewCell, ReusableCell {
   private var titleLbl:UILabel!
   private var containerView:UIView!
 
-  private var playPauseBtn:UIButton!
+  private var playPauseBtn:PlayPauseToggle!
 
   private var followBtn:UIButton!
   private var likeBtn:UIButton!
@@ -22,6 +22,12 @@ class HeaderCollectionViewCell: UICollectionViewCell, ReusableCell {
   private var followerLbl:UILabel!
 
   private var gradientOverlay:UIView!
+
+  weak var delegate: PlayPauseToggleDelegate? {
+    didSet{
+      self.playPauseBtn?.actionDelegate = self.delegate
+    }
+  }
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -49,7 +55,7 @@ class HeaderCollectionViewCell: UICollectionViewCell, ReusableCell {
     titleLbl.addConstraints(constraintsDict: [.AboveTo: 0],relativeTo: self.containerView)
     titleLbl.backgroundColor = .clear
 
-    self.playPauseBtn = UIFactory.makeButton(backgroundColor: .clear,cornerRadius: 25*DeviceMultiplier,image: "playSong")
+    self.playPauseBtn = PlayPauseToggle(frame: .zero)
     self.containerView.addSubview(self.playPauseBtn)
     self.playPauseBtn.addConstraints(constraintsDict: [.FixWidth:50,.FixHeight:50,.Trailing:deviceMargin,.Bottom:5])
     self.playPauseBtn.addTarget(self, action: #selector(method), for: .touchUpInside)

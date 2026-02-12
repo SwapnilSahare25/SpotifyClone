@@ -8,9 +8,19 @@
 import UIKit
 import SwipeCellKit
 
-class LikedSongsViewController: UIViewController, AudioPlayerDelegate {
+class LikedSongsViewController: UIViewController, AudioPlayerDelegate, PlayPauseToggleDelegate {
+  
+  func didRequestInitialPlayback() {
+    guard let songs = songsObj?.items,
+          !songs.isEmpty else { return }
+    AudioPlayerManager.shared.playSongs(songs, startIndex: 0)
+    updateTableViewInset()
+  }
+
+  func didUpdateShuffle(_ isEnabled: Bool) {
+  }
+  
   func didStartPlaying(song: Item) {
-    //indexpath = AudioPlayerManager.shared.currentIndex
     self.currentTime = 0
         tableView.reloadData()
        // updateTableViewInset()
@@ -18,27 +28,17 @@ class LikedSongsViewController: UIViewController, AudioPlayerDelegate {
   
   func didPause() {
     tableView.reloadData()
-//    if let index = indexpath {
-//               tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
-//           }
+
   }
   
   func didResume() {
     tableView.reloadData()
-//    if let index = indexpath {
-//               tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
-//           }
+
   }
   
   func didStop() {
     tableView.reloadData()
-//    let previous = indexpath
-//        indexpath = nil
-//
-//           if let previous = previous {
-//               tableView.reloadRows(at: [IndexPath(row: previous, section: 0)], with: .none)
-//           }
-    //updateTableViewInset()
+
   }
   
   func didUpdateProgress(currentTime: Double, duration: Double) {
@@ -49,18 +49,6 @@ class LikedSongsViewController: UIViewController, AudioPlayerDelegate {
   func reloadData(index: Int) {
     tableView.reloadData()
 
-//    let previousIndex = indexpath
-//    indexpath = index
-//
-//    var rowsToReload: [IndexPath] = []
-//
-//    if let previous = previousIndex {
-//        rowsToReload.append(IndexPath(row: previous, section: 0))
-//    }
-//
-//    rowsToReload.append(IndexPath(row: index, section: 0))
-//
-//    tableView.reloadRows(at: rowsToReload, with: .none)
   }
 
 
@@ -131,9 +119,9 @@ class LikedSongsViewController: UIViewController, AudioPlayerDelegate {
 
   private func setupHeader() {
 
-
     let gradientView = GradientLikedSongsView(frame: CGRect(x: 0, y: 0, width: DeviceWidth, height: 390*DeviceMultiplier))
     gradientView.clipsToBounds = true
+    gradientView.delegate = self
     gradientView.configure(count: self.songsObj?.total ?? 0)
     self.tableView.tableHeaderView = gradientView
 

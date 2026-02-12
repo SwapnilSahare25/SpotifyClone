@@ -49,7 +49,7 @@ class NewReleaseCollectionViewCell: UICollectionViewCell,ReusableCell {
     //self.artistNameLbl.backgroundColor = .red
 
 
-    self.playPauseBtn = UIFactory.makeButton(backgroundColor: .clear,cornerRadius: 20,image: "playSong")
+    self.playPauseBtn = PlayPauseToggle(frame: .zero)
     self.containerView.addSubview(self.playPauseBtn)
     self.playPauseBtn.addConstraints(constraintsDict: [.FixWidth:40,.FixHeight:40,.Trailing:deviceMargin,.Bottom:15])
     //self.playPauseBtn.tag = 100

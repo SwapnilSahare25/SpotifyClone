@@ -15,11 +15,18 @@ class GradientLikedSongsView: UIView {
   private var subTitle:UILabel!
 
   private var imgView:UIImageView!
-  private var playPauseBtn:UIButton!
+  private var playPauseBtn:PlayPauseToggle!
 
   private var likeBtn:UIButton!
   private var shuffleBtn:UIButton!
   private var moreOptsBtn:UIButton!
+
+  weak var delegate: PlayPauseToggleDelegate? {
+      didSet {
+          playPauseBtn?.actionDelegate = delegate
+      }
+  }
+
 
   func configure(count: Int) {
          subTitle.text = "\(count) songs"
@@ -52,12 +59,14 @@ class GradientLikedSongsView: UIView {
     subTitle.addConstraints(constraintsDict: [.BelowTo: 5],relativeTo: titleLbl)
     subTitle.backgroundColor = .clear
 
-    self.playPauseBtn = UIFactory.makeButton(backgroundColor: .clear,cornerRadius: 25,image: "playSong")
+    self.playPauseBtn = PlayPauseToggle(frame: .zero)
     self.addSubview(self.playPauseBtn)
     self.playPauseBtn.addConstraints(constraintsDict: [.FixWidth:50,.FixHeight:50,.Trailing:deviceMargin,.Bottom:10])
+
+
    // self.playPauseBtn.addConstraints(constraintsDict: [.BelowTo: 10],relativeTo: titleLbl)
     //self.playPauseBtn.tag = 100
-   // self.playPauseBtn.addTarget(self, action: #selector(btnClicked), for: .touchUpInside)
+    //self.playPauseBtn.addTarget(self, action: #selector(btnClicked), for: .touchUpInside)
 //    self.playPauseBtn.isHidden = true
 
     self.likeBtn = UIFactory.makeButton(backgroundColor: .clear,image: "unlike")
@@ -65,9 +74,9 @@ class GradientLikedSongsView: UIView {
     likeBtn.addConstraints(constraintsDict: [.FixWidth:25,.FixHeight:25,.Leading:deviceMargin,.Bottom:15])
 
 
-    self.shuffleBtn = UIFactory.makeButton(backgroundColor: .clear,image: "shuffleOff")
+    self.shuffleBtn = ShuffleButton(frame: .zero)
     self.addSubview(shuffleBtn)
-    shuffleBtn.addConstraints(constraintsDict: [.FixWidth:25,.FixHeight:25,.Bottom:15])
+    shuffleBtn.addConstraints(constraintsDict: [.FixWidth:20,.FixHeight:20,.Bottom:20])
     self.shuffleBtn.addConstraints(constraintsDict: [.LeftTo: 15],relativeTo: self.playPauseBtn)
 
 

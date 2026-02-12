@@ -158,6 +158,10 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
 }
 
 extension TabBarController: AudioPlayerDelegate {
+  func didUpdateShuffle(_ isEnabled: Bool) {
+    
+  }
+  
   func reloadData(index: Int) {
     
   }

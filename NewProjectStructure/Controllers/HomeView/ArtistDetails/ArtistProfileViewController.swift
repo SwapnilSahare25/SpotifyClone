@@ -7,7 +7,27 @@
 
 import UIKit
 
-class ArtistProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, AudioPlayerDelegate {
+class ArtistProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, AudioPlayerDelegate, PlayPauseToggleDelegate {
+  func didRequestInitialPlayback() {
+    for section in artistSectionArray {
+        switch section.artistSectionType {
+        case .popularTracks(let popularTracks):
+            if !popularTracks.isEmpty {
+                AudioPlayerManager.shared.playSongs(popularTracks, startIndex: 0)
+                updateInset()
+            }
+            return
+        default:
+            continue
+        }
+    }
+
+  }
+  
+  func didUpdateShuffle(_ isEnabled: Bool) {
+    
+  }
+  
   func didStartPlaying(song: Item) {
     self.currentTime = 0
     self.collectionView.reloadData()
@@ -244,7 +264,7 @@ class ArtistProfileViewController: UIViewController, UICollectionViewDelegate, U
 
       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HeaderCollectionViewCell.identifier, for: indexPath) as! HeaderCollectionViewCell
       cell.configure(obj: obj)
-
+      cell.delegate = self
       return cell
 
     case .popularTracks(let popularTracks):

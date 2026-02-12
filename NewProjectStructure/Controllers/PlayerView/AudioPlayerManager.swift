@@ -17,6 +17,7 @@ protocol AudioPlayerDelegate: AnyObject {
   func didStop()
   func didUpdateProgress(currentTime: Double, duration: Double)
   func reloadData(index: Int)
+  func didUpdateShuffle(_ isEnabled: Bool)
 
 }
 extension AudioPlayerManager {
@@ -29,15 +30,16 @@ class AudioPlayerManager {
   var player: AVPlayer?
   var isPlaying:Bool =  false
   var currentSong: Item?
-  weak var delegate: AudioPlayerDelegate?
+  // weak var delegate: AudioPlayerDelegate?
 
   private var timeObserver: Any?
 
   var isMiniPlayerVisible: Bool = false
 
   var songQueue: [Item] = []
+  private var originalQueue: [Item] = []
   var currentIndex: Int?
-
+  var isShuffleEnabled: Bool = false
 
   // MULTIPLE DELEGATES
   private var delegates = NSHashTable<AnyObject>.weakObjects()
@@ -56,70 +58,104 @@ class AudioPlayerManager {
 
   private func notify(_ action: (AudioPlayerDelegate) -> Void) {
     for delegate in delegates.allObjects {
-      action(delegate as! AudioPlayerDelegate)
+      if let delegate = delegate as? AudioPlayerDelegate {
+        action(delegate)
+      }
     }
   }
+
 
   func playSongs(_ songs: [Item], startIndex: Int=0) {
     guard !songs.isEmpty else { return }
 
-    songQueue = songs
-    currentIndex = startIndex
+    // If new playlist, set queues once
+    if originalQueue.isEmpty {
+      originalQueue = songs
+      songQueue = songs
+    }
+
+    if isShuffleEnabled {
+      playSelectedSongInShuffledQueue(songs: songs, index: startIndex)
+    } else {
+      originalQueue = songs
+      songQueue = songs
+      currentIndex = startIndex
+    }
+
     notify { $0.reloadData(index: currentIndex ?? 0) }
     playCurrent()
 
   }
-  private func playCurrent() {
+  // MARK: - Shuffle Handling
+  private func playSelectedSongInShuffledQueue(songs: [Item], index: Int) {
 
-      if let observer = timeObserver {
-          player?.removeTimeObserver(observer)
-          timeObserver = nil
-      }
+    let selectedSong = songs[index]
 
-    let song = songQueue[currentIndex ?? 0]
-      currentSong = song
+    // Shuffle only once if not already shuffled
+    if songQueue.count != songs.count {
+      songQueue = songs.shuffled()
+    }
 
-      guard let url = URL(string: song.url ?? "") else { return }
-
-      let playerItem = AVPlayerItem(url: url)
-      player = AVPlayer(playerItem: playerItem)
-      player?.play()
-
-      isPlaying = true    // ✅ set true here
-
-      // Notify delegates immediately about new song
-    notify { $0.didStartPlaying(song: song) }
-
-    if let totalSeconds = song.duration?.toSeconds() {
-          setupTimeObserver(duration: totalSeconds)
-      } else {
-          setupTimeObserver(duration: 0)
-      }
-
-      observeSongCompletion()
-  }
-//  func pause() {
-//    player?.pause()
-//    notify { $0.didPause() }
-//  }
-//
-//  func resume() {
-//    player?.play()
-//    notify { $0.didResume() }
-//  }
-
-
-  @objc private func songFinished() {
-    if currentIndex ?? 0 < songQueue.count - 1 {
-      currentIndex! += 1
-      notify { $0.reloadData(index: self.currentIndex ?? 0) }
-      playCurrent()
+    // Find selected song inside shuffled queue
+    if let newIndex = songQueue.firstIndex(where: { $0.id == selectedSong.id }) {
+      currentIndex = newIndex
     } else {
-      stop()
+      currentIndex = 0
     }
   }
 
+  private func playCurrent() {
+
+    if let observer = timeObserver {
+      player?.removeTimeObserver(observer)
+      timeObserver = nil
+    }
+
+    let song = songQueue[currentIndex ?? 0]
+    currentSong = song
+
+    guard let url = URL(string: song.url ?? "") else { return }
+
+    let playerItem = AVPlayerItem(url: url)
+    player = AVPlayer(playerItem: playerItem)
+    player?.play()
+
+    isPlaying = true
+
+    // Notify delegates immediately about new song
+    notify { $0.didStartPlaying(song: song) }
+
+    if let totalSeconds = song.duration?.toSeconds() {
+      setupTimeObserver(duration: totalSeconds)
+    } else {
+      setupTimeObserver(duration: 0)
+    }
+
+    observeSongCompletion()
+  }
+
+
+  @objc private func songFinished() {
+    // If only one song → stop
+        if songQueue.count <= 1 {
+            stop()
+            return
+        }
+        // If not last song → move forward
+    if currentIndex ?? 0 < songQueue.count - 1 {
+          currentIndex! += 1
+        } else {
+            // If last song → go back to first (loop)
+            currentIndex = 0
+        }
+
+    notify { $0.reloadData(index: currentIndex ?? 0) }
+        playCurrent()
+
+  }
+
   func togglePlayPause() {
+
     guard let player = player else { return }
 
     if isPlaying {
@@ -133,72 +169,73 @@ class AudioPlayerManager {
     }
   }
 
+  func toggleShuffle() {
+    guard currentSong != nil else { return }
+
+    isShuffleEnabled.toggle()
+
+    if isShuffleEnabled {
+      songQueue = originalQueue.shuffled()
+    } else {
+      songQueue = originalQueue
+    }
+    if let currentSong = currentSong,
+       let newIndex = songQueue.firstIndex(where: { $0.id == currentSong.id }) {
+      currentIndex = newIndex
+    }
+
+    notify { $0.didUpdateShuffle(isShuffleEnabled) }
+    notify { $0.reloadData(index: currentIndex ?? 0) }
+  }
+
   func stop() {
     player?.pause()
     player = nil
     currentSong = nil
     isPlaying = false
     isMiniPlayerVisible = false
-
+    self.songQueue.removeAll()
+    self.originalQueue.removeAll()
+    isShuffleEnabled = false
     notify { $0.didStop() }
   }
 
   private func setupTimeObserver(duration: Double) {
-      guard let player = player else { return }
+    guard let player = player else { return }
 
-      let finalDuration = duration > 0
-          ? duration
-          : (player.currentItem?.duration.seconds ?? 0)
+    let finalDuration = duration > 0
+    ? duration
+    : (player.currentItem?.duration.seconds ?? 0)
 
-      // Remove previous observer if exists
-      if let observer = timeObserver {
-          player.removeTimeObserver(observer)
-          timeObserver = nil
-      }
+    // Remove previous observer if exists
+    if let observer = timeObserver {
+      player.removeTimeObserver(observer)
+      timeObserver = nil
+    }
 
-      timeObserver = player.addPeriodicTimeObserver(
-          forInterval: CMTime(seconds: 0.5, preferredTimescale: 600),
-          queue: .main
-      ) { [weak self] time in
-          guard let self = self, finalDuration > 0 else { return }
-          // Notify all delegates about progress
-          self.notify { $0.didUpdateProgress(currentTime: time.seconds, duration: finalDuration) }
-      }
+    timeObserver = player.addPeriodicTimeObserver(
+      forInterval: CMTime(seconds: 0.5, preferredTimescale: 600),
+      queue: .main
+    ) { [weak self] time in
+      guard let self = self, finalDuration > 0 else { return }
+      // Notify all delegates about progress
+      self.notify { $0.didUpdateProgress(currentTime: time.seconds, duration: finalDuration) }
+    }
   }
 
   private func observeSongCompletion() {
-      // Remove previous notification observers to avoid duplicates
-      NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: nil)
+    // Remove previous notification observers to avoid duplicates
+    NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: nil)
 
-      // Listen for end of song
-      NotificationCenter.default.addObserver(
-          self,
-          selector: #selector(songFinished),
-          name: .AVPlayerItemDidPlayToEndTime,
-          object: player?.currentItem
-      )
+    // Listen for end of song
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(songFinished),
+      name: .AVPlayerItemDidPlayToEndTime,
+      object: player?.currentItem
+    )
   }
 
 
 
 }
-
-
-
-
-//  private func notifyResume() {
-//      for delegate in delegates.allObjects {
-//          (delegate as? AudioPlayerDelegate)?.didResume()
-//      }
-//  }
-//
-//  private func notifyProgress(current: Double, duration: Double) {
-//      for delegate in delegates.allObjects {
-//          (delegate as? AudioPlayerDelegate)?.didUpdateProgress(currentTime: current, duration: duration)
-//      }
-//  }
-//  private func notifyStop() {
-//      for delegate in delegates.allObjects {
-//          (delegate as? AudioPlayerDelegate)?.didStop()
-//      }
-//  }

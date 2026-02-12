@@ -32,6 +32,8 @@
 		554D23412F3797A4008E3345 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554D23402F3797A4008E3345 /* PlayerViewController.swift */; };
 		554D23432F3797E0008E3345 /* AudioPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554D23422F3797E0008E3345 /* AudioPlayerManager.swift */; };
 		554D23452F37A0B3008E3345 /* MiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554D23442F37A0B3008E3345 /* MiniPlayerView.swift */; };
+		556E3DE62F3E1D0200EB190B /* ShuffleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556E3DE52F3E1D0200EB190B /* ShuffleButton.swift */; };
+		556E3DE82F3E308E00EB190B /* PlayPauseToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556E3DE72F3E308E00EB190B /* PlayPauseToggle.swift */; };
 		558822382F2BC090004EBBBB /* LikedSongsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558822372F2BC090004EBBBB /* LikedSongsViewController.swift */; };
 		5588223B2F2BCE26004EBBBB /* LikedSongsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5588223A2F2BCE26004EBBBB /* LikedSongsTableViewCell.swift */; };
 		5588223E2F2BD084004EBBBB /* GradientLikedSongsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5588223D2F2BD084004EBBBB /* GradientLikedSongsView.swift */; };
@@ -123,6 +125,8 @@
 		554D23402F3797A4008E3345 /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
 		554D23422F3797E0008E3345 /* AudioPlayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerManager.swift; sourceTree = "<group>"; };
 		554D23442F37A0B3008E3345 /* MiniPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerView.swift; sourceTree = "<group>"; };
+		556E3DE52F3E1D0200EB190B /* ShuffleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShuffleButton.swift; sourceTree = "<group>"; };
+		556E3DE72F3E308E00EB190B /* PlayPauseToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayPauseToggle.swift; sourceTree = "<group>"; };
 		558822372F2BC090004EBBBB /* LikedSongsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedSongsViewController.swift; sourceTree = "<group>"; };
 		5588223A2F2BCE26004EBBBB /* LikedSongsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedSongsTableViewCell.swift; sourceTree = "<group>"; };
 		5588223D2F2BD084004EBBBB /* GradientLikedSongsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientLikedSongsView.swift; sourceTree = "<group>"; };
@@ -285,6 +289,8 @@
 			isa = PBXGroup;
 			children = (
 				55223A772F3A363800D4E4FC /* ToggleLikeButton.swift */,
+				556E3DE52F3E1D0200EB190B /* ShuffleButton.swift */,
+				556E3DE72F3E308E00EB190B /* PlayPauseToggle.swift */,
 			);
 			path = CustomButtons;
 			sourceTree = "<group>";
@@ -805,6 +811,7 @@
 				551F72D52ED86E1000B44A14 /* LibraryViewController.swift in Sources */,
 				55D70DAF2ED629CE00780590 /* ConfigFile.swift in Sources */,
 				55D70D962ED622F400780590 /* SceneDelegate.swift in Sources */,
+				556E3DE62F3E1D0200EB190B /* ShuffleButton.swift in Sources */,
 				559C701D2F2A37500011696F /* LibraryTableViewCell.swift in Sources */,
 				559FCC322F3B4E7F00E6A436 /* MiniPlayerTransitionManager.swift in Sources */,
 				559613112EFBBDF9004ED2D4 /* HomeSectionShelfCollectionViewCell.swift in Sources */,
@@ -832,6 +839,7 @@
 				5596130F2EFBBDDE004ED2D4 /* NewReleaseCollectionViewCell.swift in Sources */,
 				551F72D82ED8811D00B44A14 /* IntroViewController.swift in Sources */,
 				55955D042F2D10DC0028016B /* SongsObject.swift in Sources */,
+				556E3DE82F3E308E00EB190B /* PlayPauseToggle.swift in Sources */,
 				55CF4CA32ED6F5F300A77E05 /* Constant.swift in Sources */,
 				55907B322EE89E180064C0DA /* KeychainService.swift in Sources */,
 				559613182EFBE7C9004ED2D4 /* NewReleaseCollectionReusableView.swift in Sources */,

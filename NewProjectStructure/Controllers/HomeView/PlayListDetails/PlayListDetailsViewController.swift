@@ -7,7 +7,18 @@
 
 import UIKit
 
-class PlayListDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, AudioPlayerDelegate {
+class PlayListDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, AudioPlayerDelegate, PlayPauseToggleDelegate {
+  func didRequestInitialPlayback() {
+    guard let songs = self.playListObj?.tracks?.items,
+          !songs.isEmpty else { return }
+    AudioPlayerManager.shared.playSongs(songs, startIndex: 0)
+    updateTableViewInset()
+  }
+  
+  func didUpdateShuffle(_ isEnabled: Bool) {
+    
+  }
+  
   func didStartPlaying(song: Item) {
     self.currentTime = 0
         tableView.reloadData()
@@ -116,15 +127,17 @@ class PlayListDetailsViewController: UIViewController, UITableViewDelegate, UITa
     subTitle.backgroundColor = .clear
 
 
-    let playBtn = UIFactory.makeButton(backgroundColor: .clear,cornerRadius: 25*DeviceMultiplier,image: "playSong")
+    let playBtn = PlayPauseToggle(frame: .zero)
     headerView.addSubview(playBtn)
     playBtn.addConstraints(constraintsDict: [.FixWidth:60,.FixHeight:60,.Trailing:deviceMargin,.Bottom:5])
-    //playBtn.addTarget(self, action: #selector(btnClicked), for: .touchUpInside)
+    playBtn.actionDelegate = self
 
-    let shuffleBtn = UIFactory.makeButton(backgroundColor: .clear,image: "shuffleOff")
+
+    let shuffleBtn = ShuffleButton(frame: .zero)
     headerView.addSubview(shuffleBtn)
-    shuffleBtn.addConstraints(constraintsDict: [.FixWidth:25,.FixHeight:25,.Bottom:15])
+    shuffleBtn.addConstraints(constraintsDict: [.FixWidth:20,.FixHeight:20,.Bottom:20])
     shuffleBtn.addConstraints(constraintsDict: [.LeftTo: 15],relativeTo: playBtn)
+
 
 
     let likeBtn = UIFactory.makeButton(backgroundColor: .clear,image: "unlike")

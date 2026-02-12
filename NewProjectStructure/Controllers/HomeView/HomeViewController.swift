@@ -8,6 +8,10 @@
 import UIKit
 
 class HomeViewController: UIViewController, NewReleaseHeaderDelegate, AudioPlayerDelegate {
+  func didUpdateShuffle(_ isEnabled: Bool) {
+    
+  }
+  
   func didStartPlaying(song: Item) {
 
   }
