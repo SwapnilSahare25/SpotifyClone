@@ -10,16 +10,19 @@ import UIKit
 class ShuffleButton: UIButton {
 
 
+
   override init(frame: CGRect) {
     super.init(frame: frame)
     self.setupBtnUI()
     AudioPlayerManager.shared.addDelegate(self)
+    self.isSelected = AudioPlayerManager.shared.isShuffleEnabled
 
 
   }
   private func setupBtnUI(){
 
     self.setImage(UIImage(named: "shuffleOff"), for: .normal)
+    self.setImage(UIImage(named: "shuffleOn"), for: .selected)
 
     self.addTarget(self, action: #selector(shuffleTapped), for: .touchUpInside)
 
@@ -27,17 +30,17 @@ class ShuffleButton: UIButton {
   }
 
   deinit {
-         AudioPlayerManager.shared.removeDelegate(self)
-     }
+    AudioPlayerManager.shared.removeDelegate(self)
+  }
 
   @objc private func shuffleTapped() {
-         AudioPlayerManager.shared.toggleShuffle()
-     }
+    AudioPlayerManager.shared.toggleShuffle()
+  }
 
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
-  
+
 }
 extension ShuffleButton: AudioPlayerDelegate {
 
@@ -66,6 +69,8 @@ extension ShuffleButton: AudioPlayerDelegate {
   }
 
   func didUpdateShuffle(_ isEnabled: Bool) {
-    self.setImage(UIImage(named: isEnabled ? "shuffleOn" : "shuffleOff"), for: .normal)
+    DispatchQueue.main.async {
+      self.isSelected = isEnabled
+    }
   }
 }

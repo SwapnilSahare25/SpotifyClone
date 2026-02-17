@@ -55,7 +55,7 @@ class HeaderCollectionViewCell: UICollectionViewCell, ReusableCell {
     titleLbl.addConstraints(constraintsDict: [.AboveTo: 0],relativeTo: self.containerView)
     titleLbl.backgroundColor = .clear
 
-    self.playPauseBtn = PlayPauseToggle(frame: .zero)
+    self.playPauseBtn = PlayPauseToggle(frame: .zero,playImage: "playSong",pauseImage: "pauseSong")
     self.containerView.addSubview(self.playPauseBtn)
     self.playPauseBtn.addConstraints(constraintsDict: [.FixWidth:50,.FixHeight:50,.Trailing:deviceMargin,.Bottom:5])
     self.playPauseBtn.addTarget(self, action: #selector(method), for: .touchUpInside)
@@ -107,6 +107,12 @@ class HeaderCollectionViewCell: UICollectionViewCell, ReusableCell {
     self.titleLbl.text = obj.name ?? ""
     let followerCount = obj.followers ?? ""
     self.followerLbl.text = followerCount+" "+"monthly listeners"
+
+    playPauseBtn.playlistId = obj.id ?? 0
+    let manager = AudioPlayerManager.shared
+    playPauseBtn.isHeader = true
+    playPauseBtn.updateUI(isPlaying: AudioPlayerManager.shared.isPlaying && AudioPlayerManager.shared.currentPlaylistId == obj.id ?? 0)
+
 
   }
 

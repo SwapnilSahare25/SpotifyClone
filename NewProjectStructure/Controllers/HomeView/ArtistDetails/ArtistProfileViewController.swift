@@ -13,7 +13,8 @@ class ArtistProfileViewController: UIViewController, UICollectionViewDelegate, U
         switch section.artistSectionType {
         case .popularTracks(let popularTracks):
             if !popularTracks.isEmpty {
-                AudioPlayerManager.shared.playSongs(popularTracks, startIndex: 0)
+              AudioPlayerManager.shared.playSongs(popularTracks, startIndex: 0, playlistId: self.artistId)
+
                 updateInset()
             }
             return
@@ -321,7 +322,7 @@ class ArtistProfileViewController: UIViewController, UICollectionViewDelegate, U
     switch sectionData.artistSectionType {
     case .popularTracks(let popularTracks):
 
-      AudioPlayerManager.shared.playSongs(popularTracks, startIndex: indexPath.item)
+      AudioPlayerManager.shared.playSongs(popularTracks, startIndex: indexPath.item, playlistId: self.artistId)
       self.updateInset()
 
     case .album(let album):

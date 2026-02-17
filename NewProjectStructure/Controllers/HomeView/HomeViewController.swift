@@ -8,8 +8,12 @@
 import UIKit
 
 class HomeViewController: UIViewController, NewReleaseHeaderDelegate, AudioPlayerDelegate {
+
+//  func reloadData() {
+//    
+//  }
+//  
   func didUpdateShuffle(_ isEnabled: Bool) {
-    
   }
   
   func didStartPlaying(song: Item) {
@@ -21,30 +25,16 @@ class HomeViewController: UIViewController, NewReleaseHeaderDelegate, AudioPlaye
   }
   
   func didResume() {
-
   }
   
   func didStop() {
-
   }
   
   func didUpdateProgress(currentTime: Double, duration: Double) {
-
   }
   
   func reloadData(index: Int) {
-
   }
-  
-
-//  func miniPlayerVisibilityChanged(isVisible: Bool, height: CGFloat) {
-//        var inset = collectionView.contentInset
-//        inset.bottom = height
-//        UIView.animate(withDuration: 0.25) {
-//            self.collectionView.contentInset = inset
-//            self.collectionView.scrollIndicatorInsets = inset
-//        }
-//    }
 
   func didTapNewReleaseHeader(id: Int) {
     let vc = ArtistProfileViewController()
@@ -284,6 +274,8 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     case .newRelease(let newRelease):
       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NewReleaseCollectionViewCell.identifier, for: indexPath) as! NewReleaseCollectionViewCell
       cell.configure(obj: newRelease)
+      //cell.delegate = self
+
       return cell
 
     case .horizontalShelf(let sectionObj):
@@ -334,8 +326,8 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         self.navigationController?.pushViewController(albumVC, animated: true)
 
       }else{
+        AudioPlayerManager.shared.playSongs([obj], startIndex: 0)
 
-        AudioPlayerManager.shared.playSongs([obj])
       }
     case .newRelease(let newRelease):
       let albumVC = AlbumDetailsViewController()
@@ -436,6 +428,8 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
 
 
 }
+
+
 extension HomeViewController {
 
   private func createQuickAccessSection() -> NSCollectionLayoutSection {

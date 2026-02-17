@@ -11,9 +11,9 @@ import SwipeCellKit
 class LikedSongsViewController: UIViewController, AudioPlayerDelegate, PlayPauseToggleDelegate {
   
   func didRequestInitialPlayback() {
-    guard let songs = songsObj?.items,
-          !songs.isEmpty else { return }
-    AudioPlayerManager.shared.playSongs(songs, startIndex: 0)
+    guard let songs = songsObj?.items,!songs.isEmpty else { return }
+    AudioPlayerManager.shared.playSongs(songs, startIndex: 0, playlistId: self.likedSongsId)
+    //self.setupHeader()
     updateTableViewInset()
   }
 
@@ -22,21 +22,25 @@ class LikedSongsViewController: UIViewController, AudioPlayerDelegate, PlayPause
   
   func didStartPlaying(song: Item) {
     self.currentTime = 0
+   // self.setupHeader()
         tableView.reloadData()
        // updateTableViewInset()
   }
   
   func didPause() {
+   // self.setupHeader()
     tableView.reloadData()
 
   }
   
   func didResume() {
+   // self.setupHeader()
     tableView.reloadData()
 
   }
   
   func didStop() {
+    //self.setupHeader()
     tableView.reloadData()
 
   }
@@ -47,6 +51,7 @@ class LikedSongsViewController: UIViewController, AudioPlayerDelegate, PlayPause
   }
   
   func reloadData(index: Int) {
+   // self.setupHeader()
     tableView.reloadData()
 
   }
@@ -62,6 +67,7 @@ class LikedSongsViewController: UIViewController, AudioPlayerDelegate, PlayPause
 
   var songsObj: Tracks?
   var currentTime: Double = 0
+  var likedSongsId: Int = 9999
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -73,7 +79,7 @@ class LikedSongsViewController: UIViewController, AudioPlayerDelegate, PlayPause
     navigationController?.navigationBar.backgroundColor = .clear
     self.setupBackButton()
     self.setUpMainView()
-    self.setupHeader()
+   // self.setupHeader()
     self.callLikedSongsApi()
 
 
@@ -89,11 +95,11 @@ class LikedSongsViewController: UIViewController, AudioPlayerDelegate, PlayPause
 
   private func updateTableViewInset() {
     if AudioPlayerManager.shared.isMiniPlayerVisible {
-               let playerHeight: CGFloat = 56.0*DeviceMultiplier
-               tableView.contentInset.bottom = playerHeight + 25*DeviceMultiplier
-           } else {
-               tableView.contentInset.bottom = 0
-           }
+      let playerHeight: CGFloat = 56.0*DeviceMultiplier
+      tableView.contentInset.bottom = playerHeight + 25*DeviceMultiplier
+    } else {
+      tableView.contentInset.bottom = 0
+    }
   }
 
   override func viewWillDisappear(_ animated: Bool) {
@@ -122,7 +128,7 @@ class LikedSongsViewController: UIViewController, AudioPlayerDelegate, PlayPause
     let gradientView = GradientLikedSongsView(frame: CGRect(x: 0, y: 0, width: DeviceWidth, height: 390*DeviceMultiplier))
     gradientView.clipsToBounds = true
     gradientView.delegate = self
-    gradientView.configure(count: self.songsObj?.total ?? 0)
+    gradientView.configure(count: self.songsObj?.total ?? 0, songId: self.likedSongsId)
     self.tableView.tableHeaderView = gradientView
 
 
@@ -199,7 +205,7 @@ extension LikedSongsViewController: UITableViewDelegate, UITableViewDataSource {
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     guard let items = self.songsObj?.items else { return }
     self.currentTime = 0
-    AudioPlayerManager.shared.playSongs(items, startIndex: indexPath.row)
+    AudioPlayerManager.shared.playSongs(items, startIndex: indexPath.row, playlistId: self.likedSongsId)
     self.updateTableViewInset()
 
   }

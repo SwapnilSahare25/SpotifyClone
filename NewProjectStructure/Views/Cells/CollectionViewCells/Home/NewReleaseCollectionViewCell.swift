@@ -7,7 +7,28 @@
 
 import UIKit
 
-class NewReleaseCollectionViewCell: UICollectionViewCell,ReusableCell {
+//protocol ReloadCollection: AnyObject {
+//  func reloadData()
+//}
+
+class NewReleaseCollectionViewCell: UICollectionViewCell,ReusableCell, PlayPauseToggleDelegate {
+
+
+  func didRequestInitialPlayback() {
+    guard let id = newReleaseId else { return }
+    APIManager.shared.request(endpoint: Endpoints.getAlbumDetails(albumId: id)) { [weak self] (object: AlbumObject) in
+      guard let self = self else { return }
+      if let items = object.tracks?.items{
+        AudioPlayerManager.shared.playSongs(items, startIndex: 0, playlistId: id)
+        //self.delegate?.reloadData()
+      }else{
+        print("NO Songs Found")
+      }
+      } onFailure: { error in
+          print(error)
+      }
+  }
+  
     
   var containerView: UIView!
   var imgView: UIImageView!
@@ -15,8 +36,11 @@ class NewReleaseCollectionViewCell: UICollectionViewCell,ReusableCell {
   var songTitleLbl: UILabel!
   var artistNameLbl: UILabel!
 
-  var playPauseBtn:UIButton!
+  var playPauseBtn:PlayPauseToggle!
   var likeUnlikeBtn:UIButton!
+  var newReleaseId: Int?
+
+ // weak var delegate: ReloadCollection?
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -49,12 +73,10 @@ class NewReleaseCollectionViewCell: UICollectionViewCell,ReusableCell {
     //self.artistNameLbl.backgroundColor = .red
 
 
-    self.playPauseBtn = PlayPauseToggle(frame: .zero)
+    self.playPauseBtn = PlayPauseToggle(frame: .zero,playImage: "playSong",pauseImage: "pauseSong")
     self.containerView.addSubview(self.playPauseBtn)
     self.playPauseBtn.addConstraints(constraintsDict: [.FixWidth:40,.FixHeight:40,.Trailing:deviceMargin,.Bottom:15])
-    //self.playPauseBtn.tag = 100
-   // self.playPauseBtn.addTarget(self, action: #selector(btnClicked), for: .touchUpInside)
-//    self.playPauseBtn.isHidden = true
+    self.playPauseBtn.actionDelegate = self
 
     self.likeUnlikeBtn = UIFactory.makeButton(backgroundColor: .clear,cornerRadius: 0,image: "unlike")
     self.containerView.addSubview(self.likeUnlikeBtn)
@@ -65,9 +87,13 @@ class NewReleaseCollectionViewCell: UICollectionViewCell,ReusableCell {
 
 
   func configure(obj: NewRelease) {
+    self.newReleaseId = obj.id
     self.songTitleLbl.text = obj.content?.title ?? ""
     self.artistNameLbl.text = obj.content?.subtitle ?? ""
     self.imgView.setImage(urlStr: obj.content?.image ?? "")
+    self.playPauseBtn.playlistId = obj.id
+    self.playPauseBtn.isHeader = true
+    self.playPauseBtn.updateUI(isPlaying: AudioPlayerManager.shared.isPlaying && AudioPlayerManager.shared.currentPlaylistId == obj.id)
   }
 
   required init?(coder: NSCoder) {

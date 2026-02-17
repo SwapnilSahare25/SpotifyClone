@@ -11,7 +11,8 @@ class PlayListDetailsViewController: UIViewController, UITableViewDelegate, UITa
   func didRequestInitialPlayback() {
     guard let songs = self.playListObj?.tracks?.items,
           !songs.isEmpty else { return }
-    AudioPlayerManager.shared.playSongs(songs, startIndex: 0)
+    AudioPlayerManager.shared.playSongs(songs, startIndex: 0, playlistId: self.playListId)
+    self.setupHeader()
     updateTableViewInset()
   }
   
@@ -21,14 +22,17 @@ class PlayListDetailsViewController: UIViewController, UITableViewDelegate, UITa
   
   func didStartPlaying(song: Item) {
     self.currentTime = 0
+    self.setupHeader()
         tableView.reloadData()
   }
   
   func didPause() {
+    self.setupHeader()
     tableView.reloadData()
   }
   
   func didResume() {
+    self.setupHeader()
     tableView.reloadData()
   }
   
@@ -42,6 +46,7 @@ class PlayListDetailsViewController: UIViewController, UITableViewDelegate, UITa
   }
   
   func reloadData(index: Int) {
+    self.setupHeader()
     tableView.reloadData()
   }
   
@@ -53,6 +58,7 @@ class PlayListDetailsViewController: UIViewController, UITableViewDelegate, UITa
   var playListId: Int = 0
   var playListObj: PlayListObject?
   var currentTime: Double = 0
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -127,10 +133,13 @@ class PlayListDetailsViewController: UIViewController, UITableViewDelegate, UITa
     subTitle.backgroundColor = .clear
 
 
-    let playBtn = PlayPauseToggle(frame: .zero)
+    let playBtn = PlayPauseToggle(frame: .zero,playImage: "playSong",pauseImage: "pauseSong")
     headerView.addSubview(playBtn)
     playBtn.addConstraints(constraintsDict: [.FixWidth:60,.FixHeight:60,.Trailing:deviceMargin,.Bottom:5])
+    playBtn.playlistId = playListId
     playBtn.actionDelegate = self
+    playBtn.isHeader = true
+    playBtn.updateUI(isPlaying: AudioPlayerManager.shared.isPlaying && AudioPlayerManager.shared.currentPlaylistId == playListId)
 
 
     let shuffleBtn = ShuffleButton(frame: .zero)
@@ -230,7 +239,7 @@ class PlayListDetailsViewController: UIViewController, UITableViewDelegate, UITa
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
     guard let items = self.playListObj?.tracks?.items else { return }
-    AudioPlayerManager.shared.playSongs(items, startIndex: indexPath.row)
+    AudioPlayerManager.shared.playSongs(items, startIndex: indexPath.row, playlistId: self.playListId)
     self.updateTableViewInset()
   }
 

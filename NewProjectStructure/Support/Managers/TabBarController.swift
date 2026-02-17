@@ -221,7 +221,10 @@ extension TabBarController: MiniPlayerDelegate {
 
   func didTapMiniPlayer() {
 
-    let playerVC = UINavigationController(rootViewController: PlayerViewController())
+    let playerView = PlayerViewController()
+    playerView.currentPlaylistId = AudioPlayerManager.shared.currentPlaylistId
+    let playerVC = UINavigationController(rootViewController: playerView)
+
           // 1. Calculate the frame of the Mini Player in the Window's coordinate system
           if let window = view.window {
               let frame = miniPlayerView.convert(miniPlayerView.bounds, to: window)
@@ -233,6 +236,7 @@ extension TabBarController: MiniPlayerDelegate {
           playerVC.transitioningDelegate = transitionManager
           // 3. Use .custom for custom transitions -> keeps presenting view (TabBar) visible behind
           playerVC.modalPresentationStyle = .custom
+
           self.present(playerVC, animated: true)
 
   }

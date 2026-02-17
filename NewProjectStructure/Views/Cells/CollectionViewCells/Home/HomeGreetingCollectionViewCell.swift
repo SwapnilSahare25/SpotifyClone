@@ -50,6 +50,7 @@ class HomeGreetingCollectionViewCell: UICollectionViewCell,ReusableCell {
   func configure(obj: Item) {
     self.titleLbl.text = obj.title ?? ""
     self.imgView.setImage(urlStr: obj.image ?? "")
+    
   }
 
 

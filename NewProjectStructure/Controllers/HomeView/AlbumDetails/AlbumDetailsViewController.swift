@@ -11,7 +11,7 @@ class AlbumDetailsViewController: UIViewController, AudioPlayerDelegate, PlayPau
   func didRequestInitialPlayback() {
     guard let songs = self.albumDetails?.tracks?.items,
           !songs.isEmpty else { return }
-    AudioPlayerManager.shared.playSongs(songs, startIndex: 0)
+    AudioPlayerManager.shared.playSongs(songs, startIndex: 0, playlistId: self.albumId)
     updateTableViewInset()
   }
   
@@ -144,10 +144,15 @@ class AlbumDetailsViewController: UIViewController, AudioPlayerDelegate, PlayPau
     songsCountAndDuretionTitle.addConstraints(constraintsDict: [.BelowTo: 5],relativeTo: subTitle)
     songsCountAndDuretionTitle.backgroundColor = .clear
 
-    let playBtn = PlayPauseToggle(frame: .zero)
+    let playBtn = PlayPauseToggle(frame: .zero,playImage: "playSong",pauseImage: "pauseSong")
     headerView.addSubview(playBtn)
     playBtn.addConstraints(constraintsDict: [.FixWidth:60,.FixHeight:60,.Trailing:deviceMargin,.Bottom:5])
     playBtn.actionDelegate = self
+    playBtn.playlistId = albumId
+    playBtn.isHeader = true
+    playBtn.updateUI(isPlaying: AudioPlayerManager.shared.isPlaying && AudioPlayerManager.shared.currentPlaylistId == albumId)
+
+
     //playBtn.addTarget(self, action: #selector(btnClicked), for: .touchUpInside)
 
     let shuffleBtn = ShuffleButton(frame: .zero)
@@ -240,7 +245,7 @@ extension AlbumDetailsViewController: UITableViewDelegate, UITableViewDataSource
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
     guard let items = self.albumDetails?.tracks?.items else { return }
-    AudioPlayerManager.shared.playSongs(items, startIndex: indexPath.row)
+    AudioPlayerManager.shared.playSongs(items, startIndex: indexPath.row, playlistId: self.albumId)
     self.updateTableViewInset()
 
   }

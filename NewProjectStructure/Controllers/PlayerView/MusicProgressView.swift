@@ -9,9 +9,9 @@ import UIKit
 
 class MusicProgressView: UIView {
 
-  private let progressBar = UIProgressView(progressViewStyle: .bar)
-  private var currentSecLabel: UILabel!
-  private var duretionLabel: UILabel!
+   let progressBar = UIProgressView(progressViewStyle: .bar)
+   var currentSecLabel: UILabel!
+   var duretionLabel: UILabel!
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -24,8 +24,8 @@ class MusicProgressView: UIView {
 
   private func setupUI() {
 
-    self.progressBar.trackTintColor = .white
-    self.progressBar.progressTintColor = CellBgColor
+    self.progressBar.trackTintColor = .white.withAlphaComponent(0.3)
+    self.progressBar.progressTintColor = .white
     self.progressBar.translatesAutoresizingMaskIntoConstraints = false
     self.addSubview(self.progressBar)
     self.progressBar.addConstraints(constraintsDict: [.Leading:0,.Trailing:0,.Top:20,.FixHeight:2])
@@ -56,7 +56,7 @@ class MusicProgressView: UIView {
   }
 
   func setProgress(_ progress: Float) {
-    progressBar.setProgress(50.0, animated: true)
+    progressBar.setProgress(progress, animated: true)
   }
 
 

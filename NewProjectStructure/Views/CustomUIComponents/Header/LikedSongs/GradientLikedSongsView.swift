@@ -22,15 +22,18 @@ class GradientLikedSongsView: UIView {
   private var moreOptsBtn:UIButton!
 
   weak var delegate: PlayPauseToggleDelegate? {
-      didSet {
-          playPauseBtn?.actionDelegate = delegate
-      }
+    didSet {
+      playPauseBtn?.actionDelegate = delegate
+    }
   }
 
 
-  func configure(count: Int) {
-         subTitle.text = "\(count) songs"
-     }
+  func configure(count: Int,songId: Int) {
+    self.subTitle.text = "\(count) songs"
+    self.playPauseBtn.playlistId = songId
+    self.playPauseBtn.isHeader = true
+    self.playPauseBtn.updateUI(isPlaying: AudioPlayerManager.shared.isPlaying && AudioPlayerManager.shared.currentPlaylistId == songId)
+  }
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -59,15 +62,10 @@ class GradientLikedSongsView: UIView {
     subTitle.addConstraints(constraintsDict: [.BelowTo: 5],relativeTo: titleLbl)
     subTitle.backgroundColor = .clear
 
-    self.playPauseBtn = PlayPauseToggle(frame: .zero)
+    self.playPauseBtn = PlayPauseToggle(frame: .zero,playImage: "playSong",pauseImage: "pauseSong")
     self.addSubview(self.playPauseBtn)
     self.playPauseBtn.addConstraints(constraintsDict: [.FixWidth:50,.FixHeight:50,.Trailing:deviceMargin,.Bottom:10])
 
-
-   // self.playPauseBtn.addConstraints(constraintsDict: [.BelowTo: 10],relativeTo: titleLbl)
-    //self.playPauseBtn.tag = 100
-    //self.playPauseBtn.addTarget(self, action: #selector(btnClicked), for: .touchUpInside)
-//    self.playPauseBtn.isHidden = true
 
     self.likeBtn = UIFactory.makeButton(backgroundColor: .clear,image: "unlike")
     self.addSubview(likeBtn)

@@ -41,7 +41,7 @@ class SplashViewController: UIViewController {
       UserAuthenticationService.shared.getValidAccessToken { token in
 
         DispatchQueue.main.async {
-          if let token = token {
+          if let _ = token {
             sceneDelegate.goToMainApp()
 
           } else {

@@ -116,7 +116,7 @@ class ActiveSearchViewController: UIViewController, UISearchBarDelegate, UIColle
 
     return UICollectionViewCompositionalLayout{ [weak self] index,environment -> NSCollectionLayoutSection? in
 
-      guard let self = self else {return nil}
+      guard let _ = self else {return nil}
 
       let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
 

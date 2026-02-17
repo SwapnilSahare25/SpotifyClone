@@ -8,64 +8,99 @@
 import UIKit
 
 protocol PlayPauseToggleDelegate: AnyObject {
-    func didRequestInitialPlayback()
+  func didRequestInitialPlayback()
 }
 
 
 class PlayPauseToggle: UIButton {
 
-  
+
   weak var actionDelegate: PlayPauseToggleDelegate?
 
-  override init(frame: CGRect) {
+  private var playImageName: String
+  private var pauseImageName: String
+  private var isPlaying = false
+  var playlistId: Int?
+  var isHeader: Bool = false
+
+  // MARK: - Initializer
+  init(frame: CGRect, playImage: String = "playSong", pauseImage: String = "pauseSong") {
+    self.playImageName = playImage
+    self.pauseImageName = pauseImage
     super.init(frame: frame)
-    self.setupBtnUI()
+    setupBtnUI()
     AudioPlayerManager.shared.addDelegate(self)
   }
   private func setupBtnUI(){
 
-    self.setImage(UIImage(named: "playSong"), for: .normal)
-
+    updateState()
     self.addTarget(self, action: #selector(togglePlayPauseTapped), for: .touchUpInside)
 
 
   }
 
-  
+
+
   @objc private func togglePlayPauseTapped() {
-    let manager = AudioPlayerManager.shared
-    // If queue exists → just toggle
-    print(manager.songQueue.count,"Count is ")
-    if !manager.songQueue.isEmpty {
-        manager.togglePlayPause()
-    } else {
-      // First time play
-      actionDelegate?.didRequestInitialPlayback()
-    }
-     }
+      let manager = AudioPlayerManager.shared
+      guard let playlistId = playlistId else { return }
+
+      if isHeader {
+          // header button: play whole playlist
+          if manager.currentPlaylistId == playlistId {
+              manager.togglePlayPause()
+          } else {
+              actionDelegate?.didRequestInitialPlayback()
+          }
+      } else {
+          // cell button: play single song
+          if manager.currentSong?.id == playlistId {
+              manager.togglePlayPause()
+          } else if let queueIndex = manager.songQueue.firstIndex(where: { $0.id == playlistId }) {
+              manager.playSongs(manager.songQueue, startIndex: queueIndex)
+          }
+      }
+  }
+
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
   deinit {
-         AudioPlayerManager.shared.removeDelegate(self)
-     }
-  private func updateUI(isPlaying: Bool) {
-          let imageName = isPlaying ? "pauseSong" : "playSong"
-          setImage(UIImage(named: imageName), for: .normal)
+    AudioPlayerManager.shared.removeDelegate(self)
+  }
+  private func updateState() {
+      let manager = AudioPlayerManager.shared
+      guard let playlistId = playlistId else { return }
+
+      let playing: Bool
+      if isHeader {
+          // Header: any song in this playlist
+          playing = manager.isPlaying && manager.songQueue.contains(where: { $0.id == playlistId || manager.currentPlaylistId == playlistId })
+      } else {
+          // Cell: only if this song is currentSong
+          playing = manager.isPlaying && manager.currentSong?.id == playlistId
       }
+      updateUI(isPlaying: playing)
+  }
+
+  public func updateUI(isPlaying: Bool) {
+      self.isPlaying = isPlaying
+      let imageName = isPlaying ? pauseImageName : playImageName
+      self.setImage(UIImage(named: imageName), for: .normal)
+  }
 }
 extension PlayPauseToggle: AudioPlayerDelegate {
 
   func didStartPlaying(song: Item) {
-    updateUI(isPlaying: true)
+    updateState()
   }
 
   func didPause() {
-    updateUI(isPlaying: false)
+    updateState()
   }
 
   func didResume() {
-    updateUI(isPlaying: true)
+    updateState()
   }
 
   func didStop() {
@@ -76,8 +111,30 @@ extension PlayPauseToggle: AudioPlayerDelegate {
   }
 
   func reloadData(index: Int) {
+    updateState()
   }
 
   func didUpdateShuffle(_ isEnabled: Bool) {
   }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//  override init(frame: CGRect) {
+//    super.init(frame: frame)
+//    self.setupBtnUI()
+//    AudioPlayerManager.shared.addDelegate(self)
+//  }

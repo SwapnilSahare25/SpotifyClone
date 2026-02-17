@@ -34,6 +34,7 @@
 		554D23452F37A0B3008E3345 /* MiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554D23442F37A0B3008E3345 /* MiniPlayerView.swift */; };
 		556E3DE62F3E1D0200EB190B /* ShuffleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556E3DE52F3E1D0200EB190B /* ShuffleButton.swift */; };
 		556E3DE82F3E308E00EB190B /* PlayPauseToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556E3DE72F3E308E00EB190B /* PlayPauseToggle.swift */; };
+		557176392F44959C008A0271 /* MarqueeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557176382F44959C008A0271 /* MarqueeLabel.swift */; };
 		558822382F2BC090004EBBBB /* LikedSongsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558822372F2BC090004EBBBB /* LikedSongsViewController.swift */; };
 		5588223B2F2BCE26004EBBBB /* LikedSongsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5588223A2F2BCE26004EBBBB /* LikedSongsTableViewCell.swift */; };
 		5588223E2F2BD084004EBBBB /* GradientLikedSongsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5588223D2F2BD084004EBBBB /* GradientLikedSongsView.swift */; };
@@ -127,6 +128,7 @@
 		554D23442F37A0B3008E3345 /* MiniPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerView.swift; sourceTree = "<group>"; };
 		556E3DE52F3E1D0200EB190B /* ShuffleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShuffleButton.swift; sourceTree = "<group>"; };
 		556E3DE72F3E308E00EB190B /* PlayPauseToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayPauseToggle.swift; sourceTree = "<group>"; };
+		557176382F44959C008A0271 /* MarqueeLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarqueeLabel.swift; sourceTree = "<group>"; };
 		558822372F2BC090004EBBBB /* LikedSongsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedSongsViewController.swift; sourceTree = "<group>"; };
 		5588223A2F2BCE26004EBBBB /* LikedSongsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedSongsTableViewCell.swift; sourceTree = "<group>"; };
 		5588223D2F2BD084004EBBBB /* GradientLikedSongsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientLikedSongsView.swift; sourceTree = "<group>"; };
@@ -529,6 +531,7 @@
 				55223A762F3A360800D4E4FC /* CustomButtons */,
 				559613142EFBE78A004ED2D4 /* Header */,
 				55CF4CC72ED7277E00A77E05 /* CustomButton.swift */,
+				557176382F44959C008A0271 /* MarqueeLabel.swift */,
 			);
 			path = CustomUIComponents;
 			sourceTree = "<group>";
@@ -811,6 +814,7 @@
 				551F72D52ED86E1000B44A14 /* LibraryViewController.swift in Sources */,
 				55D70DAF2ED629CE00780590 /* ConfigFile.swift in Sources */,
 				55D70D962ED622F400780590 /* SceneDelegate.swift in Sources */,
+				557176392F44959C008A0271 /* MarqueeLabel.swift in Sources */,
 				556E3DE62F3E1D0200EB190B /* ShuffleButton.swift in Sources */,
 				559C701D2F2A37500011696F /* LibraryTableViewCell.swift in Sources */,
 				559FCC322F3B4E7F00E6A436 /* MiniPlayerTransitionManager.swift in Sources */,

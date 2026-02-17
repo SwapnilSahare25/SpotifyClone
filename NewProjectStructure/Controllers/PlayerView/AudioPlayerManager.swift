@@ -8,6 +8,11 @@
 import Foundation
 import AVFoundation
 
+enum RepeatMode {
+    case off
+    case all
+    case one
+}
 
 protocol AudioPlayerDelegate: AnyObject {
 
@@ -41,6 +46,10 @@ class AudioPlayerManager {
   var currentIndex: Int?
   var isShuffleEnabled: Bool = false
 
+  var currentPlaylistId: Int?
+
+  var repeatMode: RepeatMode = .off
+
   // MULTIPLE DELEGATES
   private var delegates = NSHashTable<AnyObject>.weakObjects()
 
@@ -65,10 +74,11 @@ class AudioPlayerManager {
   }
 
 
-  func playSongs(_ songs: [Item], startIndex: Int=0) {
+  func playSongs(_ songs: [Item], startIndex: Int=0, playlistId: Int=0) {
     guard !songs.isEmpty else { return }
 
     // If new playlist, set queues once
+    currentPlaylistId = playlistId
     if originalQueue.isEmpty {
       originalQueue = songs
       songQueue = songs
@@ -104,7 +114,7 @@ class AudioPlayerManager {
     }
   }
 
-  private func playCurrent() {
+  public func playCurrent() {
 
     if let observer = timeObserver {
       player?.removeTimeObserver(observer)
@@ -134,26 +144,6 @@ class AudioPlayerManager {
     observeSongCompletion()
   }
 
-
-  @objc private func songFinished() {
-    // If only one song → stop
-        if songQueue.count <= 1 {
-            stop()
-            return
-        }
-        // If not last song → move forward
-    if currentIndex ?? 0 < songQueue.count - 1 {
-          currentIndex! += 1
-        } else {
-            // If last song → go back to first (loop)
-            currentIndex = 0
-        }
-
-    notify { $0.reloadData(index: currentIndex ?? 0) }
-        playCurrent()
-
-  }
-
   func togglePlayPause() {
 
     guard let player = player else { return }
@@ -168,6 +158,29 @@ class AudioPlayerManager {
       notify { $0.didResume() }
     }
   }
+
+  // MARK: - Repeat / Next / Previous
+     @objc private func songFinished() {
+         switch repeatMode {
+         case .off:
+             playNext()
+         case .all:
+             if let index = currentIndex, index < songQueue.count - 1 { currentIndex! += 1 }
+             else { currentIndex = 0 }
+             playCurrent()
+         case .one:
+             playCurrent() // repeat current song
+         }
+     }
+
+     func toggleRepeat() {
+         switch repeatMode {
+         case .off: repeatMode = .all
+         case .all: repeatMode = .one
+         case .one: repeatMode = .off
+         }
+         notify { $0.reloadData(index: currentIndex ?? 0) }
+     }
 
   func toggleShuffle() {
     guard currentSong != nil else { return }
@@ -197,6 +210,7 @@ class AudioPlayerManager {
     self.songQueue.removeAll()
     self.originalQueue.removeAll()
     isShuffleEnabled = false
+    currentPlaylistId = nil
     notify { $0.didStop() }
   }
 
@@ -239,3 +253,71 @@ class AudioPlayerManager {
 
 
 }
+extension AudioPlayerManager {
+
+  func playNext() {
+         guard !songQueue.isEmpty else { return }
+
+         switch repeatMode {
+         case .one:
+             // repeat current song
+             break
+         default:
+             if let index = currentIndex, index < songQueue.count - 1 {
+                 currentIndex! += 1
+             } else {
+                 currentIndex = 0
+             }
+         }
+
+         playCurrent()
+     }
+
+  func playPrevious() {
+        guard !songQueue.isEmpty else { return }
+
+        switch repeatMode {
+        case .one:
+            // repeat current song
+            break
+        default:
+            if let index = currentIndex, index > 0 {
+                currentIndex! -= 1
+            } else {
+                currentIndex = songQueue.count - 1
+            }
+        }
+
+        playCurrent()
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+//  @objc private func songFinished() {
+//    // If only one song → stop
+//        if songQueue.count <= 1 {
+//            stop()
+//            return
+//        }
+//        // If not last song → move forward
+//    if currentIndex ?? 0 < songQueue.count - 1 {
+//          currentIndex! += 1
+//        } else {
+//            // If last song → go back to first (loop)
+//            currentIndex = 0
+//        }
+//
+//    notify { $0.reloadData(index: currentIndex ?? 0) }
+//        playCurrent()
+//
+//  }
