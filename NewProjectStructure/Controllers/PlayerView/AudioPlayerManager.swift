@@ -173,11 +173,14 @@ class AudioPlayerManager {
          }
      }
 
-     func toggleRepeat() {
+    func toggleRepeat() {
          switch repeatMode {
-         case .off: repeatMode = .all
-         case .all: repeatMode = .one
-         case .one: repeatMode = .off
+         case .off: 
+           repeatMode = .all
+         case .all: 
+           repeatMode = .one
+         case .one: 
+           repeatMode = .off
          }
          notify { $0.reloadData(index: currentIndex ?? 0) }
      }
@@ -217,9 +220,7 @@ class AudioPlayerManager {
   private func setupTimeObserver(duration: Double) {
     guard let player = player else { return }
 
-    let finalDuration = duration > 0
-    ? duration
-    : (player.currentItem?.duration.seconds ?? 0)
+    let finalDuration = duration > 0 ? duration : (player.currentItem?.duration.seconds ?? 0)
 
     // Remove previous observer if exists
     if let observer = timeObserver {
@@ -227,10 +228,8 @@ class AudioPlayerManager {
       timeObserver = nil
     }
 
-    timeObserver = player.addPeriodicTimeObserver(
-      forInterval: CMTime(seconds: 0.5, preferredTimescale: 600),
-      queue: .main
-    ) { [weak self] time in
+    timeObserver = player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 0.5, preferredTimescale: 600),queue: .main) { [weak self] time in
+
       guard let self = self, finalDuration > 0 else { return }
       // Notify all delegates about progress
       self.notify { $0.didUpdateProgress(currentTime: time.seconds, duration: finalDuration) }
@@ -242,12 +241,7 @@ class AudioPlayerManager {
     NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: nil)
 
     // Listen for end of song
-    NotificationCenter.default.addObserver(
-      self,
-      selector: #selector(songFinished),
-      name: .AVPlayerItemDidPlayToEndTime,
-      object: player?.currentItem
-    )
+    NotificationCenter.default.addObserver(self,selector: #selector(songFinished),name: .AVPlayerItemDidPlayToEndTime,object: player?.currentItem)
   }
 
 

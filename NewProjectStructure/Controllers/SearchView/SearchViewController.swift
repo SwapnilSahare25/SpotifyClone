@@ -62,7 +62,11 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
 
     self.collectionView.scrollIndicatorInsets = collectionView.contentInset
   }
-
+//  override func viewWillDisappear(_ animated: Bool) {
+//    super.viewWillDisappear(animated)
+//    self.navigationController?.navigationBar.prefersLargeTitles = false
+//    self.navigationItem.largeTitleDisplayMode = .never
+//  }
 
 
   private func setupMainView(){
@@ -228,6 +232,13 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
 
 
   }
+
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    let vc = CategoryViewController()
+    vc.hidesBottomBarWhenPushed = true
+    self.navigationController?.pushViewController(vc, animated: true)
+  }
+
   func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
     let section = searchSectionArray[indexPath.section]
 
