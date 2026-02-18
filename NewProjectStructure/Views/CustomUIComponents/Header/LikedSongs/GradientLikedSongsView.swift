@@ -67,7 +67,7 @@ class GradientLikedSongsView: UIView {
     self.playPauseBtn.addConstraints(constraintsDict: [.FixWidth:50,.FixHeight:50,.Trailing:deviceMargin,.Bottom:10])
 
 
-    self.likeBtn = UIFactory.makeButton(backgroundColor: .clear,image: "unlike")
+    self.likeBtn = UIFactory.makeButton(backgroundColor: .clear,image: "like")
     self.addSubview(likeBtn)
     likeBtn.addConstraints(constraintsDict: [.FixWidth:25,.FixHeight:25,.Leading:deviceMargin,.Bottom:15])
 

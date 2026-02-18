@@ -16,12 +16,18 @@ class HeaderCollectionViewCell: UICollectionViewCell, ReusableCell {
   private var playPauseBtn:PlayPauseToggle!
 
   private var followBtn:UIButton!
-  private var likeBtn:UIButton!
+  private var likeBtn:ToggleLikeButton!
   private var moreOptsBtn:UIButton!
 
   private var followerLbl:UILabel!
 
   private var gradientOverlay:UIView!
+
+  weak var artistProfileDelegate: LikeUpdateDelegate? {
+    didSet{
+      self.likeBtn.delegate = self.artistProfileDelegate
+    }
+  }
 
   weak var delegate: PlayPauseToggleDelegate? {
     didSet{
@@ -65,7 +71,7 @@ class HeaderCollectionViewCell: UICollectionViewCell, ReusableCell {
     followerLbl.addConstraints(constraintsDict: [.Trailing:60,.FixHeight:15,.Leading:deviceMargin,.Top:5])
     followerLbl.backgroundColor = .clear
 
-    self.likeBtn = UIFactory.makeButton(backgroundColor: .clear,image: "unlike")
+    self.likeBtn = ToggleLikeButton(frame: .zero)
     self.containerView.addSubview(likeBtn)
     likeBtn.addConstraints(constraintsDict: [.FixWidth:25,.FixHeight:25,.Leading:deviceMargin,.Bottom:5])
 
@@ -113,7 +119,7 @@ class HeaderCollectionViewCell: UICollectionViewCell, ReusableCell {
     playPauseBtn.isHeader = true
     playPauseBtn.updateUI(isPlaying: AudioPlayerManager.shared.isPlaying && AudioPlayerManager.shared.currentPlaylistId == obj.id ?? 0)
 
-
+    self.likeBtn.configure(id: obj.id ?? 0, type: "artist", isLiked: obj.isLiked ?? false)
   }
 
   required init?(coder: NSCoder) {

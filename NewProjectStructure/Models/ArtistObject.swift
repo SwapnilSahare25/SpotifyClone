@@ -16,11 +16,13 @@ struct ArtistObject: Codable {
     let name: String?
     let popularTracks: [Item]?
     let relatedArtists: [Artist]?
+  let isLiked: Bool?
 
     enum CodingKeys: String, CodingKey {
         case albums, followers, id, image, name
         case popularTracks = "popular_tracks"
         case relatedArtists = "related_artists"
+      case isLiked = "is_liked"
     }
 }
 

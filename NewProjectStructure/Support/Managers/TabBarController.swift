@@ -48,6 +48,7 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
     playerBottomConstraint?.isActive = true
     miniPlayerView.isHidden = isHidden // Hidden by default until song plays
     miniPlayerView.delegate = self
+    miniPlayerView.likeDelegate = self
 
     view.layoutIfNeeded()
 
@@ -168,6 +169,13 @@ extension TabBarController: AudioPlayerDelegate {
 
   func didStartPlaying(song: Item) {
     miniPlayerView.configure(title: song.title ?? "", subtitle: song.artist ?? "", imageURL: song.image)
+
+//    if let like = song.isLiked {
+//      print(like,"LL")
+//    }else{
+//      print("BB")
+//    }
+    miniPlayerView.configureLikeButton(id: song.id ?? 0,type: "song",isLiked: song.isLiked ?? false)
     miniPlayerView.setPlaying(true)
 
     AudioPlayerManager.shared.isMiniPlayerVisible = true
@@ -248,4 +256,10 @@ extension TabBarController: MiniPlayerDelegate {
   func didSwipeToClose() {
     AudioPlayerManager.shared.stop()
   }
+}
+extension TabBarController: LikeUpdateDelegate {
+
+    func didUpdateLike() {
+
+    }
 }

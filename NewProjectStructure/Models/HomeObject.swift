@@ -21,25 +21,6 @@ struct HomeObject: Codable {
   }
 }
 
-//// MARK: - GridItem
-//struct GridItem: Codable {
-//  let id: Int?
-//  let image: String?
-//  let pinned: Bool?
-//  let title, type, album, artist: String?
-//  let duration: String?
-//  let url: String?
-//  let description: String?
-//  let owner: String?
-//  let songCount: Int?
-//  let subtitle: String?
-//
-//  enum CodingKeys: String, CodingKey {
-//    case id, image, pinned, title, type, album, artist, duration, url, description, owner
-//    case songCount = "song_count"
-//    case subtitle
-//  }
-//}
 
 // MARK: - Item
 struct Item: Codable {
@@ -57,6 +38,7 @@ struct Item: Codable {
   let duration: String?
   let url: String?
   let playCount: Int64?
+  var isLiked: Bool?
   var isCurrentlyPlaying: Bool = false
 
   enum CodingKeys: String, CodingKey {
@@ -64,6 +46,7 @@ struct Item: Codable {
     case songCount = "song_count"
     case subtitle, title, type, artist, name, color, pinned, album, duration, url
     case playCount = "play_count"
+    case isLiked = "is_liked"
   }
 }
 
@@ -81,6 +64,13 @@ struct Artist: Codable {
   let name: String?
   let id: Int?
   let type: String?
+  let isLiked: Bool?
+
+  enum CodingKeys: String, CodingKey {
+    case id, image
+    case isLiked = "is_liked"
+    case name, type
+  }
 }
 
 // MARK: - Content
@@ -90,6 +80,12 @@ struct Content: Codable {
   let image: String?
   let subtitle, title: String?
   let type: String?
+  let isLiked: Bool?
+
+  enum CodingKeys: String, CodingKey {
+    case artist, id, image, type, title, subtitle
+    case isLiked = "is_liked"
+  }
 }
 // MARK: - Section
 struct SectionObject: Codable {
@@ -104,9 +100,9 @@ struct SectionObject: Codable {
   }
 }
 struct AssociatedItem: Codable {
-    let id: Int?
-    let subtitle, title: String?
-    let type: String?
+  let id: Int?
+  let subtitle, title: String?
+  let type: String?
 }
 
 

@@ -7,7 +7,11 @@
 
 import UIKit
 
-class PlayListDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, AudioPlayerDelegate, PlayPauseToggleDelegate {
+class PlayListDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, AudioPlayerDelegate, PlayPauseToggleDelegate, LikeUpdateDelegate {
+  func didUpdateLike() {
+    self.callPlayListDetailsApi()
+  }
+  
   func didRequestInitialPlayback() {
     guard let songs = self.playListObj?.tracks?.items,
           !songs.isEmpty else { return }
@@ -149,9 +153,11 @@ class PlayListDetailsViewController: UIViewController, UITableViewDelegate, UITa
 
 
 
-    let likeBtn = UIFactory.makeButton(backgroundColor: .clear,image: "unlike")
+    let likeBtn = ToggleLikeButton(frame: .zero)
     headerView.addSubview(likeBtn)
     likeBtn.addConstraints(constraintsDict: [.FixWidth:25,.FixHeight:25,.Leading:deviceMargin,.Bottom:5])
+    likeBtn.delegate = self
+    likeBtn.configure(id: self.playListObj?.id ?? 0, type: "album", isLiked: playListObj?.isLiked ?? false)
     //likeBtn.addTarget(self, action: #selector(btnClicked), for: .touchUpInside)
 
     let moreOptsBtn = UIFactory.makeButton(backgroundColor: .clear,image: "moreOptsHori")

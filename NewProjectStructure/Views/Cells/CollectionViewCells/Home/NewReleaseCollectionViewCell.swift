@@ -7,9 +7,6 @@
 
 import UIKit
 
-//protocol ReloadCollection: AnyObject {
-//  func reloadData()
-//}
 
 class NewReleaseCollectionViewCell: UICollectionViewCell,ReusableCell, PlayPauseToggleDelegate {
 
@@ -17,7 +14,7 @@ class NewReleaseCollectionViewCell: UICollectionViewCell,ReusableCell, PlayPause
   func didRequestInitialPlayback() {
     guard let id = newReleaseId else { return }
     APIManager.shared.request(endpoint: Endpoints.getAlbumDetails(albumId: id)) { [weak self] (object: AlbumObject) in
-      guard let self = self else { return }
+     // guard let self = self else { return }
       if let items = object.tracks?.items{
         AudioPlayerManager.shared.playSongs(items, startIndex: 0, playlistId: id)
         //self.delegate?.reloadData()
@@ -37,10 +34,16 @@ class NewReleaseCollectionViewCell: UICollectionViewCell,ReusableCell, PlayPause
   var artistNameLbl: UILabel!
 
   var playPauseBtn:PlayPauseToggle!
-  var likeUnlikeBtn:UIButton!
+
+  var likeUnlikeBtn:ToggleLikeButton!
+
   var newReleaseId: Int?
 
- // weak var delegate: ReloadCollection?
+  weak var homeReloadDelegate: LikeUpdateDelegate?{
+    didSet{
+      self.likeUnlikeBtn.delegate = self.homeReloadDelegate
+    }
+  }
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -78,22 +81,30 @@ class NewReleaseCollectionViewCell: UICollectionViewCell,ReusableCell, PlayPause
     self.playPauseBtn.addConstraints(constraintsDict: [.FixWidth:40,.FixHeight:40,.Trailing:deviceMargin,.Bottom:15])
     self.playPauseBtn.actionDelegate = self
 
-    self.likeUnlikeBtn = UIFactory.makeButton(backgroundColor: .clear,cornerRadius: 0,image: "unlike")
+    self.likeUnlikeBtn = ToggleLikeButton(frame: .zero)
     self.containerView.addSubview(self.likeUnlikeBtn)
     self.likeUnlikeBtn.addConstraints(constraintsDict: [.FixWidth:25,.FixHeight:25,.Bottom:20])
     self.likeUnlikeBtn.addConstraints(constraintsDict: [.RightTo:16],relativeTo: self.imgView)
-    //self.likeUnlikeBtn.addTarget(self, action: #selector(btnClicked), for: .touchUpInside)
+
   }
 
 
   func configure(obj: NewRelease) {
-    self.newReleaseId = obj.id
+    self.newReleaseId = obj.content?.id ?? 0
     self.songTitleLbl.text = obj.content?.title ?? ""
     self.artistNameLbl.text = obj.content?.subtitle ?? ""
     self.imgView.setImage(urlStr: obj.content?.image ?? "")
-    self.playPauseBtn.playlistId = obj.id
+
+    self.likeUnlikeBtn.configure(id: obj.content?.id ?? 0, type: "album", isLiked: obj.content?.isLiked ?? false)
+
+    self.playPauseBtn.playlistId = obj.content?.id ?? 0
     self.playPauseBtn.isHeader = true
-    self.playPauseBtn.updateUI(isPlaying: AudioPlayerManager.shared.isPlaying && AudioPlayerManager.shared.currentPlaylistId == obj.id)
+    self.playPauseBtn.updateUI(isPlaying: AudioPlayerManager.shared.isPlaying && AudioPlayerManager.shared.currentPlaylistId == obj.content?.id)
+
+
+
+
+
   }
 
   required init?(coder: NSCoder) {

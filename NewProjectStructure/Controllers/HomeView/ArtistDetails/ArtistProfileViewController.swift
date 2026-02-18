@@ -7,7 +7,12 @@
 
 import UIKit
 
-class ArtistProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, AudioPlayerDelegate, PlayPauseToggleDelegate {
+class ArtistProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, AudioPlayerDelegate, PlayPauseToggleDelegate, LikeUpdateDelegate {
+  func didUpdateLike() {
+    self.callArtistProfileApi()
+  }
+
+ 
   func didRequestInitialPlayback() {
     for section in artistSectionArray {
         switch section.artistSectionType {
@@ -266,6 +271,7 @@ class ArtistProfileViewController: UIViewController, UICollectionViewDelegate, U
       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HeaderCollectionViewCell.identifier, for: indexPath) as! HeaderCollectionViewCell
       cell.configure(obj: obj)
       cell.delegate = self
+      cell.artistProfileDelegate = self
       return cell
 
     case .popularTracks(let popularTracks):

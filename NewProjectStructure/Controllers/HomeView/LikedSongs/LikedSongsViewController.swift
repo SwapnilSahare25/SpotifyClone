@@ -139,14 +139,13 @@ class LikedSongsViewController: UIViewController, AudioPlayerDelegate, PlayPause
   private func callLikedSongsApi() {
     let endPoint = Endpoints.getLikedSongs()
 
-     APIManager.shared.request(endpoint: endPoint) { [weak self] (object: SongsObject) in
+     APIManager.shared.request(endpoint: endPoint) { [weak self] (object: LikedSongsObject) in
 
        if let self = self {
          if let items = object.tracks {
            self.songsObj = items
          }
          self.setupHeader()
-         //self.headerView?.configure(count: self.songsObj?.total ?? 0)
 
          self.tableView.reloadData()
 

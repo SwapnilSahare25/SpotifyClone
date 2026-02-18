@@ -7,7 +7,11 @@
 
 import UIKit
 
-class AlbumDetailsViewController: UIViewController, AudioPlayerDelegate, PlayPauseToggleDelegate {
+class AlbumDetailsViewController: UIViewController, AudioPlayerDelegate, PlayPauseToggleDelegate, LikeUpdateDelegate {
+  func didUpdateLike() {
+    self.callAlbumDetailsApi()
+  }
+  
   func didRequestInitialPlayback() {
     guard let songs = self.albumDetails?.tracks?.items,
           !songs.isEmpty else { return }
@@ -168,9 +172,11 @@ class AlbumDetailsViewController: UIViewController, AudioPlayerDelegate, PlayPau
 //    }
 //
 
-    let likeBtn = UIFactory.makeButton(backgroundColor: .clear,image: "unlike")
+    let likeBtn = ToggleLikeButton(frame: .zero)
     headerView.addSubview(likeBtn)
     likeBtn.addConstraints(constraintsDict: [.FixWidth:25,.FixHeight:25,.Leading:deviceMargin,.Bottom:5])
+    likeBtn.delegate = self
+    likeBtn.configure(id: self.albumDetails?.id ?? 0, type: "album", isLiked: albumDetails?.isLiked ?? false)
     //likeBtn.addTarget(self, action: #selector(btnClicked), for: .touchUpInside)
 
 

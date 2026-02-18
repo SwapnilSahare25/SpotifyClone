@@ -17,17 +17,27 @@ class MiniPlayerView: UIView {
 
 
 
+
   private var imageView:UIImageView!
   private var titleLabel: UILabel!
   private var subtitleLabel: UILabel!
   private var playPauseButton: UIButton!
 
-  private var likeBtn: UIButton!
+  private var likeBtn: ToggleLikeButton!
   private var originalCenter: CGPoint = .zero
+
+
 
   private let progressBar = UIProgressView(progressViewStyle: .bar)
 
   weak var delegate: MiniPlayerDelegate?
+
+  weak var likeDelegate: LikeUpdateDelegate? {
+      didSet {
+          likeBtn?.delegate = likeDelegate
+      }
+  }
+
 
      override init(frame: CGRect) {
          super.init(frame: frame)
@@ -75,11 +85,10 @@ class MiniPlayerView: UIView {
        playPauseButton.addConstraints(constraintsDict: [.FixWidth:25,.FixHeight:25,.Trailing:deviceMargin,.CenterY:0])
        playPauseButton.addTarget(self, action: #selector(playPauseTapped), for: .touchUpInside)
 
-       self.likeBtn = UIFactory.makeButton(backgroundColor: .clear,image: "unlike")
+       self.likeBtn = ToggleLikeButton(frame: .zero)
        self.addSubview(likeBtn)
        likeBtn.addConstraints(constraintsDict: [.FixWidth:25,.FixHeight:25,.CenterY:0])
        likeBtn.addConstraints(constraintsDict: [.LeftTo:15],relativeTo: playPauseButton)
-       //likeBtn.addTarget(self, action: #selector(playPauseTapped), for: .touchUpInside)
 
 
        let expandBtn = UIFactory.makeButton(backgroundColor: ViewBGColor, cornerRadius: 12.5*DeviceMultiplier,image: "up")
@@ -98,7 +107,11 @@ class MiniPlayerView: UIView {
 
        let pan = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
               addGestureRecognizer(pan)
-          
+
+     }
+
+  func configureLikeButton(id: Int, type: String, isLiked: Bool) {
+    self.likeBtn.configure(id: id, type: type, isLiked: isLiked)
      }
 
   @objc private func handleTap(){

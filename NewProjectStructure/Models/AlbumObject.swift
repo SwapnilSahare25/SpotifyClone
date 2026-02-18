@@ -19,6 +19,7 @@ struct AlbumObject: Codable {
   let subtitle: String?
   let year: Int?
   let totalDuration: String?
+  let isLiked: Bool?
 
   
   enum CodingKeys: String, CodingKey {
@@ -32,6 +33,7 @@ struct AlbumObject: Codable {
       case subtitle
       case year
       case totalDuration = "total_duration"
+      case isLiked = "is_liked"
   }
 
 }

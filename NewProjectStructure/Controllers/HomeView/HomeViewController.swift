@@ -7,11 +7,13 @@
 
 import UIKit
 
-class HomeViewController: UIViewController, NewReleaseHeaderDelegate, AudioPlayerDelegate {
+class HomeViewController: UIViewController, NewReleaseHeaderDelegate, AudioPlayerDelegate, LikeUpdateDelegate {
+  func didUpdateLike() {
+    self.callHomeApi()
+  }
 
-//  func reloadData() {
-//    
-//  }
+
+
 //  
   func didUpdateShuffle(_ isEnabled: Bool) {
   }
@@ -229,13 +231,6 @@ class HomeViewController: UIViewController, NewReleaseHeaderDelegate, AudioPlaye
     self.navigationController?.pushViewController(vc, animated: true)
   }
 
-//  @objc private func sectionHeaderClicked(_ sender: UITapGestureRecognizer) {
-//
-//    let vc = ArtistProfileViewController()
-//    vc.hidesBottomBarWhenPushed = true
-//    self.navigationController?.pushViewController(vc, animated: true)
-//  }
-
 }
 
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -272,9 +267,10 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
       return cell
 
     case .newRelease(let newRelease):
+
       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NewReleaseCollectionViewCell.identifier, for: indexPath) as! NewReleaseCollectionViewCell
       cell.configure(obj: newRelease)
-      //cell.delegate = self
+      cell.homeReloadDelegate = self
 
       return cell
 
@@ -330,8 +326,9 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
 
       }
     case .newRelease(let newRelease):
+
       let albumVC = AlbumDetailsViewController()
-      albumVC.albumId = newRelease.id ?? 0
+      albumVC.albumId = newRelease.content?.id ?? 0
       albumVC.hidesBottomBarWhenPushed = true
       self.navigationController?.pushViewController(albumVC, animated: true)
 
@@ -539,11 +536,6 @@ extension HomeViewController {
       let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(60))
       let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
       section.boundarySupplementaryItems = [header]
-
-//      if isBlue {
-//        let bg = NSCollectionLayoutDecorationItem.background(elementKind: SectionBgViewCollectionReusableView.identifier)
-//               section.decorationItems = [bg]
-//      }
 
       return section
     }
