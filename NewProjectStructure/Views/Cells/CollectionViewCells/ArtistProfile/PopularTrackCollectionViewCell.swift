@@ -31,7 +31,7 @@ class PopularTrackCollectionViewCell: UICollectionViewCell, ReusableCell {
     self.contentView.addSubview(self.containerView)
     self.containerView.addConstraints(constraintsDict: [.Leading:0,.Trailing:0,.Top:0,.Bottom:0])
 
-    self.countLbl = UIFactory.makeLabel(text:"",textColor: SecondaryTextColor,font: UIFont(name: fontNameRegular, size: (SmallFontSize).scaled) ?? .boldSystemFont(ofSize: SmallFontSize),alignment: .center)
+    self.countLbl = UIFactory.makeLabel(text:"",textColor: SecondaryTextColor,font: UIFont(name: fontNameRegular, size: (SmallFontSize)) ?? .boldSystemFont(ofSize: SmallFontSize),alignment: .center)
     self.containerView.addSubview(countLbl)
     countLbl.addConstraints(constraintsDict: [.Leading:0,.FixHeight:30,.CenterY:0,.FixWidth:0])
     countLbl.backgroundColor = .clear
@@ -42,13 +42,13 @@ class PopularTrackCollectionViewCell: UICollectionViewCell, ReusableCell {
     imgView.addConstraints(constraintsDict: [.RightTo: 0],relativeTo: self.countLbl)
 
 
-    self.titleLbl = UIFactory.makeLabel(text:"Start Now",textColor: WhiteTextColor,font: UIFont(name: fontNameSemiBold, size: (TitleFontsize-2).scaled) ?? .boldSystemFont(ofSize: TitleFontsize-2),alignment: .left)
+    self.titleLbl = UIFactory.makeLabel(text:"Start Now",textColor: WhiteTextColor,font: UIFont(name: fontNameSemiBold, size: (TitleFontsize-2)) ?? .boldSystemFont(ofSize: TitleFontsize-2),alignment: .left)
     self.containerView.addSubview(titleLbl)
     titleLbl.addConstraints(constraintsDict: [.Trailing:40,.FixHeight:16,.Top:9])
     titleLbl.addConstraints(constraintsDict: [.RightTo: 5],relativeTo: self.imgView)
     titleLbl.backgroundColor = .clear
 
-    self.subTitle = UIFactory.makeLabel(text:"3:45",textColor: SecondaryTextColor,font: UIFont(name: fontNameRegular, size: (SmallFontSize+1).scaled) ?? .boldSystemFont(ofSize: SmallFontSize+1),alignment: .left)
+    self.subTitle = UIFactory.makeLabel(text:"3:45",textColor: SecondaryTextColor,font: UIFont(name: fontNameRegular, size: (SmallFontSize+1)) ?? .boldSystemFont(ofSize: SmallFontSize+1),alignment: .left)
     self.containerView.addSubview(subTitle)
     subTitle.addConstraints(constraintsDict: [.Trailing:40,.FixHeight:15,.Bottom:9])
     subTitle.addConstraints(constraintsDict: [.RightTo: 5],relativeTo: self.imgView)
@@ -58,7 +58,7 @@ class PopularTrackCollectionViewCell: UICollectionViewCell, ReusableCell {
     self.containerView.addSubview(self.moreOptionsBtn)
     self.moreOptionsBtn.addConstraints(constraintsDict: [.FixWidth:15,.FixHeight:15,.CenterY:0,.Trailing:0])
 
-    self.duretionLbl = UIFactory.makeLabel(text:"3:45",textColor: SecondaryTextColor,font: UIFont(name: fontNameRegular, size: (SmallFontSize+1).scaled) ?? .boldSystemFont(ofSize: SmallFontSize+1),alignment: .left)
+    self.duretionLbl = UIFactory.makeLabel(text:"3:45",textColor: SecondaryTextColor,font: UIFont(name: fontNameRegular, size: (SmallFontSize+1)) ?? .boldSystemFont(ofSize: SmallFontSize+1),alignment: .left)
     self.containerView.addSubview(duretionLbl)
     duretionLbl.addConstraints(constraintsDict: [.CenterY:0,.FixHeight:15,.FixWidth:35])
     duretionLbl.addConstraints(constraintsDict: [.LeftTo: 10],relativeTo: self.moreOptionsBtn)

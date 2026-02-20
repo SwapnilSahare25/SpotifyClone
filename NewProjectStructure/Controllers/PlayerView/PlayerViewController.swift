@@ -114,13 +114,13 @@ class PlayerViewController: UIViewController, UIScrollViewDelegate, AudioPlayerD
 //            titleLbl.animationDelay = 1.0
 //            titleLbl.trailingBuffer = 30
 
-    titleLbl = UIFactory.makeLabel(text:"Liked Songs",textColor: WhiteTextColor,font: UIFont(name: fontNameBlack, size: (HugeTitleFontSize+6).scaled) ?? .boldSystemFont(ofSize: HugeTitleFontSize+6),alignment: .left)
+    titleLbl = UIFactory.makeLabel(text:"Liked Songs",textColor: WhiteTextColor,font: UIFont(name: fontNameBlack, size: (HugeTitleFontSize+6)) ?? .boldSystemFont(ofSize: HugeTitleFontSize+6),alignment: .left)
     self.mainContainer.addSubview(titleLbl)
     titleLbl.addConstraints(constraintsDict: [.Trailing:80,.FixHeight:33,.Leading:30])
     titleLbl.addConstraints(constraintsDict: [.BelowTo: 25],relativeTo: imgView)
     titleLbl.backgroundColor = .clear
 
-    subTitle = UIFactory.makeLabel(text:"10 Songs",textColor: SecondaryTextColor,font: UIFont(name: fontNameMedium, size: (SubTitleFontsize).scaled) ?? .boldSystemFont(ofSize: SubTitleFontsize),alignment: .left)
+    subTitle = UIFactory.makeLabel(text:"10 Songs",textColor: SecondaryTextColor,font: UIFont(name: fontNameMedium, size: (SubTitleFontsize)) ?? .boldSystemFont(ofSize: SubTitleFontsize),alignment: .left)
     self.mainContainer.addSubview(subTitle)
     subTitle.addConstraints(constraintsDict: [.Trailing:80,.FixHeight:17,.Leading:30])
     subTitle.addConstraints(constraintsDict: [.BelowTo: 5],relativeTo: titleLbl)

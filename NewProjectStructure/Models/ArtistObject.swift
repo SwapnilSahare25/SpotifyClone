@@ -59,9 +59,24 @@ enum ArtistSectionType {
   case relatedArtist([Artist])
   case none
 }
-struct ArtistSectionsArray {
-  var sectionHeaderTitleStr: String = ""
-  var artistSectionType: ArtistSectionType = .none
-  var headerHeight: CGFloat = 50*DeviceMultiplier
+//struct ArtistSectionsArray {
+//  var sectionHeaderTitleStr: String = ""
+//  var artistSectionType: ArtistSectionType = .none
+//  var headerHeight: CGFloat = 50*DeviceMultiplier
+//
+//}
 
+@MainActor
+struct ArtistSectionsArray {
+    var sectionHeaderTitleStr: String
+    var artistSectionType: ArtistSectionType
+    var headerHeight: CGFloat
+
+    // HIG Compliant init. Eliminates strict concurrency/MainActor warnings.
+    init(sectionHeaderTitleStr: String = "",artistSectionType: ArtistSectionType = .none,headerHeight: CGFloat? = nil) {
+        self.sectionHeaderTitleStr = sectionHeaderTitleStr
+        self.artistSectionType = artistSectionType
+        // Defers computing DeviceMultiplier until struct allocation inside MainActor
+        self.headerHeight = headerHeight ?? (50*DeviceMultiplier)
+    }
 }

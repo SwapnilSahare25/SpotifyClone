@@ -34,11 +34,11 @@ class ArtistCollectionViewCell: UICollectionViewCell,ReusableCell {
     self.imgView.addConstraints(constraintsDict: [.Leading:0,.Trailing:0,.Top:0,.FixHeight:175])
 
 
-    self.titleLbl = UIFactory.makeLabel(text: "",textColor: WhiteTextColor,font: UIFont(name: fontNameMedium, size: (SmallFontSize).scaled) ?? .boldSystemFont(ofSize: 13),alignment: .center)
+    self.titleLbl = UIFactory.makeLabel(text: "",textColor: WhiteTextColor,font: UIFont(name: fontNameMedium, size: (SmallFontSize)) ?? .boldSystemFont(ofSize: 13),alignment: .center)
     self.titleLbl.adjustsFontForContentSizeCategory = true
     self.containerView.addSubview(self.titleLbl)
     self.titleLbl.addConstraints(constraintsDict: [.Leading:5,.Trailing:5,.Bottom:5])
-    self.titleLbl.belowTo(view: self.imgView, constant: 5)
+    self.titleLbl.addConstraints(constraintsDict: [.BelowTo:5],relativeTo: imgView)
 
   }
 

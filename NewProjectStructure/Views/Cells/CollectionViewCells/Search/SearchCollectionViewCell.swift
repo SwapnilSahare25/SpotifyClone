@@ -27,7 +27,7 @@ class SearchCollectionViewCell: UICollectionViewCell,ReusableCell {
     self.contentView.addSubview(self.containerView)
     self.containerView.addConstraints(constraintsDict: [.Leading:0,.Trailing:0,.Top:0,.Bottom:0])
 
-    titleLbl = UIFactory.makeLabel(text:"Good evening",textColor: WhiteTextColor,font: UIFont(name: fontNameSemiBold, size: (DetailFontsize+1).scaled) ?? .boldSystemFont(ofSize: 14),alignment: .left)
+    titleLbl = UIFactory.makeLabel(text:"Good evening",textColor: WhiteTextColor,font: UIFont(name: fontNameSemiBold, size: (DetailFontsize+1)) ?? .boldSystemFont(ofSize: 14),alignment: .left)
     self.containerView.addSubview(titleLbl)
     titleLbl.addConstraints(constraintsDict: [.Leading:5,.Trailing:40,.HeightLessThanOrEqual:50,.Top:10])
     titleLbl.backgroundColor = .clear

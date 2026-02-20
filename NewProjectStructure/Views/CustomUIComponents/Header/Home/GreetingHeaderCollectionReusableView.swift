@@ -32,14 +32,14 @@ class GreetingHeaderCollectionReusableView: UICollectionReusableView, ReusableCe
 
     let profileImage = UIFactory.makeImageView(imageName: "Setting",clipsToBounds: true)
     self.addSubview(profileImage)
-    profileImage.addConstraints(constraintsDict: [.Trailing:deviceMargin,.FixHeight:25,.FixWidth:25,.Top:topOffset])
+    profileImage.addConstraints(constraintsDict: [.Trailing:CGFloat.DeviceMargin,.FixHeight:25,.FixWidth:25,.Top:topOffset])
     profileImage.tintColor = .white
     profileImage.isUserInteractionEnabled = true
     profileImage.addTarget(self, action: #selector(buttonTapped))
 
-    let titleLbl = UIFactory.makeLabel(text:"Good evening",textColor: WhiteTextColor,font: UIFont(name: fontNameBold, size: HeaderFontSize.scaled) ?? .boldSystemFont(ofSize: 19),alignment: .left)
+    let titleLbl = UIFactory.makeLabel(text:"Good evening",textColor: WhiteTextColor,font: UIFont(name: fontNameBold, size: HeaderFontSize) ?? .boldSystemFont(ofSize: 19),alignment: .left)
     self.addSubview(titleLbl)
-    titleLbl.addConstraints(constraintsDict: [.Leading:deviceMargin,.Trailing:50,.FixHeight:25,.Top:topOffset])
+    titleLbl.addConstraints(constraintsDict: [.Leading:CGFloat.DeviceMargin,.Trailing:50,.FixHeight:25,.Top:topOffset])
     titleLbl.backgroundColor = .clear
   }
 

@@ -31,7 +31,7 @@ class RelatedArtistCollectionViewCell: UICollectionViewCell, ReusableCell {
 
 
 
-    self.titleLbl = UIFactory.makeLabel(text:"Start Now",textColor: SecondaryTextColor,font: UIFont(name: fontNameSemiBold, size: (DetailTabFontSize).scaled) ?? .boldSystemFont(ofSize: DetailTabFontSize),alignment: .center)
+    self.titleLbl = UIFactory.makeLabel(text:"Start Now",textColor: SecondaryTextColor,font: UIFont(name: fontNameSemiBold, size: (DetailTabFontSize)) ?? .boldSystemFont(ofSize: DetailTabFontSize),alignment: .center)
     self.containerView.addSubview(titleLbl)
     self.titleLbl.addConstraints(constraintsDict: [.BelowTo:5],relativeTo: self.imgView)
     titleLbl.addConstraints(constraintsDict: [.Trailing:0,.Leading:0,.Bottom:2])

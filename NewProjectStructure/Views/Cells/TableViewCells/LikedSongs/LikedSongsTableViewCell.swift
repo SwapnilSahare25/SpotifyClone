@@ -34,24 +34,24 @@ class LikedSongsTableViewCell: SwipeTableViewCell, ReusableCell {
 
     self.imgView = UIFactory.makeImageView(imageName: "likedSongs",contentMode: .scaleToFill,cornerRadius: 5*DeviceMultiplier,clipsToBounds: true)
     self.containerView.addSubview(imgView)
-    imgView.addConstraints(constraintsDict: [.FixHeight:35,.FixWidth:35,.CenterY:0,.Leading:deviceMargin])
+    imgView.addConstraints(constraintsDict: [.FixHeight:35,.FixWidth:35,.CenterY:0,.Leading:CGFloat.DeviceMargin])
 
-    self.titleLbl = UIFactory.makeLabel(text:"title",textColor: WhiteTextColor,font: UIFont(name: fontNameSemiBold, size: (SubTitleFontsize-1).scaled) ?? .boldSystemFont(ofSize: SubTitleFontsize-1),alignment: .left)
+    self.titleLbl = UIFactory.makeLabel(text:"title",textColor: WhiteTextColor,font: UIFont(name: fontNameSemiBold, size: (SubTitleFontsize-1)) ?? .boldSystemFont(ofSize: SubTitleFontsize-1),alignment: .left)
     self.containerView.addSubview(titleLbl)
     titleLbl.addConstraints(constraintsDict: [.Trailing:40,.HeightLessThanOrEqual:50,.Top:15])
     titleLbl.addConstraints(constraintsDict: [.RightTo: 10],relativeTo: imgView)
     titleLbl.backgroundColor = .clear
 
-    self.subTitle = UIFactory.makeLabel(text:"subtitle",textColor: WhiteTextColor,font: UIFont(name: fontNameRegular, size: (SmallFontSize).scaled) ?? .boldSystemFont(ofSize: SmallFontSize),alignment: .left)
+    self.subTitle = UIFactory.makeLabel(text:"subtitle",textColor: WhiteTextColor,font: UIFont(name: fontNameRegular, size: (SmallFontSize)) ?? .boldSystemFont(ofSize: SmallFontSize),alignment: .left)
     self.containerView.addSubview(subTitle)
     subTitle.addConstraints(constraintsDict: [.Trailing:40,.HeightLessThanOrEqual:50,.Bottom:15])
     subTitle.addConstraints(constraintsDict: [.RightTo: 10],relativeTo: imgView)
     subTitle.backgroundColor = .clear
 
 
-    self.duretionLbl = UIFactory.makeLabel(text:"3:45",textColor: SecondaryTextColor,font: UIFont(name: fontNameRegular, size: (SmallFontSize+1).scaled) ?? .boldSystemFont(ofSize: SmallFontSize+1),alignment: .left)
+    self.duretionLbl = UIFactory.makeLabel(text:"3:45",textColor: SecondaryTextColor,font: UIFont(name: fontNameRegular, size: (SmallFontSize+1)) ?? .boldSystemFont(ofSize: SmallFontSize+1),alignment: .left)
     self.containerView.addSubview(duretionLbl)
-    duretionLbl.addConstraints(constraintsDict: [.CenterY:0,.FixHeight:15,.FixWidth:35,.Trailing:deviceMargin])
+    duretionLbl.addConstraints(constraintsDict: [.CenterY:0,.FixHeight:15,.FixWidth:35,.Trailing:CGFloat.DeviceMargin])
     duretionLbl.backgroundColor = .clear
 
     self.dividerLine = UIFactory.makeContinerView(backgroundColor: DisableColor)

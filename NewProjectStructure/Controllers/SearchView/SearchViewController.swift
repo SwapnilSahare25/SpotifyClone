@@ -183,7 +183,7 @@ extension SearchViewController {
 
     let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 2)
     group.interItemSpacing = .fixed(10)
-    group.contentInsets = .init(top: 0, leading: deviceMargin, bottom: 0, trailing: deviceMargin)
+    group.contentInsets = .init(top: 0, leading: CGFloat.DeviceMargin, bottom: 0, trailing: CGFloat.DeviceMargin)
 
     let section = NSCollectionLayoutSection(group: group)
     section.interGroupSpacing = 10

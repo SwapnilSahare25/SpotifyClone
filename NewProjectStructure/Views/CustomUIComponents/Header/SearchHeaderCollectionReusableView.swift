@@ -24,9 +24,9 @@ class SearchHeaderCollectionReusableView: UICollectionReusableView,ReusableCell 
   private func setUpUi() {
 
 
-    titleLbl = UIFactory.makeLabel(text:"Good evening",textColor: WhiteTextColor,font: UIFont(name: fontNameMedium, size: DetailFontsize.scaled) ?? .boldSystemFont(ofSize: 14),alignment: .left)
+    titleLbl = UIFactory.makeLabel(text:"Good evening",textColor: WhiteTextColor,font: UIFont(name: fontNameMedium, size: DetailFontsize) ?? .boldSystemFont(ofSize: 14),alignment: .left)
     self.addSubview(titleLbl)
-    titleLbl.addConstraints(constraintsDict: [.Leading:deviceMargin,.Trailing:50,.FixHeight:25,.Top:17])
+    titleLbl.addConstraints(constraintsDict: [.Leading:CGFloat.DeviceMargin,.Trailing:50,.FixHeight:25,.Top:17])
     titleLbl.backgroundColor = .clear
   }
   func configure(obj: SectionObject){

@@ -36,22 +36,22 @@ class PlayListDetailsTableViewCell: UITableViewCell, ReusableCell {
 
     self.imgView = UIFactory.makeImageView(imageName: "likedSongs",contentMode: .scaleToFill,cornerRadius: 5*DeviceMultiplier,clipsToBounds: true)
     self.containerView.addSubview(imgView)
-    imgView.addConstraints(constraintsDict: [.FixHeight:35,.FixWidth:35,.CenterY:0,.Leading:deviceMargin])
+    imgView.addConstraints(constraintsDict: [.FixHeight:35,.FixWidth:35,.CenterY:0,.Leading:CGFloat.DeviceMargin])
 
-    self.countLbl = UIFactory.makeLabel(text:"50",textColor: SecondaryTextColor,font: UIFont(name: fontNameSemiBold, size: (SmallFontSize+1).scaled) ?? .boldSystemFont(ofSize: SmallFontSize+1),alignment: .center)
+    self.countLbl = UIFactory.makeLabel(text:"50",textColor: SecondaryTextColor,font: UIFont(name: fontNameSemiBold, size: (SmallFontSize+1)) ?? .boldSystemFont(ofSize: SmallFontSize+1),alignment: .center)
     self.containerView.addSubview(countLbl)
     countLbl.addConstraints(constraintsDict: [.FixHeight:25,.CenterY:0,.FixWidth:20])
     countLbl.addConstraints(constraintsDict: [.RightTo: 2.5],relativeTo: imgView)
     countLbl.backgroundColor = .clear
 
 
-    self.titleLbl = UIFactory.makeLabel(text:"Dont Start Now",textColor: WhiteTextColor,font: UIFont(name: fontNameSemiBold, size: (SubTitleFontsize-1).scaled) ?? .boldSystemFont(ofSize: SubTitleFontsize-1),alignment: .left)
+    self.titleLbl = UIFactory.makeLabel(text:"Dont Start Now",textColor: WhiteTextColor,font: UIFont(name: fontNameSemiBold, size: (SubTitleFontsize-1)) ?? .boldSystemFont(ofSize: SubTitleFontsize-1),alignment: .left)
     self.containerView.addSubview(titleLbl)
     titleLbl.addConstraints(constraintsDict: [.Trailing:40,.HeightLessThanOrEqual:25,.Top:10])
     titleLbl.addConstraints(constraintsDict: [.RightTo: 10],relativeTo: self.countLbl)
     titleLbl.backgroundColor = .clear
 
-    self.subTitle = UIFactory.makeLabel(text:"subtitle",textColor: WhiteTextColor,font: UIFont(name: fontNameRegular, size: (SmallFontSize+1).scaled) ?? .boldSystemFont(ofSize: SmallFontSize+1),alignment: .left)
+    self.subTitle = UIFactory.makeLabel(text:"subtitle",textColor: WhiteTextColor,font: UIFont(name: fontNameRegular, size: (SmallFontSize+1)) ?? .boldSystemFont(ofSize: SmallFontSize+1),alignment: .left)
     self.containerView.addSubview(subTitle)
     subTitle.addConstraints(constraintsDict: [.Trailing:40,.HeightLessThanOrEqual:50,.Bottom:10])
     subTitle.addConstraints(constraintsDict: [.RightTo: 10],relativeTo: self.countLbl)
@@ -59,10 +59,10 @@ class PlayListDetailsTableViewCell: UITableViewCell, ReusableCell {
 
     self.moreOptionsBtn = UIFactory.makeButton(backgroundColor: .clear,image: "moreOptsVerticle")
     self.containerView.addSubview(self.moreOptionsBtn)
-    self.moreOptionsBtn.addConstraints(constraintsDict: [.FixWidth:15,.FixHeight:15,.CenterY:0,.Trailing:deviceMargin])
+    self.moreOptionsBtn.addConstraints(constraintsDict: [.FixWidth:15,.FixHeight:15,.CenterY:0,.Trailing:CGFloat.DeviceMargin])
 
 
-    self.duretionLbl = UIFactory.makeLabel(text:"3:45",textColor: SecondaryTextColor,font: UIFont(name: fontNameRegular, size: (SmallFontSize+1).scaled) ?? .boldSystemFont(ofSize: SmallFontSize+1),alignment: .center)
+    self.duretionLbl = UIFactory.makeLabel(text:"3:45",textColor: SecondaryTextColor,font: UIFont(name: fontNameRegular, size: (SmallFontSize+1)) ?? .boldSystemFont(ofSize: SmallFontSize+1),alignment: .center)
     self.containerView.addSubview(duretionLbl)
     duretionLbl.addConstraints(constraintsDict: [.CenterY:0,.FixHeight:15,.FixWidth:30])
     duretionLbl.addConstraints(constraintsDict: [.LeftTo: 10],relativeTo: self.moreOptionsBtn)

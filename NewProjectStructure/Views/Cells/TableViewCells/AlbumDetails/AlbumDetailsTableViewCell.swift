@@ -31,18 +31,18 @@ class AlbumDetailsTableViewCell: UITableViewCell, ReusableCell {
     self.contentView.addSubview(self.containerView)
     self.containerView.addConstraints(constraintsDict: [.Leading:0,.Trailing:0,.Top:0,.Bottom:0])
 
-    self.countLbl = UIFactory.makeLabel(text:"50",textColor: SecondaryTextColor,font: UIFont(name: fontNameSemiBold, size: (SmallFontSize+1).scaled) ?? .boldSystemFont(ofSize: SmallFontSize+1),alignment: .center)
+    self.countLbl = UIFactory.makeLabel(text:"50",textColor: SecondaryTextColor,font: UIFont(name: fontNameSemiBold, size: (SmallFontSize+1)) ?? .boldSystemFont(ofSize: SmallFontSize+1),alignment: .center)
     self.containerView.addSubview(countLbl)
-    countLbl.addConstraints(constraintsDict: [.Leading:deviceMargin,.FixHeight:25,.CenterY:0,.FixWidth:30])
+    countLbl.addConstraints(constraintsDict: [.Leading:CGFloat.DeviceMargin,.FixHeight:25,.CenterY:0,.FixWidth:30])
     countLbl.backgroundColor = .clear
 
-    self.titleLbl = UIFactory.makeLabel(text:"Dont Start Now",textColor: WhiteTextColor,font: UIFont(name: fontNameSemiBold, size: (SubTitleFontsize-1).scaled) ?? .boldSystemFont(ofSize: SubTitleFontsize-1),alignment: .left)
+    self.titleLbl = UIFactory.makeLabel(text:"Dont Start Now",textColor: WhiteTextColor,font: UIFont(name: fontNameSemiBold, size: (SubTitleFontsize-1)) ?? .boldSystemFont(ofSize: SubTitleFontsize-1),alignment: .left)
     self.containerView.addSubview(titleLbl)
     titleLbl.addConstraints(constraintsDict: [.Trailing:40,.FixHeight:25,.Top:10])
     titleLbl.addConstraints(constraintsDict: [.RightTo: 5],relativeTo: self.countLbl)
     titleLbl.backgroundColor = .clear
 
-    self.subTitle = UIFactory.makeLabel(text:"323232323",textColor: SecondaryTextColor,font: UIFont(name: fontNameRegular, size: (SmallFontSize+1).scaled) ?? .boldSystemFont(ofSize: SmallFontSize+1),alignment: .left)
+    self.subTitle = UIFactory.makeLabel(text:"323232323",textColor: SecondaryTextColor,font: UIFont(name: fontNameRegular, size: (SmallFontSize+1)) ?? .boldSystemFont(ofSize: SmallFontSize+1),alignment: .left)
     self.containerView.addSubview(subTitle)
     subTitle.addConstraints(constraintsDict: [.Trailing:40,.FixHeight:15,.Bottom:10])
     subTitle.addConstraints(constraintsDict: [.RightTo: 5],relativeTo: self.countLbl)
@@ -50,10 +50,10 @@ class AlbumDetailsTableViewCell: UITableViewCell, ReusableCell {
 
     self.moreOptionsBtn = UIFactory.makeButton(backgroundColor: .clear,image: "moreOptsVerticle")
     self.containerView.addSubview(self.moreOptionsBtn)
-    self.moreOptionsBtn.addConstraints(constraintsDict: [.FixWidth:15,.FixHeight:15,.CenterY:0,.Trailing:deviceMargin])
+    self.moreOptionsBtn.addConstraints(constraintsDict: [.FixWidth:15,.FixHeight:15,.CenterY:0,.Trailing:CGFloat.DeviceMargin])
 
 
-    self.duretionTitle = UIFactory.makeLabel(text:"3:45",textColor: SecondaryTextColor,font: UIFont(name: fontNameRegular, size: (SmallFontSize+1).scaled) ?? .boldSystemFont(ofSize: SmallFontSize+1),alignment: .center)
+    self.duretionTitle = UIFactory.makeLabel(text:"3:45",textColor: SecondaryTextColor,font: UIFont(name: fontNameRegular, size: (SmallFontSize+1)) ?? .boldSystemFont(ofSize: SmallFontSize+1),alignment: .center)
     self.containerView.addSubview(duretionTitle)
     duretionTitle.addConstraints(constraintsDict: [.FixHeight:15,.CenterY:0,.FixWidth:30])
     duretionTitle.addConstraints(constraintsDict: [.LeftTo: 10],relativeTo: self.moreOptionsBtn)

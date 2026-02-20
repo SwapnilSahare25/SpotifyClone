@@ -36,13 +36,13 @@ class ActiveSearchCollectionViewCell: UICollectionViewCell,ReusableCell {
     imgView.addConstraints(constraintsDict: [.FixHeight:45,.FixWidth:45,.CenterY:0,.Leading:10])
     //imgView.backgroundColor = .red
 
-    titleLbl = UIFactory.makeLabel(text:"Good evening",textColor: WhiteTextColor,font: UIFont(name: fontNameSemiBold, size: (DetailFontsize+1).scaled) ?? .boldSystemFont(ofSize: 14),alignment: .left)
+    titleLbl = UIFactory.makeLabel(text:"Good evening",textColor: WhiteTextColor,font: UIFont(name: fontNameSemiBold, size: (DetailFontsize+1)) ?? .boldSystemFont(ofSize: 14),alignment: .left)
     self.containerView.addSubview(titleLbl)
     titleLbl.addConstraints(constraintsDict: [.Trailing:40,.HeightLessThanOrEqual:50,.Top:10])
     titleLbl.addConstraints(constraintsDict: [.RightTo: 10],relativeTo: imgView)
     titleLbl.backgroundColor = .clear
 
-    subTitle = UIFactory.makeLabel(text:"Good",textColor: WhiteTextColor,font: UIFont(name: fontNameRegular, size: (SmallFontSize).scaled) ?? .boldSystemFont(ofSize: 12),alignment: .left)
+    subTitle = UIFactory.makeLabel(text:"Good",textColor: WhiteTextColor,font: UIFont(name: fontNameRegular, size: (SmallFontSize)) ?? .boldSystemFont(ofSize: 12),alignment: .left)
     self.containerView.addSubview(subTitle)
     subTitle.addConstraints(constraintsDict: [.Trailing:40,.HeightLessThanOrEqual:50,.Bottom:10])
     subTitle.addConstraints(constraintsDict: [.RightTo: 10],relativeTo: imgView)

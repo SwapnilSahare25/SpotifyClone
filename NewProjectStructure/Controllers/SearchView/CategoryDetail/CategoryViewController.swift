@@ -60,7 +60,7 @@ class CategoryViewController: UIViewController, UICollectionViewDelegate, UIColl
 
       let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 2)
       group.interItemSpacing = .fixed(15)
-      group.contentInsets = .init(top: 0, leading: deviceMargin, bottom: 0, trailing: deviceMargin)
+      group.contentInsets = .init(top: 0, leading: CGFloat.DeviceMargin, bottom: 0, trailing: CGFloat.DeviceMargin)
 
       let section = NSCollectionLayoutSection(group: group)
       section.interGroupSpacing = 15
@@ -130,7 +130,10 @@ class CategoryViewController: UIViewController, UICollectionViewDelegate, UIColl
   }
 
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    setNavBarColor(.black)
+    let offsetY = scrollView.contentOffset.y
+    if offsetY > 10 {
+        setNavBarColor(.black)
+    }
   }
 
 

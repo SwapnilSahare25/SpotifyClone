@@ -40,7 +40,7 @@ class NewReleaseCollectionReusableView: UICollectionReusableView, ReusableCell {
   // MARK: - Reuse Safety
      override func prepareForReuse() {
          super.prepareForReuse()
-         profileLeadingConstraint.constant = deviceMargin
+         profileLeadingConstraint.constant = CGFloat.DeviceMargin
          titleLbl.text = nil
          subtitleLbl.text = nil
          profileImage.image = nil
@@ -50,22 +50,22 @@ class NewReleaseCollectionReusableView: UICollectionReusableView, ReusableCell {
 
     profileImage = UIFactory.makeImageView(imageName: "Setting",cornerRadius: 25*DeviceMultiplier,clipsToBounds: true)
     self.addSubview(profileImage)
-    profileLeadingConstraint = profileImage.leadingAnchor.constraint(equalTo: leadingAnchor,constant: deviceMargin)
+    profileLeadingConstraint = profileImage.leadingAnchor.constraint(equalTo: leadingAnchor,constant: CGFloat.DeviceMargin)
     profileLeadingConstraint.isActive = true
     profileImage.addConstraints(constraintsDict: [.FixHeight:50,.FixWidth:50,.Top:28])
 
 
-    titleLbl = UIFactory.makeLabel(text:"",textColor: WhiteTextColor,font: UIFont(name: fontNameBold, size: HeaderFontSize.scaled) ?? .boldSystemFont(ofSize: 19),alignment: .left)
+    titleLbl = UIFactory.makeLabel(text:"",textColor: WhiteTextColor,font: UIFont(name: fontNameBold, size: HeaderFontSize) ?? .boldSystemFont(ofSize: 19),alignment: .left)
     self.addSubview(titleLbl)
-    titleLbl.addConstraints(constraintsDict: [.Trailing:deviceMargin,.FixHeight:25,.Bottom:20])
-    titleLbl.rightTo(view: profileImage, constant: 10)
+    titleLbl.addConstraints(constraintsDict: [.Trailing:CGFloat.DeviceMargin,.FixHeight:25,.Bottom:20])
+    titleLbl.addConstraints(constraintsDict: [.RightTo: 10], relativeTo: profileImage)
     titleLbl.backgroundColor = .clear
 
-    subtitleLbl = UIFactory.makeLabel(text:"NEW RELEASE FROM",textColor: WhiteTextColor,font: UIFont(name: fontNameRegular, size: (SmallFontSize-3).scaled) ?? .boldSystemFont(ofSize: 9),alignment: .left)
+    subtitleLbl = UIFactory.makeLabel(text:"NEW RELEASE FROM",textColor: WhiteTextColor,font: UIFont(name: fontNameRegular, size: (SmallFontSize-3)) ?? .boldSystemFont(ofSize: 9),alignment: .left)
     self.addSubview(subtitleLbl)
-    subtitleLbl.addConstraints(constraintsDict: [.Trailing:deviceMargin,.FixHeight:10])
-    subtitleLbl.rightTo(view: profileImage, constant: 10)
-    subtitleLbl.aboveTo(view: titleLbl, constant: 2)
+    subtitleLbl.addConstraints(constraintsDict: [.Trailing:CGFloat.DeviceMargin,.FixHeight:10])
+    subtitleLbl.addConstraints(constraintsDict: [.RightTo: 10], relativeTo: profileImage)
+    subtitleLbl.addConstraints(constraintsDict: [.AboveTo: 2], relativeTo: titleLbl)
     subtitleLbl.backgroundColor = .clear
   }
 

@@ -35,13 +35,13 @@ class MusicProgressView: UIView {
     self.progressBar.addTarget(self, action: #selector(self.increaseDecreaseCurrentDuretion))
 
 
-    self.currentSecLabel = UIFactory.makeLabel(text:"0:45",textColor: SecondaryTextColor,font: UIFont(name: fontNameMedium, size: (SmallFontSize+1).scaled) ?? .boldSystemFont(ofSize: SmallFontSize-1),alignment: .left)
+    self.currentSecLabel = UIFactory.makeLabel(text:"0:45",textColor: SecondaryTextColor,font: UIFont(name: fontNameMedium, size: (SmallFontSize+1)) ?? .boldSystemFont(ofSize: SmallFontSize-1),alignment: .left)
     self.addSubview(currentSecLabel)
     currentSecLabel.addConstraints(constraintsDict: [.Leading:0,.HeightLessThanOrEqual:20,.FixWidth:30])
     currentSecLabel.addConstraints(constraintsDict: [.BelowTo: 7],relativeTo: self.progressBar)
     currentSecLabel.backgroundColor = .clear
 
-    self.duretionLabel = UIFactory.makeLabel(text:"3:45",textColor: SecondaryTextColor,font: UIFont(name: fontNameMedium, size: (SmallFontSize+1).scaled) ?? .boldSystemFont(ofSize: SmallFontSize-1),alignment: .right)
+    self.duretionLabel = UIFactory.makeLabel(text:"3:45",textColor: SecondaryTextColor,font: UIFont(name: fontNameMedium, size: (SmallFontSize+1)) ?? .boldSystemFont(ofSize: SmallFontSize-1),alignment: .right)
     self.addSubview(duretionLabel)
     duretionLabel.addConstraints(constraintsDict: [.Trailing:0,.HeightLessThanOrEqual:20,.FixWidth:30])
     duretionLabel.addConstraints(constraintsDict: [.BelowTo: 7],relativeTo: self.progressBar)

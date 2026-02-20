@@ -42,8 +42,8 @@ private func _isDebug() -> Bool {
     return false
 #endif
 }
-let baseWidth: CGFloat = 375.0
-let DeviceMultiplier: CGFloat = UIScreen.main.bounds.width / baseWidth
+//private let baseWidth: CGFloat = 375.0
+//let DeviceMultiplier: CGFloat = UIScreen.main.bounds.width / baseWidth
 var statusBarFrame:CGRect{
     get {
         guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
@@ -66,25 +66,29 @@ var spotifyClientID: String = "262b23b768d84dafb4129b71109f66e4"
 var spotifyClientSecret: String = "8b08ca74b389477cb40b8470b314234d"
 var redirectUrl: String = "myspotifyclone://callback"
 
-let deviceMargin = CGFloat.DeviceMargin
-extension CGFloat {
-    static var DeviceMargin: CGFloat {
-        let width = UIScreen.main.bounds.width
-        switch width {
-        case 0...375:
-            return 16 // iPhone SE, 8, Mini
-        case 376...450:
-            return 20 // All modern iPhones including Pro Max (430/440pt)
-        default:
-            return 24 // iPads or very large devices
-        }
-    }
-}
-extension CGFloat {
-    var scaled: CGFloat {
-        return self*DeviceMultiplier
-    }
-}
+
+
+//extension CGFloat {
+//
+//    // Adaptive scaling based on screen width (clean version)
+//    var adaptive: CGFloat {
+//        let screenWidth = UIScreen.main.bounds.width
+//        return (self / baseWidth) * screenWidth
+//    }
+//
+//    // Smart spacing for margins (clean Apple-style spacing)
+//    static var DeviceMargin: CGFloat {
+//        let width = UIScreen.main.bounds.width
+//        switch width {
+//        case 0...375:
+//            return 16
+//        case 376...430:
+//            return 20
+//        default:
+//            return 24
+//        }
+//    }
+//}
 
 
 var isAppLoad:Bool{

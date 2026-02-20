@@ -50,26 +50,26 @@ class GradientLikedSongsView: UIView {
     imgView.addConstraints(constraintsDict: [.Trailing:30,.FixHeight:200,.Top:statusBarHeight,.Leading:30])
 
 
-    self.titleLbl = UIFactory.makeLabel(text:"Liked Songs",textColor: WhiteTextColor,font: UIFont(name: fontNameBlack, size: (HugeTitleFontSize+6).scaled) ?? .boldSystemFont(ofSize: HugeTitleFontSize+6),alignment: .left)
+    self.titleLbl = UIFactory.makeLabel(text:"Liked Songs",textColor: WhiteTextColor,font: UIFont(name: fontNameBlack, size: (HugeTitleFontSize+6)) ?? .boldSystemFont(ofSize: HugeTitleFontSize+6),alignment: .left)
     self.addSubview(titleLbl)
-    titleLbl.addConstraints(constraintsDict: [.Trailing:80,.FixHeight:35,.Leading:deviceMargin])
+    titleLbl.addConstraints(constraintsDict: [.Trailing:80,.FixHeight:35,.Leading: CGFloat.DeviceMargin])
     titleLbl.addConstraints(constraintsDict: [.BelowTo: 25],relativeTo: imgView)
     titleLbl.backgroundColor = .clear
 
-    self.subTitle = UIFactory.makeLabel(text:"10 Songs",textColor: SecondaryTextColor,font: UIFont(name: fontNameRegular, size: (DetailTabFontSize).scaled) ?? .boldSystemFont(ofSize: DetailTabFontSize),alignment: .left)
+    self.subTitle = UIFactory.makeLabel(text:"10 Songs",textColor: SecondaryTextColor,font: UIFont(name: fontNameRegular, size: (DetailTabFontSize)) ?? .boldSystemFont(ofSize: DetailTabFontSize),alignment: .left)
     self.addSubview(subTitle)
-    subTitle.addConstraints(constraintsDict: [.Trailing:80,.FixHeight:15,.Leading:deviceMargin])
+    subTitle.addConstraints(constraintsDict: [.Trailing:80,.FixHeight:15,.Leading: CGFloat.DeviceMargin])
     subTitle.addConstraints(constraintsDict: [.BelowTo: 5],relativeTo: titleLbl)
     subTitle.backgroundColor = .clear
 
     self.playPauseBtn = PlayPauseToggle(frame: .zero,playImage: "playSong",pauseImage: "pauseSong")
     self.addSubview(self.playPauseBtn)
-    self.playPauseBtn.addConstraints(constraintsDict: [.FixWidth:50,.FixHeight:50,.Trailing:deviceMargin,.Bottom:10])
+    self.playPauseBtn.addConstraints(constraintsDict: [.FixWidth:50,.FixHeight:50,.Trailing:CGFloat.DeviceMargin,.Bottom:10])
 
 
     self.likeBtn = UIFactory.makeButton(backgroundColor: .clear,image: "like")
     self.addSubview(likeBtn)
-    likeBtn.addConstraints(constraintsDict: [.FixWidth:25,.FixHeight:25,.Leading:deviceMargin,.Bottom:15])
+    likeBtn.addConstraints(constraintsDict: [.FixWidth:25,.FixHeight:25,.Leading:CGFloat.DeviceMargin,.Bottom:15])
 
 
     self.shuffleBtn = ShuffleButton(frame: .zero)
@@ -85,7 +85,7 @@ class GradientLikedSongsView: UIView {
 
     let spaceView = UIView()
     self.addSubview(spaceView)
-    spaceView.addConstraints(constraintsDict: [.Leading:deviceMargin,.Bottom:0,.Trailing:deviceMargin])
+    spaceView.addConstraints(constraintsDict: [.Leading:CGFloat.DeviceMargin,.Bottom:0,.Trailing: CGFloat.DeviceMargin])
     spaceView.addConstraints(constraintsDict: [.BelowTo: 20],relativeTo: playPauseBtn)
 
 

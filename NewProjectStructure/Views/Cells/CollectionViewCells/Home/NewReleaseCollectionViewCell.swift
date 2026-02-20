@@ -54,20 +54,20 @@ class NewReleaseCollectionViewCell: UICollectionViewCell,ReusableCell, PlayPause
   private func setUpUi(){
     self.containerView = UIFactory.makeContinerView(backgroundColor: ViewBGColor,cornerRadius: 10*DeviceMultiplier)
     self.contentView.addSubview(self.containerView)
-    self.containerView.addConstraints(constraintsDict: [.Leading:deviceMargin,.Trailing:deviceMargin,.Top:0,.Bottom:0])
+    self.containerView.addConstraints(constraintsDict: [.Leading:CGFloat.DeviceMargin,.Trailing:CGFloat.DeviceMargin,.Top:0,.Bottom:0])
 
     self.imgView = UIFactory.makeImageView(contentMode: .scaleToFill)
     self.containerView.addSubview(self.imgView)
     self.imgView.addConstraints(constraintsDict: [.Leading:0,.Bottom:0,.Top:0,.FixWidth:140])
 
-    self.songTitleLbl = UIFactory.makeLabel(text: "",textColor: WhiteTextColor,font: UIFont(name: fontNameMedium, size: (SmallFontSize).scaled) ?? .boldSystemFont(ofSize: 12),alignment: .left)
+    self.songTitleLbl = UIFactory.makeLabel(text: "",textColor: WhiteTextColor,font: UIFont(name: fontNameMedium, size: (SmallFontSize)) ?? .boldSystemFont(ofSize: 12),alignment: .left)
     self.songTitleLbl.adjustsFontForContentSizeCategory = true
     self.containerView.addSubview(self.songTitleLbl)
     self.songTitleLbl.addConstraints(constraintsDict: [.FixHeight:14,.Top:20,.Trailing:0])
     self.songTitleLbl.addConstraints(constraintsDict: [.RightTo:16],relativeTo: self.imgView)
     //self.songTitleLbl.backgroundColor = .red
 
-    self.artistNameLbl = UIFactory.makeLabel(text: "",textColor: WhiteTextColor,font: UIFont(name: fontNameRegular, size: (SmallFontSize-1).scaled) ?? .boldSystemFont(ofSize: 11),alignment: .left)
+    self.artistNameLbl = UIFactory.makeLabel(text: "",textColor: WhiteTextColor,font: UIFont(name: fontNameRegular, size: (SmallFontSize-1)) ?? .boldSystemFont(ofSize: 11),alignment: .left)
     self.artistNameLbl.adjustsFontForContentSizeCategory = true
     self.containerView.addSubview(self.artistNameLbl)
     self.artistNameLbl.addConstraints(constraintsDict: [.FixHeight:13,.Trailing:0])
@@ -78,7 +78,7 @@ class NewReleaseCollectionViewCell: UICollectionViewCell,ReusableCell, PlayPause
 
     self.playPauseBtn = PlayPauseToggle(frame: .zero,playImage: "playSong",pauseImage: "pauseSong")
     self.containerView.addSubview(self.playPauseBtn)
-    self.playPauseBtn.addConstraints(constraintsDict: [.FixWidth:40,.FixHeight:40,.Trailing:deviceMargin,.Bottom:15])
+    self.playPauseBtn.addConstraints(constraintsDict: [.FixWidth:40,.FixHeight:40,.Trailing:CGFloat.DeviceMargin,.Bottom:15])
     self.playPauseBtn.actionDelegate = self
 
     self.likeUnlikeBtn = ToggleLikeButton(frame: .zero)

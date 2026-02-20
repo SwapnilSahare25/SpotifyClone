@@ -36,16 +36,16 @@ class LibraryTableViewCell: UITableViewCell, ReusableCell {
 
     self.imgView = UIFactory.makeImageView(imageName: "",contentMode: .scaleToFill,cornerRadius: 17.5*DeviceMultiplier,clipsToBounds: true)
     self.containerView.addSubview(imgView)
-    imgView.addConstraints(constraintsDict: [.FixHeight:35,.FixWidth:35,.CenterY:0,.Leading:deviceMargin])
+    imgView.addConstraints(constraintsDict: [.FixHeight:35,.FixWidth:35,.CenterY:0,.Leading:CGFloat.DeviceMargin])
     //imgView.backgroundColor = .red
 
-    self.titleLbl = UIFactory.makeLabel(text:"",textColor: WhiteTextColor,font: UIFont(name: fontNameSemiBold, size: (DetailFontsize+1).scaled) ?? .boldSystemFont(ofSize: 14),alignment: .left)
+    self.titleLbl = UIFactory.makeLabel(text:"",textColor: WhiteTextColor,font: UIFont(name: fontNameSemiBold, size: (DetailFontsize+1)) ?? .boldSystemFont(ofSize: 14),alignment: .left)
     self.containerView.addSubview(titleLbl)
     titleLbl.addConstraints(constraintsDict: [.Trailing:40,.HeightLessThanOrEqual:50,.Top:10])
     titleLbl.addConstraints(constraintsDict: [.RightTo: 10],relativeTo: imgView)
     titleLbl.backgroundColor = .clear
 
-    self.subTitle = UIFactory.makeLabel(text:"",textColor: WhiteTextColor,font: UIFont(name: fontNameRegular, size: (SmallFontSize).scaled) ?? .boldSystemFont(ofSize: 12),alignment: .left)
+    self.subTitle = UIFactory.makeLabel(text:"",textColor: WhiteTextColor,font: UIFont(name: fontNameRegular, size: (SmallFontSize)) ?? .boldSystemFont(ofSize: 12),alignment: .left)
     self.containerView.addSubview(subTitle)
     subTitle.addConstraints(constraintsDict: [.Trailing:40,.HeightLessThanOrEqual:50,.Bottom:10])
     subTitle.addConstraints(constraintsDict: [.RightTo: 10],relativeTo: imgView)

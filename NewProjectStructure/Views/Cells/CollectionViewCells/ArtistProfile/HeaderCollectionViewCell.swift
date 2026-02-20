@@ -55,27 +55,27 @@ class HeaderCollectionViewCell: UICollectionViewCell, ReusableCell {
     self.contentView.addSubview(self.containerView)
     self.containerView.addConstraints(constraintsDict: [.Leading:0,.Trailing:0,.FixHeight:65,.Bottom:0])
 
-    self.titleLbl = UIFactory.makeLabel(text:"Title",textColor: WhiteTextColor,font: UIFont(name: fontNameBlack, size: (HugeTitleFontSize+6).scaled) ?? .boldSystemFont(ofSize: HugeTitleFontSize+6),alignment: .left)
+    self.titleLbl = UIFactory.makeLabel(text:"Title",textColor: WhiteTextColor,font: UIFont(name: fontNameBlack, size: (HugeTitleFontSize+6)) ?? .boldSystemFont(ofSize: HugeTitleFontSize+6),alignment: .left)
     self.contentView.addSubview(titleLbl)
-    titleLbl.addConstraints(constraintsDict: [.Trailing:40,.HeightLessThanOrEqual:50,.Leading:deviceMargin])
+    titleLbl.addConstraints(constraintsDict: [.Trailing:40,.HeightLessThanOrEqual:50,.Leading:CGFloat.DeviceMargin])
     titleLbl.addConstraints(constraintsDict: [.AboveTo: 0],relativeTo: self.containerView)
     titleLbl.backgroundColor = .clear
 
     self.playPauseBtn = PlayPauseToggle(frame: .zero,playImage: "playSong",pauseImage: "pauseSong")
     self.containerView.addSubview(self.playPauseBtn)
-    self.playPauseBtn.addConstraints(constraintsDict: [.FixWidth:50,.FixHeight:50,.Trailing:deviceMargin,.Bottom:5])
+    self.playPauseBtn.addConstraints(constraintsDict: [.FixWidth:50,.FixHeight:50,.Trailing:CGFloat.DeviceMargin,.Bottom:5])
     self.playPauseBtn.addTarget(self, action: #selector(method), for: .touchUpInside)
 
-    self.followerLbl = UIFactory.makeLabel(text:"1.2M monthly listeners",textColor: SecondaryTextColor,font: UIFont(name: fontNameRegular, size: (SmallFontSize+1).scaled) ?? .boldSystemFont(ofSize: SmallFontSize+1),alignment: .left)
+    self.followerLbl = UIFactory.makeLabel(text:"1.2M monthly listeners",textColor: SecondaryTextColor,font: UIFont(name: fontNameRegular, size: (SmallFontSize+1)) ?? .boldSystemFont(ofSize: SmallFontSize+1),alignment: .left)
     self.containerView.addSubview(followerLbl)
-    followerLbl.addConstraints(constraintsDict: [.Trailing:60,.FixHeight:15,.Leading:deviceMargin,.Top:5])
+    followerLbl.addConstraints(constraintsDict: [.Trailing:60,.FixHeight:15,.Leading:CGFloat.DeviceMargin,.Top:5])
     followerLbl.backgroundColor = .clear
 
     self.likeBtn = ToggleLikeButton(frame: .zero)
     self.containerView.addSubview(likeBtn)
-    likeBtn.addConstraints(constraintsDict: [.FixWidth:25,.FixHeight:25,.Leading:deviceMargin,.Bottom:5])
+    likeBtn.addConstraints(constraintsDict: [.FixWidth:25,.FixHeight:25,.Leading:CGFloat.DeviceMargin,.Bottom:5])
 
-    self.followBtn = UIFactory.makeButton(title: "Following",font: UIFont(name: fontNameMedium, size: DetailTabFontSize.scaled) ?? .boldSystemFont(ofSize: 13),backgroundColor: .clear,cornerRadius: 12.5*DeviceMultiplier)
+    self.followBtn = UIFactory.makeButton(title: "Following",font: UIFont(name: fontNameMedium, size: DetailTabFontSize) ?? .boldSystemFont(ofSize: 13),backgroundColor: .clear,cornerRadius: 12.5*DeviceMultiplier)
     self.containerView.addSubview(self.followBtn)
     self.followBtn.addConstraints(constraintsDict: [.FixWidth:80,.FixHeight:25,.Bottom:5])
     self.followBtn.addConstraints(constraintsDict: [.RightTo:15],relativeTo: self.likeBtn)
@@ -115,7 +115,7 @@ class HeaderCollectionViewCell: UICollectionViewCell, ReusableCell {
     self.followerLbl.text = followerCount+" "+"monthly listeners"
 
     playPauseBtn.playlistId = obj.id ?? 0
-    let manager = AudioPlayerManager.shared
+  //  let manager = AudioPlayerManager.shared
     playPauseBtn.isHeader = true
     playPauseBtn.updateUI(isPlaying: AudioPlayerManager.shared.isPlaying && AudioPlayerManager.shared.currentPlaylistId == obj.id ?? 0)
 

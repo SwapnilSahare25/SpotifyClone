@@ -11,7 +11,7 @@ class PlayListDetailsViewController: UIViewController, UITableViewDelegate, UITa
   func didUpdateLike() {
     self.callPlayListDetailsApi()
   }
-  
+
   func didRequestInitialPlayback() {
     guard let songs = self.playListObj?.tracks?.items,
           !songs.isEmpty else { return }
@@ -19,43 +19,43 @@ class PlayListDetailsViewController: UIViewController, UITableViewDelegate, UITa
     self.setupHeader()
     updateTableViewInset()
   }
-  
+
   func didUpdateShuffle(_ isEnabled: Bool) {
-    
+
   }
-  
+
   func didStartPlaying(song: Item) {
     self.currentTime = 0
     self.setupHeader()
-        tableView.reloadData()
+    tableView.reloadData()
   }
-  
+
   func didPause() {
     self.setupHeader()
     tableView.reloadData()
   }
-  
+
   func didResume() {
     self.setupHeader()
     tableView.reloadData()
   }
-  
+
   func didStop() {
     tableView.reloadData()
   }
-  
+
   func didUpdateProgress(currentTime: Double, duration: Double) {
     self.currentTime = currentTime
     tableView.reloadData()
   }
-  
+
   func reloadData(index: Int) {
     self.setupHeader()
     tableView.reloadData()
   }
-  
 
-  
+
+
 
 
   private var tableView: UITableView!
@@ -64,32 +64,38 @@ class PlayListDetailsViewController: UIViewController, UITableViewDelegate, UITa
   var currentTime: Double = 0
 
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-      self.view.backgroundColor = .black
-      self.navigationController?.setNavigationBarHidden(false, animated: false)
-//      navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-//      navigationController?.navigationBar.shadowImage = UIImage()
-//      navigationController?.navigationBar.isTranslucent = true
-//      navigationController?.navigationBar.backgroundColor = .clear
-      self.navigationItem.largeTitleDisplayMode = .never
-      let appearance = UINavigationBarAppearance()
-         appearance.configureWithTransparentBackground()
-         appearance.backgroundColor = .clear
-         appearance.shadowColor = .clear
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    self.view.backgroundColor = .black
 
-         navigationController?.navigationBar.standardAppearance = appearance
-         navigationController?.navigationBar.scrollEdgeAppearance = appearance
-      self.setupBackButton()
-      self.setUpMainView()
-      self.setupHeader()
-      self.callPlayListDetailsApi()
+    self.edgesForExtendedLayout = .all
+    self.extendedLayoutIncludesOpaqueBars = true
+    self.navigationController?.setNavigationBarHidden(false, animated: true)
+    self.navigationItem.largeTitleDisplayMode = .never
+    
+    let appearance = UINavigationBarAppearance()
+    appearance.configureWithTransparentBackground()
+    appearance.backgroundColor = .clear
+    appearance.shadowColor = .clear
 
-      
-    }
+    navigationController?.navigationBar.standardAppearance = appearance
+    navigationController?.navigationBar.scrollEdgeAppearance = appearance
+    
+    self.setupBackButton()
+    self.setUpMainView()
+    self.setupHeader()
+    self.callPlayListDetailsApi()
+  }
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    //self.tableView.contentInsetAdjustmentBehavior = .never
+    self.tableView.contentInsetAdjustmentBehavior = .never
+    self.navigationController?.navigationBar.setNeedsLayout()
+    self.navigationController?.navigationBar.layoutIfNeeded()
+
+    if self.tableView.contentOffset.y < 0 {
+      self.tableView.contentOffset.y = 0
+    }
+    
     AudioPlayerManager.shared.addDelegate(self)
     tableView.reloadData()
     updateTableViewInset()
@@ -99,12 +105,19 @@ class PlayListDetailsViewController: UIViewController, UITableViewDelegate, UITa
     super.viewWillDisappear(animated)
     AudioPlayerManager.shared.removeDelegate(self)
   }
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+    if self.tableView.contentInset.top != 0 {
+      self.tableView.contentInset.top = 0
+    }
+  }
+
   private func updateTableViewInset() {
     if AudioPlayerManager.shared.isMiniPlayerVisible {
       let playerHeight: CGFloat = 56.0*DeviceMultiplier
-      tableView.contentInset.bottom = playerHeight + 25*DeviceMultiplier
+      tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: playerHeight + 25*DeviceMultiplier, right: 0)
     } else {
-      tableView.contentInset.bottom = 0
+      tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
   }
 
@@ -119,14 +132,14 @@ class PlayListDetailsViewController: UIViewController, UITableViewDelegate, UITa
 
     let titleLbl = UIFactory.makeLabel(text: self.playListObj?.title ?? "",textColor: WhiteTextColor,font: UIFont(name: fontNameBlack, size: (HugeTitleFontSize+4)) ?? .boldSystemFont(ofSize: BigTitleFontsize),alignment: .left)
     headerView.addSubview(titleLbl)
-    titleLbl.addConstraints(constraintsDict: [.Trailing:deviceMargin,.HeightLessThanOrEqual:50,.Leading:deviceMargin])
+    titleLbl.addConstraints(constraintsDict: [.Trailing:CGFloat.DeviceMargin,.HeightLessThanOrEqual:50,.Leading:CGFloat.DeviceMargin])
     titleLbl.addConstraints(constraintsDict: [.BelowTo: 25],relativeTo: imgView)
     titleLbl.backgroundColor = .clear
 
 
     let descTitle = UIFactory.makeLabel(text:self.playListObj?.description ?? "",textColor: SecondaryTextColor,font: UIFont(name: fontNameRegular, size: (DetailTabFontSize)) ?? .boldSystemFont(ofSize: DetailTabFontSize),alignment: .left)
     headerView.addSubview(descTitle)
-    descTitle.addConstraints(constraintsDict: [.Trailing:deviceMargin,.FixHeight:15,.Leading:deviceMargin])
+    descTitle.addConstraints(constraintsDict: [.Trailing:CGFloat.DeviceMargin,.FixHeight:15,.Leading:CGFloat.DeviceMargin])
     descTitle.addConstraints(constraintsDict: [.BelowTo: 5],relativeTo: titleLbl)
     descTitle.backgroundColor = .clear
 
@@ -140,14 +153,14 @@ class PlayListDetailsViewController: UIViewController, UITableViewDelegate, UITa
 
     let subTitle = UIFactory.makeLabel(text:songsCountAndDuretionTitleText,textColor: SecondaryTextColor,font: UIFont(name: fontNameRegular, size: (DetailTabFontSize)) ?? .boldSystemFont(ofSize: DetailTabFontSize),alignment: .left)
     headerView.addSubview(subTitle)
-    subTitle.addConstraints(constraintsDict: [.Trailing:deviceMargin,.FixHeight:15,.Leading:deviceMargin])
+    subTitle.addConstraints(constraintsDict: [.Trailing:CGFloat.DeviceMargin,.FixHeight:15,.Leading:CGFloat.DeviceMargin])
     subTitle.addConstraints(constraintsDict: [.BelowTo: 5],relativeTo: descTitle)
     subTitle.backgroundColor = .clear
 
 
     let playBtn = PlayPauseToggle(frame: .zero,playImage: "playSong",pauseImage: "pauseSong")
     headerView.addSubview(playBtn)
-    playBtn.addConstraints(constraintsDict: [.FixWidth:60,.FixHeight:60,.Trailing:deviceMargin,.Bottom:5])
+    playBtn.addConstraints(constraintsDict: [.FixWidth:60,.FixHeight:60,.Trailing:CGFloat.DeviceMargin,.Bottom:5])
     playBtn.playlistId = playListId
     playBtn.actionDelegate = self
     playBtn.isHeader = true
@@ -163,7 +176,7 @@ class PlayListDetailsViewController: UIViewController, UITableViewDelegate, UITa
 
     let likeBtn = ToggleLikeButton(frame: .zero)
     headerView.addSubview(likeBtn)
-    likeBtn.addConstraints(constraintsDict: [.FixWidth:25,.FixHeight:25,.Leading:deviceMargin,.Bottom:5])
+    likeBtn.addConstraints(constraintsDict: [.FixWidth:25,.FixHeight:25,.Leading:CGFloat.DeviceMargin,.Bottom:5])
     likeBtn.delegate = self
     likeBtn.configure(id: self.playListObj?.id ?? 0, type: "album", isLiked: playListObj?.isLiked ?? false)
     //likeBtn.addTarget(self, action: #selector(btnClicked), for: .touchUpInside)
@@ -178,17 +191,22 @@ class PlayListDetailsViewController: UIViewController, UITableViewDelegate, UITa
 
   }
 
-  private func setUpMainView(){
-
+  private func setUpMainView() {
     self.tableView = UIFactory.makeTableView(separatorStyle: .none)
     self.view.addSubview(self.tableView)
+    self.tableView.contentInsetAdjustmentBehavior = .never
+    
     self.tableView.delegate = self
     self.tableView.dataSource = self
     self.tableView.backgroundColor = .clear
+    
     self.tableView.register(PlayListDetailsTableViewCell.self, forCellReuseIdentifier: PlayListDetailsTableViewCell.identifier)
-    self.tableView.addConstraints(constraintsDict: [.Leading:0,.Trailing:0,.Bottom:0,.Top:0])
+    
+    self.tableView.addConstraints(constraintsDict: [.Leading: 0, .Trailing: 0, .Bottom: 0, .Top: 0])
 
-
+    if #available(iOS 15.0, *) {
+      self.tableView.sectionHeaderTopPadding = 0
+    }
   }
 
 
@@ -197,22 +215,22 @@ class PlayListDetailsViewController: UIViewController, UITableViewDelegate, UITa
   private func callPlayListDetailsApi() {
     let endPoint = Endpoints.getPlayListDetails(playListId: self.playListId)
 
-     APIManager.shared.request(endpoint: endPoint) { [weak self] (object: PlayListObject) in
+    APIManager.shared.request(endpoint: endPoint) { [weak self] (object: PlayListObject) in
 
-       if let self = self {
-           self.playListObj = object
-         self.setupHeader()
+      if let self = self {
+        self.playListObj = object
+        self.setupHeader()
 
-         self.tableView.reloadData()
+        self.tableView.reloadData()
 
-       }else{
-         print("No Data Found")
-       }
-     } onFailure: { error in
-       print(error)
-     }
+      }else{
+        print("No Data Found")
+      }
+    } onFailure: { error in
+      print(error)
+    }
 
-   }
+  }
 
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
     let offsetY = scrollView.contentOffset.y

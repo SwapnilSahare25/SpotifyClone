@@ -36,23 +36,26 @@ class LibraryViewController: UIViewController {
 
     let imgView = UIFactory.makeImageView(imageName: "profileIcon")
     self.headerView.addSubview(imgView)
-    imgView.addConstraints(constraintsDict: [.FixHeight:30,.FixWidth:30,.Top:statusBarHeight+10,.Leading:deviceMargin])
+    imgView.addConstraints(constraintsDict: [.FixHeight:30,.FixWidth:30,.Top:statusBarHeight+10,.Leading:CGFloat.DeviceMargin])
 
-    let titleLbl = UIFactory.makeLabel(text:"Your Library",textColor: WhiteTextColor,font: UIFont(name: fontNameBold, size: (SubTitleFontsize).scaled) ?? .boldSystemFont(ofSize: SubTitleFontsize),alignment: .left)
+    let titleLbl = UIFactory.makeLabel(text:"Your Library",textColor: WhiteTextColor,font: UIFont(name: fontNameBold, size: (SubTitleFontsize)) ?? .boldSystemFont(ofSize: SubTitleFontsize),alignment: .left)
      self.headerView.addSubview(titleLbl)
     titleLbl.addConstraints(constraintsDict: [.Trailing:80,.FixHeight:30,.Top:statusBarHeight+10])
-    titleLbl.rightTo(view: imgView, constant: 10)
+    titleLbl.addConstraints(constraintsDict: [.RightTo: 10], relativeTo: imgView)
+    //titleLbl.rightTo(view: imgView, constant: 10)
     titleLbl.backgroundColor = .clear
+
 
     let plusBtn = UIFactory.makeButton(backgroundColor: .clear, image: "plus")
     self.headerView.addSubview(plusBtn)
-    plusBtn.addConstraints(constraintsDict: [.Trailing:deviceMargin,.FixHeight:20,.FixWidth:20,.Top:statusBarHeight+20])
+    plusBtn.addConstraints(constraintsDict: [.Trailing:CGFloat.DeviceMargin,.FixHeight:20,.FixWidth:20,.Top:statusBarHeight+20])
     plusBtn.addTarget(self, action: #selector(btnClicked), for: .touchUpInside)
 
     let scrollView = UIFactory.makeScrollView(showsHorizontalScrollIndicator: false)
     scrollView.backgroundColor = .clear
     self.headerView.addSubview(scrollView)
-    scrollView.belowTo(view: imgView, constant: 15)
+   // scrollView.belowTo(view: imgView, constant: 15)
+    scrollView.addConstraints(constraintsDict: [.BelowTo: 15], relativeTo: imgView)
     scrollView.addConstraints(constraintsDict: [.Leading:0,.Trailing:0,.FixHeight:40])
 
     var xAxis: CGFloat = 15*DeviceMultiplier
@@ -92,7 +95,8 @@ class LibraryViewController: UIViewController {
     self.tableView.delegate = self
     self.tableView.dataSource = self
     self.tableView.register(LibraryTableViewCell.self, forCellReuseIdentifier: LibraryTableViewCell.identifier)
-    self.tableView.belowTo(view: self.headerView, constant: 0)
+    self.tableView.addConstraints(constraintsDict: [.BelowTo: 0], relativeTo: self.headerView)
+   // self.tableView.belowTo(view: self.headerView, constant: 0)
     self.tableView.addConstraints(constraintsDict: [.Leading:0,.Trailing:0,.Bottom:0])
 
     self.selectTab(index: 0)

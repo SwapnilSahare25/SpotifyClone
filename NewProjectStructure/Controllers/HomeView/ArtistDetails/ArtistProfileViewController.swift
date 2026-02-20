@@ -395,7 +395,7 @@ extension ArtistProfileViewController {
       //group.contentInsets = NSDirectionalEdgeInsets(top: 0,leading: deviceMargin-5,bottom: 0,trailing: deviceMargin-5)
 
       let section = NSCollectionLayoutSection(group: group)
-      section.contentInsets = NSDirectionalEdgeInsets(top: 0,leading: deviceMargin,bottom: 0,trailing: deviceMargin)
+      section.contentInsets = NSDirectionalEdgeInsets(top: 0,leading: CGFloat.DeviceMargin,bottom: 0,trailing: CGFloat.DeviceMargin)
 
       let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(50))
 
@@ -420,7 +420,7 @@ extension ArtistProfileViewController {
       let section = NSCollectionLayoutSection(group: group)
       section.orthogonalScrollingBehavior = .continuous
       section.interGroupSpacing = 10
-      section.contentInsets = NSDirectionalEdgeInsets(top: 0,leading: deviceMargin,bottom: 0,trailing: deviceMargin)
+      section.contentInsets = NSDirectionalEdgeInsets(top: 0,leading: CGFloat.DeviceMargin,bottom: 0,trailing: CGFloat.DeviceMargin)
 
 
       let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(50))
@@ -445,7 +445,7 @@ extension ArtistProfileViewController {
       let section = NSCollectionLayoutSection(group: group)
       section.orthogonalScrollingBehavior = .continuous
       section.interGroupSpacing = 10
-      section.contentInsets = NSDirectionalEdgeInsets(top: 0,leading: deviceMargin,bottom: 0,trailing: deviceMargin)
+      section.contentInsets = NSDirectionalEdgeInsets(top: 0,leading: CGFloat.DeviceMargin,bottom: 0,trailing: CGFloat.DeviceMargin)
 
 
       let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(50))

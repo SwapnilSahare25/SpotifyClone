@@ -119,7 +119,7 @@ class AlbumDetailsViewController: UIViewController, AudioPlayerDelegate, PlayPau
 
     let titleLbl = UIFactory.makeLabel(text:self.albumDetails?.title ?? "",textColor: WhiteTextColor,font: UIFont(name: fontNameBlack, size: (HugeTitleFontSize+4)) ?? .boldSystemFont(ofSize: BigTitleFontsize),alignment: .left)
     headerView.addSubview(titleLbl)
-    titleLbl.addConstraints(constraintsDict: [.Trailing:deviceMargin,.FixHeight:35,.Leading:deviceMargin])
+    titleLbl.addConstraints(constraintsDict: [.Trailing:CGFloat.DeviceMargin,.FixHeight:35,.Leading:CGFloat.DeviceMargin])
     titleLbl.addConstraints(constraintsDict: [.BelowTo: 25],relativeTo: imgView)
     titleLbl.backgroundColor = .clear
 
@@ -132,7 +132,7 @@ class AlbumDetailsViewController: UIViewController, AudioPlayerDelegate, PlayPau
 
     let subTitle = UIFactory.makeLabel(text:subTitleText,textColor: SecondaryTextColor,font: UIFont(name: fontNameRegular, size: (DetailTabFontSize)) ?? .boldSystemFont(ofSize: DetailTabFontSize),alignment: .left)
     headerView.addSubview(subTitle)
-    subTitle.addConstraints(constraintsDict: [.Trailing:deviceMargin,.FixHeight:15,.Leading:deviceMargin])
+    subTitle.addConstraints(constraintsDict: [.Trailing:CGFloat.DeviceMargin,.FixHeight:15,.Leading:CGFloat.DeviceMargin])
     subTitle.addConstraints(constraintsDict: [.BelowTo: 5],relativeTo: titleLbl)
     subTitle.backgroundColor = .clear
 
@@ -145,13 +145,13 @@ class AlbumDetailsViewController: UIViewController, AudioPlayerDelegate, PlayPau
 
     let songsCountAndDuretionTitle = UIFactory.makeLabel(text:songsCountAndDuretionTitleText,textColor: SecondaryTextColor,font: UIFont(name: fontNameRegular, size: (DetailTabFontSize)) ?? .boldSystemFont(ofSize: DetailTabFontSize),alignment: .left)
     headerView.addSubview(songsCountAndDuretionTitle)
-    songsCountAndDuretionTitle.addConstraints(constraintsDict: [.Trailing:50,.FixHeight:15,.Leading:deviceMargin])
+    songsCountAndDuretionTitle.addConstraints(constraintsDict: [.Trailing:50,.FixHeight:15,.Leading:CGFloat.DeviceMargin])
     songsCountAndDuretionTitle.addConstraints(constraintsDict: [.BelowTo: 5],relativeTo: subTitle)
     songsCountAndDuretionTitle.backgroundColor = .clear
 
     let playBtn = PlayPauseToggle(frame: .zero,playImage: "playSong",pauseImage: "pauseSong")
     headerView.addSubview(playBtn)
-    playBtn.addConstraints(constraintsDict: [.FixWidth:60,.FixHeight:60,.Trailing:deviceMargin,.Bottom:5])
+    playBtn.addConstraints(constraintsDict: [.FixWidth:60,.FixHeight:60,.Trailing:CGFloat.DeviceMargin,.Bottom:5])
     playBtn.actionDelegate = self
     playBtn.playlistId = albumId
     playBtn.isHeader = true
@@ -175,7 +175,7 @@ class AlbumDetailsViewController: UIViewController, AudioPlayerDelegate, PlayPau
 
     let likeBtn = ToggleLikeButton(frame: .zero)
     headerView.addSubview(likeBtn)
-    likeBtn.addConstraints(constraintsDict: [.FixWidth:25,.FixHeight:25,.Leading:deviceMargin,.Bottom:5])
+    likeBtn.addConstraints(constraintsDict: [.FixWidth:25,.FixHeight:25,.Leading:CGFloat.DeviceMargin,.Bottom:5])
     likeBtn.delegate = self
     likeBtn.configure(id: self.albumDetails?.id ?? 0, type: "album", isLiked: albumDetails?.isLiked ?? false)
     //likeBtn.addTarget(self, action: #selector(btnClicked), for: .touchUpInside)

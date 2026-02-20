@@ -26,7 +26,7 @@ class ShelfCollectionReusableView: UICollectionReusableView, ReusableCell {
   private func setUpUi() {
 
 
-    titleLbl = UIFactory.makeLabel(text:"",textColor: WhiteTextColor,font: UIFont(name: fontNameBold, size: HeaderFontSize.scaled) ?? .boldSystemFont(ofSize: 19),alignment: .left)
+    titleLbl = UIFactory.makeLabel(text:"",textColor: WhiteTextColor,font: UIFont(name: fontNameBold, size: HeaderFontSize) ?? .boldSystemFont(ofSize: 19),alignment: .left)
     self.addSubview(titleLbl)
     titleLbl.addConstraints(constraintsDict: [.Leading:0,.Trailing:50,.FixHeight:25])
     bottomConstraint = titleLbl.bottomAnchor.constraint(equalTo: bottomAnchor,constant: -13*DeviceMultiplier)

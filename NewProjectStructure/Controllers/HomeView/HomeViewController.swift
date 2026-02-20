@@ -55,8 +55,6 @@ class HomeViewController: UIViewController, NewReleaseHeaderDelegate, AudioPlaye
     super.viewDidLoad()
     self.view.backgroundColor = Appcolor
     navigationController?.setNavigationBarHidden(true, animated: false)
-    edgesForExtendedLayout = [.top]
-    extendedLayoutIncludesOpaqueBars = true
 
     self.setUpMainView()
     self.callHomeApi()
@@ -379,7 +377,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
       let sectionHeader2 = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: NewReleaseCollectionReusableView.identifier, for: indexPath) as! NewReleaseCollectionReusableView
       sectionHeader2.backgroundColor = CellBgColor
       sectionHeader2.subtitleLbl.text = "NEW RELEASE FROM"
-      sectionHeader2.setLeading(deviceMargin)
+      sectionHeader2.setLeading(CGFloat.DeviceMargin)
       sectionHeader2.configure(obj: newRelease)
       sectionHeader2.artistId = newRelease.artist?.id ?? 0
       sectionHeader2.delegate = self
@@ -441,7 +439,7 @@ extension HomeViewController {
 
     let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,subitem: item,count: 2)
     // Apply horizontal margin to GROUP (not section)
-    group.contentInsets = NSDirectionalEdgeInsets(top: 0,leading: deviceMargin-5,bottom: 0,trailing: deviceMargin-5)
+    group.contentInsets = NSDirectionalEdgeInsets(top: 0,leading: CGFloat.DeviceMargin-5,bottom: 0,trailing: CGFloat.DeviceMargin-5)
 
 
     let section = NSCollectionLayoutSection(group: group)
@@ -500,7 +498,7 @@ extension HomeViewController {
       let section = NSCollectionLayoutSection(group: group)
       section.orthogonalScrollingBehavior = .continuous
       section.interGroupSpacing = 10
-      section.contentInsets = NSDirectionalEdgeInsets(top: 0,leading: deviceMargin,bottom: 0,trailing: deviceMargin)
+      section.contentInsets = NSDirectionalEdgeInsets(top: 0,leading: CGFloat.DeviceMargin,bottom: 0,trailing: CGFloat.DeviceMargin)
 
       let headerHeight: CGFloat = isMoreLike ? 95 : 60
 
@@ -530,7 +528,7 @@ extension HomeViewController {
       let section = NSCollectionLayoutSection(group: group)
       //section.orthogonalScrollingBehavior = .continuous
       section.interGroupSpacing = 10
-      section.contentInsets = NSDirectionalEdgeInsets(top: 0,leading: deviceMargin,bottom: 0,trailing: deviceMargin)
+      section.contentInsets = NSDirectionalEdgeInsets(top: 0,leading: CGFloat.DeviceMargin,bottom: 0,trailing: CGFloat.DeviceMargin)
 
 
       let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(60))

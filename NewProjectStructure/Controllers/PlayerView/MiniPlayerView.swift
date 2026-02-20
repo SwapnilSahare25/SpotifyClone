@@ -65,15 +65,15 @@ class MiniPlayerView: UIView {
        self.imageView = UIFactory.makeImageView(contentMode: .scaleToFill,cornerRadius: 4*DeviceMultiplier,clipsToBounds: true)
        self.imageView.backgroundColor = CellBgColor
        self.addSubview(self.imageView)
-       self.imageView.addConstraints(constraintsDict: [.Leading:deviceMargin,.CenterY:0,.FixHeight:40,.FixWidth:40])
+       self.imageView.addConstraints(constraintsDict: [.Leading:CGFloat.DeviceMargin,.CenterY:0,.FixHeight:40,.FixWidth:40])
 
-       self.titleLabel = UIFactory.makeLabel(text:"Start Now",textColor: WhiteTextColor,font: UIFont(name: fontNameSemiBold, size: (DetailFontsize-1).scaled) ?? .boldSystemFont(ofSize: DetailFontsize-1),alignment: .left)
+       self.titleLabel = UIFactory.makeLabel(text:"Start Now",textColor: WhiteTextColor,font: UIFont(name: fontNameSemiBold, size: (DetailFontsize-1)) ?? .boldSystemFont(ofSize: DetailFontsize-1),alignment: .left)
        self.addSubview(self.titleLabel)
        titleLabel.addConstraints(constraintsDict: [.Trailing:60,.FixHeight:15,.Top:12])
        titleLabel.addConstraints(constraintsDict: [.RightTo: 10],relativeTo: self.imageView)
        titleLabel.backgroundColor = .clear
 
-       self.subtitleLabel = UIFactory.makeLabel(text:"3:45",textColor: SecondaryTextColor,font: UIFont(name: fontNameRegular, size: (SmallFontSize-1).scaled) ?? .boldSystemFont(ofSize: SmallFontSize-1),alignment: .left)
+       self.subtitleLabel = UIFactory.makeLabel(text:"3:45",textColor: SecondaryTextColor,font: UIFont(name: fontNameRegular, size: (SmallFontSize-1)) ?? .boldSystemFont(ofSize: SmallFontSize-1),alignment: .left)
        self.addSubview(subtitleLabel)
        subtitleLabel.addConstraints(constraintsDict: [.Trailing:40,.FixHeight:15,.Bottom:12])
        subtitleLabel.addConstraints(constraintsDict: [.RightTo: 10],relativeTo: self.imageView)
@@ -82,7 +82,7 @@ class MiniPlayerView: UIView {
 
        playPauseButton = UIFactory.makeButton(backgroundColor: .clear,image: "miniPause")
        self.addSubview(playPauseButton)
-       playPauseButton.addConstraints(constraintsDict: [.FixWidth:25,.FixHeight:25,.Trailing:deviceMargin,.CenterY:0])
+       playPauseButton.addConstraints(constraintsDict: [.FixWidth:25,.FixHeight:25,.Trailing:CGFloat.DeviceMargin,.CenterY:0])
        playPauseButton.addTarget(self, action: #selector(playPauseTapped), for: .touchUpInside)
 
        self.likeBtn = ToggleLikeButton(frame: .zero)
