@@ -20,14 +20,26 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = Appcolor
-      title = "Search"
+          title = "Search"
       self.navigationController?.navigationBar.prefersLargeTitles = true
-      self.navigationItem.largeTitleDisplayMode = .always
+        self.navigationItem.largeTitleDisplayMode = .always
+
       self.setupSearchBar()
         self.setupMainView()
           self.callSearchApi()
 
     }
+//  override func viewWillAppear(_ animated: Bool) {
+//    super.viewWillAppear(animated)
+//    self
+//
+//  }
+//  override func viewWillDisappear(_ animated: Bool) {
+//    super.viewWillDisappear(animated)
+//    self.navigationController?.navigationBar.prefersLargeTitles = false
+//    self.navigationItem.largeTitleDisplayMode = .never
+//
+//  }
 
   private func setupSearchBar() {
           searchController = UISearchController(searchResultsController: nil)
@@ -62,11 +74,6 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
 
     self.collectionView.scrollIndicatorInsets = collectionView.contentInset
   }
-//  override func viewWillDisappear(_ animated: Bool) {
-//    super.viewWillDisappear(animated)
-//    self.navigationController?.navigationBar.prefersLargeTitles = false
-//    self.navigationItem.largeTitleDisplayMode = .never
-//  }
 
 
   private func setupMainView(){
@@ -192,6 +199,10 @@ extension SearchViewController {
     return section
   }
 
+  func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    setNavBarColor(.black)
+  }
+
 }
 
 extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -234,9 +245,26 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
   }
 
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    let vc = CategoryViewController()
-    vc.hidesBottomBarWhenPushed = true
-    self.navigationController?.pushViewController(vc, animated: true)
+    let sections = self.searchSectionArray[indexPath.section]
+
+    switch sections.searcType {
+
+    case .topGenres(let section), .browseAll(let section):
+
+      let item = section.items?[indexPath.item]
+
+      let vc = CategoryViewController()
+      vc.titleStr = item?.title ?? ""
+      vc.categoryType = item?.title ?? ""
+      vc.hidesBottomBarWhenPushed = true
+      self.navigationController?.pushViewController(vc, animated: true)
+
+    default:
+      break
+
+    }
+
+
   }
 
   func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {

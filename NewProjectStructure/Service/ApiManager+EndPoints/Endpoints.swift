@@ -48,6 +48,10 @@ struct Endpoints {
     return "artist/\(artistId)?user_id=\(userId)"
   }
 
+  static func categoryDetails(categoryType: String) -> String {
+    return "category/\(categoryType)?user_id=\(userId)"
+  }
+
 
 
 

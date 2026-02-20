@@ -68,10 +68,18 @@ class PlayListDetailsViewController: UIViewController, UITableViewDelegate, UITa
         super.viewDidLoad()
       self.view.backgroundColor = .black
       self.navigationController?.setNavigationBarHidden(false, animated: false)
-      navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-      navigationController?.navigationBar.shadowImage = UIImage()
-      navigationController?.navigationBar.isTranslucent = true
-      navigationController?.navigationBar.backgroundColor = .clear
+//      navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+//      navigationController?.navigationBar.shadowImage = UIImage()
+//      navigationController?.navigationBar.isTranslucent = true
+//      navigationController?.navigationBar.backgroundColor = .clear
+      self.navigationItem.largeTitleDisplayMode = .never
+      let appearance = UINavigationBarAppearance()
+         appearance.configureWithTransparentBackground()
+         appearance.backgroundColor = .clear
+         appearance.shadowColor = .clear
+
+         navigationController?.navigationBar.standardAppearance = appearance
+         navigationController?.navigationBar.scrollEdgeAppearance = appearance
       self.setupBackButton()
       self.setUpMainView()
       self.setupHeader()
@@ -81,7 +89,7 @@ class PlayListDetailsViewController: UIViewController, UITableViewDelegate, UITa
     }
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    self.tableView.contentInsetAdjustmentBehavior = .never
+    //self.tableView.contentInsetAdjustmentBehavior = .never
     AudioPlayerManager.shared.addDelegate(self)
     tableView.reloadData()
     updateTableViewInset()
@@ -177,7 +185,6 @@ class PlayListDetailsViewController: UIViewController, UITableViewDelegate, UITa
     self.tableView.delegate = self
     self.tableView.dataSource = self
     self.tableView.backgroundColor = .clear
-    self.tableView.contentInsetAdjustmentBehavior = .never
     self.tableView.register(PlayListDetailsTableViewCell.self, forCellReuseIdentifier: PlayListDetailsTableViewCell.identifier)
     self.tableView.addConstraints(constraintsDict: [.Leading:0,.Trailing:0,.Bottom:0,.Top:0])
 

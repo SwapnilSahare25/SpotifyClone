@@ -32,13 +32,13 @@ class DiscographyCollectionViewCell: UICollectionViewCell, ReusableCell {
 
 
 
-    self.titleLbl = UIFactory.makeLabel(text:"Start Now",textColor: SecondaryTextColor,font: UIFont(name: fontNameSemiBold, size: (DetailTabFontSize-2).scaled) ?? .boldSystemFont(ofSize: DetailTabFontSize-2),alignment: .center)
+    self.titleLbl = UIFactory.makeLabel(text:"Start Now",textColor: SecondaryTextColor,font: UIFont(name: fontNameSemiBold, size: (DetailTabFontSize-2)) ?? .boldSystemFont(ofSize: DetailTabFontSize-2),alignment: .center)
     self.containerView.addSubview(titleLbl)
     titleLbl.addConstraints(constraintsDict: [.Trailing:0,.HeightLessThanOrEqual:30,.Leading:0])
     titleLbl.addConstraints(constraintsDict: [.BelowTo:2],relativeTo: self.imgView)
     titleLbl.backgroundColor = .clear
 
-    self.subTitleLbl = UIFactory.makeLabel(text:"Start Now",textColor: SecondaryTextColor,font: UIFont(name: fontNameMedium, size: (SmallFontSize-3).scaled) ?? .boldSystemFont(ofSize: SmallFontSize-3),alignment: .center,numberOfLines: 2)
+    self.subTitleLbl = UIFactory.makeLabel(text:"Start Now",textColor: SecondaryTextColor,font: UIFont(name: fontNameMedium, size: (SmallFontSize-3)) ?? .boldSystemFont(ofSize: SmallFontSize-3),alignment: .center,numberOfLines: 2)
     self.containerView.addSubview(subTitleLbl)
     subTitleLbl.addConstraints(constraintsDict: [.Trailing:0,.HeightLessThanOrEqual:50,.Leading:0])
     subTitleLbl.addConstraints(constraintsDict: [.BelowTo:2],relativeTo: self.titleLbl)

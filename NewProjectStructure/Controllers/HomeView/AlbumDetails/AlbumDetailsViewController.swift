@@ -65,6 +65,7 @@ class AlbumDetailsViewController: UIViewController, AudioPlayerDelegate, PlayPau
     navigationController?.navigationBar.shadowImage = UIImage()
     navigationController?.navigationBar.isTranslucent = true
     navigationController?.navigationBar.backgroundColor = .clear
+    self.navigationItem.largeTitleDisplayMode = .never
     self.setupBackButton()
     self.setUpMainView()
     self.setupHeader()
