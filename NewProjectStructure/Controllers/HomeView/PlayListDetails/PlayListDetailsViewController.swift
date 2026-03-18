@@ -88,7 +88,6 @@ class PlayListDetailsViewController: UIViewController, UITableViewDelegate, UITa
   }
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    self.tableView.contentInsetAdjustmentBehavior = .never
     self.navigationController?.navigationBar.setNeedsLayout()
     self.navigationController?.navigationBar.layoutIfNeeded()
 

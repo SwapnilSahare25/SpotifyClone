@@ -81,6 +81,11 @@ class ArtistProfileViewController: UIViewController, UICollectionViewDelegate, U
     navigationController?.navigationBar.shadowImage = UIImage()
     navigationController?.navigationBar.isTranslucent = true
     navigationController?.navigationBar.backgroundColor = .clear
+    
+    self.edgesForExtendedLayout = .all
+    self.extendedLayoutIncludesOpaqueBars = true
+    self.navigationItem.largeTitleDisplayMode = .never
+
     self.setupBackButton()
     self.setUpMainView()
     self.callArtistProfileApi()
@@ -89,7 +94,6 @@ class ArtistProfileViewController: UIViewController, UICollectionViewDelegate, U
   }
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    self.collectionView.contentInsetAdjustmentBehavior = .never
     AudioPlayerManager.shared.addDelegate(self)
     self.updateInset()
     self.collectionView.reloadData()

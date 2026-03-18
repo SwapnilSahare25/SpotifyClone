@@ -65,6 +65,9 @@ class AlbumDetailsViewController: UIViewController, AudioPlayerDelegate, PlayPau
     navigationController?.navigationBar.shadowImage = UIImage()
     navigationController?.navigationBar.isTranslucent = true
     navigationController?.navigationBar.backgroundColor = .clear
+    
+    self.edgesForExtendedLayout = .all
+    self.extendedLayoutIncludesOpaqueBars = true
     self.navigationItem.largeTitleDisplayMode = .never
     self.setupBackButton()
     self.setUpMainView()
@@ -74,7 +77,6 @@ class AlbumDetailsViewController: UIViewController, AudioPlayerDelegate, PlayPau
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    self.tableView.contentInsetAdjustmentBehavior = .never
     AudioPlayerManager.shared.addDelegate(self)
     tableView.reloadData()
     updateTableViewInset()

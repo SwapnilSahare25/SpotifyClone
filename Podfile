@@ -13,6 +13,9 @@ target 'NewProjectStructure' do
   pod 'CHIPageControl'
   pod 'SwipeCellKit'
   pod 'StickyTabBarViewController'
+  pod 'SwiftPopup'
+  pod 'PopupKit'
+
   #pod 'SOTabBar'
  # pod "SHSearchBar"
 

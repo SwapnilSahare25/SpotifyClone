@@ -30,3 +30,8 @@ struct PlayListObject: Codable {
       case isLiked = "is_liked"
     }
 }
+
+struct CreatePlayList: Codable {
+  let message: String?
+  let item: Item?
+}

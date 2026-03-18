@@ -61,9 +61,8 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
       }
   @objc private func openActiveSearch() {
           let activeVC = ActiveSearchViewController()
-          let nav = UINavigationController(rootViewController: activeVC)
-          nav.modalPresentationStyle = .fullScreen
-          self.present(nav, animated: false)
+          activeVC.hidesBottomBarWhenPushed = true
+          self.navigationController?.pushViewController(activeVC, animated: false)
       }
 
 

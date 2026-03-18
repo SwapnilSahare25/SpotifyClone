@@ -36,6 +36,10 @@ struct Endpoints {
     return "toggle_like"
   }
 
+  static func createPlaylist() -> String {
+    return "create_playlist?user_id=\(userId)"
+  }
+
   static func getAlbumDetails(albumId:Int) -> String {
     return "album/\(albumId)?user_id=\(userId)"
   }

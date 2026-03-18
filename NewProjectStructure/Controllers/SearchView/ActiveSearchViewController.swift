@@ -8,7 +8,35 @@
 import UIKit
 import IQKeyboardManagerSwift
 
-class ActiveSearchViewController: UIViewController, UISearchBarDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
+class ActiveSearchViewController: UIViewController, UISearchBarDelegate, UICollectionViewDelegate, UICollectionViewDataSource, AudioPlayerDelegate {
+  func didStartPlaying(song: Item) {
+
+  }
+  
+  func didPause() {
+
+  }
+  
+  func didResume() {
+
+  }
+  
+  func didStop() {
+
+  }
+  
+  func didUpdateProgress(currentTime: Double, duration: Double) {
+
+  }
+  
+  func reloadData(index: Int) {
+
+  }
+  
+  func didUpdateShuffle(_ isEnabled: Bool) {
+
+  }
+  
 
 
   private var collectionView:UICollectionView!
@@ -20,6 +48,7 @@ class ActiveSearchViewController: UIViewController, UISearchBarDelegate, UIColle
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .black
+    self.navigationItem.largeTitleDisplayMode = .never
     title = "Active Search"
     //navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back",style: .plain,target: self,action: #selector(close))
     self.setupBackButton(action: #selector(close))
@@ -30,8 +59,18 @@ class ActiveSearchViewController: UIViewController, UISearchBarDelegate, UIColle
 
   }
 
+  override func viewWillAppear(_ animated: Bool) {
+      super.viewWillAppear(animated)
+    self.navigationController?.setNavigationBarHidden(false, animated: false)
+    AudioPlayerManager.shared.addDelegate(self)
+  }
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    AudioPlayerManager.shared.removeDelegate(self)
+  }
+
   @objc private func close() {
-    dismiss(animated: true)
+    self.navigationController?.popViewController(animated: false)
   }
 
   private func setupSearchBar() {
@@ -48,7 +87,6 @@ class ActiveSearchViewController: UIViewController, UISearchBarDelegate, UIColle
   }
 
   func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-    
 
     return true
   }
@@ -136,6 +174,7 @@ class ActiveSearchViewController: UIViewController, UISearchBarDelegate, UIColle
 
     }
   }
+
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return self.activeSearch?.items?.count ?? 0
   }
@@ -151,6 +190,48 @@ class ActiveSearchViewController: UIViewController, UISearchBarDelegate, UIColle
     return cell
 
   }
+
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+
+    guard let item = self.activeSearch?.items?[indexPath.item] else { return }
+
+    switch item.type ?? "" {
+
+    case "artist":
+
+      let vc = ArtistProfileViewController()
+      vc.artistId = item.id ?? 0
+      vc.hidesBottomBarWhenPushed = true
+      self.navigationController?.pushViewController(vc, animated: true)
+
+    case "album":
+
+      let vc = AlbumDetailsViewController()
+      vc.albumId = item.id ?? 0
+      vc.hidesBottomBarWhenPushed = true
+      self.navigationController?.pushViewController(vc, animated: true)
+
+    case "playlist":
+
+      let vc = PlayListDetailsViewController()
+      vc.playListId = item.id ?? 0
+      vc.hidesBottomBarWhenPushed = true
+      self.navigationController?.pushViewController(vc, animated: true)
+
+    case "song":
+
+      AudioPlayerManager.shared.playSongs([item], startIndex: 0)
+
+    default:
+        break
+    }
+
+
+
+    }
+
+
+
 
 
 }
